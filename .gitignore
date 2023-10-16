@@ -4,6 +4,7 @@ xcuserdata
 *.xcworkspace
 *.xcuserdatad
 *.xcproj
+.xcuserstate
 
 # Swift
 .DS_Store
