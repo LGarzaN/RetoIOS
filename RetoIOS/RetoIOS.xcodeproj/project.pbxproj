@@ -14,6 +14,8 @@
 		4C2B0EDD2ADDDB8600693DC1 /* RetoIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B0EDC2ADDDB8600693DC1 /* RetoIOSTests.swift */; };
 		4C2B0EE72ADDDB8600693DC1 /* RetoIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B0EE62ADDDB8600693DC1 /* RetoIOSUITests.swift */; };
 		4C2B0EE92ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B0EE82ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift */; };
+		BB41F1442ADF3EA50088D1C5 /* Cuenta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */; };
+		BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1472ADF45840088D1C5 /* Prefabs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		4C2B0EE22ADDDB8600693DC1 /* RetoIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetoIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C2B0EE62ADDDB8600693DC1 /* RetoIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetoIOSUITests.swift; sourceTree = "<group>"; };
 		4C2B0EE82ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetoIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cuenta.swift; sourceTree = "<group>"; };
+		BB41F1472ADF45840088D1C5 /* Prefabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefabs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 			children = (
 				4C2B0ECB2ADDDB8200693DC1 /* RetoIOSApp.swift */,
 				4C2B0ECD2ADDDB8200693DC1 /* ContentView.swift */,
+				BB41F1472ADF45840088D1C5 /* Prefabs.swift */,
+				BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */,
 				4C2B0ECF2ADDDB8500693DC1 /* Assets.xcassets */,
 				4C2B0ED12ADDDB8500693DC1 /* Preview Content */,
 			);
@@ -191,7 +197,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					4C2B0EC72ADDDB8200693DC1 = {
 						CreatedOnToolsVersion = 14.2;
@@ -257,8 +263,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB41F1442ADF3EA50088D1C5 /* Cuenta.swift in Sources */,
 				4C2B0ECE2ADDDB8200693DC1 /* ContentView.swift in Sources */,
 				4C2B0ECC2ADDDB8200693DC1 /* RetoIOSApp.swift in Sources */,
+				BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +339,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -391,6 +400,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -417,6 +427,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RetoIOS/Preview Content\"";
+				DEVELOPMENT_TEAM = KFFF9Z9V8N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -445,6 +456,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RetoIOS/Preview Content\"";
+				DEVELOPMENT_TEAM = KFFF9Z9V8N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

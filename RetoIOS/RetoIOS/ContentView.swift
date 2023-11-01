@@ -9,13 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack{
+            VStack {
+                Text("Bienvenido")
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .multilineTextAlignment(.leading)
+                    
+                ButtonFill(contentTxt: "Iniciar Sesión", c:.purp)
+                Spacer()
+                ButtonBlank(contentTxt: "Crear Cuenta", c:.blu)
+                Text("J C S L")
+                    .bold()
+                    .padding(.top,0.5)
+
+            }
         }
-        .padding()
     }
 }
 
@@ -24,3 +32,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
