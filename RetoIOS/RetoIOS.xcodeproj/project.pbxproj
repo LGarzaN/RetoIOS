@@ -14,6 +14,7 @@
 		4C2B0EDD2ADDDB8600693DC1 /* RetoIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B0EDC2ADDDB8600693DC1 /* RetoIOSTests.swift */; };
 		4C2B0EE72ADDDB8600693DC1 /* RetoIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B0EE62ADDDB8600693DC1 /* RetoIOSUITests.swift */; };
 		4C2B0EE92ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B0EE82ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift */; };
+		BB0C33252AF48C9400AD93F7 /* CrearCuenta1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */; };
 		BB41F1442ADF3EA50088D1C5 /* Cuenta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */; };
 		BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1472ADF45840088D1C5 /* Prefabs.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		4C2B0EE22ADDDB8600693DC1 /* RetoIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetoIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C2B0EE62ADDDB8600693DC1 /* RetoIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetoIOSUITests.swift; sourceTree = "<group>"; };
 		4C2B0EE82ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetoIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearCuenta1.swift; sourceTree = "<group>"; };
 		BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cuenta.swift; sourceTree = "<group>"; };
 		BB41F1472ADF45840088D1C5 /* Prefabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefabs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 			children = (
 				4C2B0ECB2ADDDB8200693DC1 /* RetoIOSApp.swift */,
 				4C2B0ECD2ADDDB8200693DC1 /* ContentView.swift */,
+				BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */,
 				BB41F1472ADF45840088D1C5 /* Prefabs.swift */,
 				BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */,
 				4C2B0ECF2ADDDB8500693DC1 /* Assets.xcassets */,
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB0C33252AF48C9400AD93F7 /* CrearCuenta1.swift in Sources */,
 				BB41F1442ADF3EA50088D1C5 /* Cuenta.swift in Sources */,
 				4C2B0ECE2ADDDB8200693DC1 /* ContentView.swift in Sources */,
 				4C2B0ECC2ADDDB8200693DC1 /* RetoIOSApp.swift in Sources */,

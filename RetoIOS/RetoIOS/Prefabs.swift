@@ -19,8 +19,8 @@ struct ButtonBlank : View{
             Text(contentTxt)
                 .font(.title)
                 .foregroundColor(c)
-                .padding(.horizontal, 50.0)
-                .padding(.vertical, 1)
+                .padding(.horizontal, 85.0)
+                .padding(.vertical, 10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 90)
                         .stroke(c, lineWidth: 3)
@@ -39,8 +39,8 @@ struct ButtonFill : View{
         }){
             Text(contentTxt)
         }
-            .padding(.horizontal, 50.0)
-            .padding(.vertical, 1)
+            .padding(.horizontal, 85.0)
+            .padding(.vertical, 12)
             .font(.title)
             .foregroundColor(Color.white)
             .background(c)
