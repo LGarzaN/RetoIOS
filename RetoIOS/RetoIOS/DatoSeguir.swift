@@ -8,7 +8,7 @@
 import Foundation
 
 
-class DatoSeguir {
+class DatoSeguir : Identifiable{
     var id : Int
     var nombreDato : String
     var fechaIni : Date

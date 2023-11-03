@@ -21,68 +21,71 @@ struct HPdatos: View {
             ZStack{
                 Color.bg
                     .ignoresSafeArea()
-                ScrollView(.vertical, showsIndicators: true) {
-                    VStack{
-                        Text("Hola, Usuario")
-                            .foregroundColor(.white)
-                            .font(.system(size: 40))
-                            .frame(width: 333, alignment: .leading)
-                            .padding(.bottom)
-                        Text("Seguimiento")
-                            .foregroundColor(.white)
-                            .font(.system(size: 28))
-                            .frame(width: 333, alignment: .leading)
-                        ForEach(datos, id: \.self.id) { d in
-                            
-                            NavigationLink {
-
-                            } label: {
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color(red: 60/255, green: 60/255, blue: 60/255))
-                                    
-                                    HStack{
-                                        VStack{
-                                            Text("Dato")
-                                                .fontWeight(.bold)
-                                                .frame(width: 150, alignment: .leading)
-                                                .foregroundColor(.white)
-                                            
-                                            
-                                            Text(d.nombreDato)
-                                                .frame(width: 150, alignment: .leading)
-                                                .foregroundColor(.white)
-                                                .padding(.bottom, 1)
-                                            Text("Ultimo Registro")
-                                                .fontWeight(.bold)
-                                                .frame(width: 150, alignment: .leading)
-                                                .foregroundColor(.white)
-                                            Text("\(d.ultimoRegistro.formatted())")
-                                                .frame(width: 150, alignment: .leading)
-                                                .foregroundColor(.white)
-                                            
-                                        }
-                                        .padding()
-                                        Spacer()
-                                        Chart{
-                                            LineMark(x: .value("Ciudad", "1"), y: .value("Poblacion", 4))
-                                            LineMark(x: .value("Ciudad", "2"), y: .value("Poblacion", 7))
-                                            LineMark(x: .value("Ciudad", "3"), y: .value("Poblacion", 2))
-                                            LineMark(x: .value("Ciudad", "4"), y: .value("Poblacion", 10))
-                                        }
-                                        .frame(width: 120, height: 70)
-                                        .padding()
+                VStack{
+                    ScrollView(.vertical, showsIndicators: true) {
+                        VStack{
+                            Text("Hola, Usuario")
+                                .foregroundColor(.white)
+                                .font(.system(size: 40))
+                                .frame(width: 333, alignment: .leading)
+                                .padding(.bottom)
+                            Text("Seguimiento")
+                                .foregroundColor(.white)
+                                .font(.system(size: 28))
+                                .frame(width: 333, alignment: .leading)
+                            ForEach(datos) { d in
+                                
+                                NavigationLink {
+                                    DatoDetalle(dato: d)
+                                } label: {
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(Color(red: 60/255, green: 60/255, blue: 60/255))
                                         
+                                        HStack{
+                                            VStack{
+                                                Text("Dato")
+                                                    .fontWeight(.bold)
+                                                    .frame(width: 150, alignment: .leading)
+                                                    .foregroundColor(.white)
+                                                
+                                                
+                                                Text(d.nombreDato)
+                                                    .frame(width: 150, alignment: .leading)
+                                                    .foregroundColor(.white)
+                                                    .padding(.bottom, 1)
+                                                Text("Ultimo Registro")
+                                                    .fontWeight(.bold)
+                                                    .frame(width: 150, alignment: .leading)
+                                                    .foregroundColor(.white)
+                                                Text("\(d.ultimoRegistro.formatted())")
+                                                    .frame(width: 150, alignment: .leading)
+                                                    .foregroundColor(.white)
+                                                
+                                            }
+                                            .padding()
+                                            Spacer()
+                                            Chart{
+                                                LineMark(x: .value("Ciudad", "1"), y: .value("Poblacion", 4))
+                                                LineMark(x: .value("Ciudad", "2"), y: .value("Poblacion", 7))
+                                                LineMark(x: .value("Ciudad", "3"), y: .value("Poblacion", 2))
+                                                LineMark(x: .value("Ciudad", "4"), y: .value("Poblacion", 10))
+                                            }
+                                            .frame(width: 120, height: 70)
+                                            .padding()
+                                            
+                                        }
                                     }
+                                    .frame(width: 333, height: 130)
+                                .padding(10)
                                 }
-                                .frame(width: 333, height: 130)
-                            .padding(10)
                             }
                         }
-                        ButtonBlank(contentTxt: "Agregar Sintoma", c: .white)
                     }
+                    ButtonBlank(contentTxt: "Agregar Dato", c: .white)
+                        .padding()
                 }
-                
+
             }
         }
     }
