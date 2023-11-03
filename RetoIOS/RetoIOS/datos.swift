@@ -8,7 +8,7 @@
 import Foundation
 
 
-class registroDatos {
+class registroDatos : Identifiable{
     var id : Int
     var nombre : String
     var fecha : Date
