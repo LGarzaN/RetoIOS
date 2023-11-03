@@ -63,6 +63,7 @@ struct AgregarAntecedente: View {
     }
 }
 
-#Preview {
-    AgregarAntecedente(listaAntecedentes : ListaAntecedentes())
+struct AgregarAntecedentes_Previews: PreviewProvider {
+    static var previews: some View {
+        AgregarAntecedente(listaAntecedentes : ListaAntecedentes())    }
 }
