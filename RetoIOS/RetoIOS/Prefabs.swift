@@ -14,18 +14,18 @@ struct ButtonBlank : View{
     
     var body : some View {
         Button(action: {
-            print("Hello button tapped!")
+            print("Supreme Leader Blank")
         }) {
             Text(contentTxt)
                 .font(.title)
                 .foregroundColor(c)
-                .padding(.horizontal, 50.0)
+                .padding(.horizontal, 85.0)
+                .padding(.vertical, 10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 90)
                         .stroke(c, lineWidth: 3)
                 )
-        }
-            
+            }
     }
 }
 
@@ -35,21 +35,17 @@ struct ButtonFill : View{
     
     var body : some View {
         Button(action: {
-            print("Hello button tapped!")
-        }) {
+            print("Supreme Leader Fill")
+        }){
             Text(contentTxt)
-                .font(.title)
-                //.foregroundColor(.black)
-                .background(c)
-                .padding(.horizontal, 50.0)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 90)
-                        .stroke(c, lineWidth: 3)
-                        .background(RoundedRectangle(cornerRadius: 90).fill(c))
-                )
         }
-            
-    }
+            .padding(.horizontal, 85.0)
+            .padding(.vertical, 12)
+            .font(.title)
+            .foregroundColor(Color.white)
+            .background(c)
+            .cornerRadius(90)
+        }
 }
 
 //Colors
@@ -60,4 +56,27 @@ extension Color {
     static let bg = Color(red: 35/255, green: 35/255, blue: 40/255)
 }
 
-
+/*
+ struct ButtonBlank : View{
+     var contentTxt : String
+     var c : Color
+     
+     var body : some View {
+         GeometryReader{ geo in
+             Button(action: {
+                 print(geo.size.height)
+                 print(geo.size.width)
+             }) {
+                 Text(contentTxt)
+                     .font(.title)
+                     .foregroundColor(c)
+                     .padding(.horizontal, 50.0)
+                     .overlay(
+                         RoundedRectangle(cornerRadius: 90)
+                             .stroke(c, lineWidth: 3)
+                     )
+             }
+         }
+     }
+ }
+ */
