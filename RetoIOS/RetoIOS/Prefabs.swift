@@ -53,6 +53,7 @@ extension Color {
     static let blu = Color(red: 0/255, green: 167/255, blue: 225/255)
     static let purp = Color(red: 218/255, green: 64/255, blue: 210/255)
     static let grn = Color(red: 44/255, green: 222/255, blue: 126/255)
+    static let bg = Color(red: 35/255, green: 35/255, blue: 40/255)
 }
 
 /*
