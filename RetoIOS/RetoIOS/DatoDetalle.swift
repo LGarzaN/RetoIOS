@@ -42,7 +42,7 @@ struct DatoDetalle: View {
             Form{
                 Section{
                     NavigationLink {
-                        
+                        ComoTeSientes()
                     } label: {
                         Text("¿Cómo te sientes?")
                     }
