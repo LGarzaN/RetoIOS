@@ -4,66 +4,70 @@
 //
 //  Created by Juan Lebrija on 11/2/23.
 //
-
 import SwiftUI
 
 
 struct CrearCuenta1: View {
+    //        .background(Color("inverted"))
     @State var fName = ""
     @State var lName = ""
     @State var email = ""
     @State var cellNum = ""
     var body: some View {
-        NavigationStack{
-            Form{
-                Section{
-                    //Nombre
-                    HStack{
-                        TextField("nombre",text: $fName)
+        ZStack{
+            VStack{
+                NavigationStack{
+                    Form{
+                        Section{
+                            //Nombre
+                            HStack{
+                                TextField("nombre",text: $fName)
+                            }
+                            //Apellido
+                            HStack{
+                                TextField("apellido",text: $lName)
+                            }
+                        }
+                        header : {
+                            Text("Nombre de Usuario")
+                        }
+                        Section{
+                            //Correo Electronico
+                            HStack{
+                                TextField("correo",text: $fName)
+                            }
+                            //Num Celular
+                            HStack{
+                                TextField("# celular",text: $cellNum)
+                            }
+                        }
+                        header : {
+                            Text("Datos de Usuario")
+                        }
+                        Section{
+                            //Contraseña
+                            HStack{
+                                TextField("contraseña",text: $fName)
+                            }
+                            //Confirmar Contraseña
+                            HStack{
+                                TextField("confirmar contraseña",text: $cellNum)
+                            }
+                        }
+                        header : {
+                            Text("Contraseña")
+                        }
                     }
-                    //Apellido
-                    HStack{
-                        TextField("apellido",text: $lName)
-                    }
+                    .navigationTitle("Cuenta")
                 }
-                header : {
-                    Text("Nombre de Usuario")
-                }
-                Section{
-                    //Correo Electronico
-                    HStack{
-                        TextField("correo",text: $fName)
-                    }
-                    //Num Celular
-                    HStack{
-                        TextField("# celular",text: $cellNum)
-                    }
-                }
-                header : {
-                    Text("Datos de Usuario")
-                }
-                Section{
-                    //Contraseña
-                    HStack{
-                        TextField("contraseña",text: $fName)
-                    }
-                    //Confirmar Contraseña
-                    HStack{
-                        TextField("confirmar contraseña",text: $cellNum)
-                    }
-                }
-                header : {
-                    Text("Contraseña")
-                }
+                Spacer()
+                ButtonBlank(contentTxt: "Siguiente", c:.purp)
+                Text("J C S L")
+                    .bold()
+                    .padding(.top,0.5)
             }
-            //.padding()
-            .navigationTitle("Cuenta")
-            Spacer()
-            ButtonBlank(contentTxt: "Siguiente", c:.purp)
-            Text("J C S L")
-                .bold()
-                .padding(.top,0.5)
         }
+        .background(Color("basic"))
     }
 }
 
