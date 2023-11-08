@@ -19,18 +19,16 @@ struct HPdatos: View {
     var body: some View {
         NavigationStack{
             ZStack{
-                Color.bg
-                    .ignoresSafeArea()
                 VStack{
                     ScrollView(.vertical, showsIndicators: true) {
                         VStack{
                             Text("Hola, Usuario")
-                                .foregroundColor(.white)
+                                
                                 .font(.system(size: 40))
                                 .frame(width: 333, alignment: .leading)
                                 .padding(.bottom)
                             Text("Seguimiento")
-                                .foregroundColor(.white)
+                                
                                 .font(.system(size: 28))
                                 .frame(width: 333, alignment: .leading)
                             ForEach(datos) { d in
@@ -85,7 +83,6 @@ struct HPdatos: View {
                     ButtonBlank(contentTxt: "Agregar Dato", c: .white)
                         .padding()
                 }
-
             }
         }
     }

@@ -11,6 +11,7 @@ struct ComoTeSientes: View {
     @State var intensidad = 0.0
     @State var accent : Color = .black
     @State var nota : String = ""
+    @State var fecha : Date = Date()
     var body: some View {
         VStack{
             Text("¿Cómo te sientes hoy?")
@@ -38,10 +39,11 @@ struct ComoTeSientes: View {
                 Section{
                     HStack{
                         Text("Fecha")
+                        DatePicker("Fecha", selection: $fecha, displayedComponents: .date)
                     }
                 }
             }
-
+            ButtonBlank(contentTxt: "Guardar", c: .purp)
             Spacer()
         }
     }
