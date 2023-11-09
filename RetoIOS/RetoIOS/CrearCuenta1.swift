@@ -14,9 +14,11 @@ struct CrearCuenta1: View {
     @State var email = ""
     @State var cellNum = ""
     var body: some View {
-        ZStack{
-            VStack{
-                NavigationStack{
+        NavigationStack{
+            ZStack{
+                Color("basic")
+                    .ignoresSafeArea()
+                VStack{
                     Form{
                         Section{
                             //Nombre
@@ -59,15 +61,25 @@ struct CrearCuenta1: View {
                         }
                     }
                     .navigationTitle("Cuenta")
+                    NavigationLink{
+                        CrearCuenta2()
+                    } label: {
+                        Text("Siguiente")
+                            .font(.title)
+                            .foregroundColor(.purp)
+                            .padding(.horizontal, 107.0)
+                            .padding(.vertical, 10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 90)
+                                    .stroke(Color.purp, lineWidth: 3)
+                            )
+                    }
+                    Text("J C S L")
+                        .bold()
+                        .padding(.top,0.5)
                 }
-                Spacer()
-                ButtonBlank(contentTxt: "Siguiente", c:.purp)
-                Text("J C S L")
-                    .bold()
-                    .padding(.top,0.5)
             }
         }
-        .background(Color("basic"))
     }
 }
 

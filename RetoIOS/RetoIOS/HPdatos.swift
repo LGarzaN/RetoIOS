@@ -19,11 +19,12 @@ struct HPdatos: View {
     var body: some View {
         NavigationStack{
             ZStack{
+                Color("basic")
+                    .ignoresSafeArea()
                 VStack{
                     ScrollView(.vertical, showsIndicators: true) {
                         VStack{
                             Text("Hola, Usuario")
-                                
                                 .font(.system(size: 40))
                                 .frame(width: 333, alignment: .leading)
                                 .padding(.bottom)
@@ -38,7 +39,7 @@ struct HPdatos: View {
                                 } label: {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 10)
-                                            .foregroundColor(Color(red: 60/255, green: 60/255, blue: 60/255))
+                                            .foregroundColor(Color("butts"))
                                         
                                         HStack{
                                             VStack{

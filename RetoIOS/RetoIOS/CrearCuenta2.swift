@@ -11,6 +11,7 @@ struct CrearCuenta2: View {
     @State var FechaNac = Date()
     @State var peso = ""
     @State var estatura = ""
+    @State var create = false
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
     
@@ -63,8 +64,20 @@ struct CrearCuenta2: View {
                     }
                     .navigationTitle("Cuenta")
                 }
-                Spacer()
-                ButtonBlank(contentTxt: "Siguiente", c:.purp)
+                Button {
+                    create = true
+                } label: {
+                    Text("Crear Cuenta")
+                        .padding(.horizontal, 85.0)
+                        .padding(.vertical, 12)
+                        .font(.title)
+                        .foregroundColor(Color.white)
+                        .background(Color.purp)
+                        .cornerRadius(90)
+                }
+                .fullScreenCover(isPresented : $create) {
+                    Homepage()
+                }
                 Text("J C S L")
                     .bold()
                     .padding(.top,0.5)
