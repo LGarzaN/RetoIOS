@@ -12,10 +12,10 @@ class registroDatos : Identifiable{
     var id : Int
     var nombre : String
     var fecha : Date
-    var intensidad : Int
+    var intensidad : Float
     var nota : String
     
-    init(id: Int, nombre: String, fecha: Date, intensidad: Int, nota: String) {
+    init(id: Int, nombre: String, fecha: Date, intensidad: Float, nota: String) {
         self.id = id
         self.nombre = nombre
         self.fecha = fecha

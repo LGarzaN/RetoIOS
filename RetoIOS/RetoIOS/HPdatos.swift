@@ -28,7 +28,6 @@ struct HPdatos: View {
                                 .frame(width: 333, alignment: .leading)
                                 .padding(.bottom)
                             Text("Seguimiento")
-                                
                                 .font(.system(size: 28))
                                 .frame(width: 333, alignment: .leading)
                             ForEach(datos) { d in
