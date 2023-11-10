@@ -3,6 +3,7 @@
 //  RetoIOS
 //
 //  Created by Luis Eduardo Garza Naranjo on 08/11/23.
+//  Juan logro que jale :)
 //
 
 import SwiftUI
@@ -31,8 +32,7 @@ struct UltimosDias: View {
                             .foregroundColor(Color(red: 60/255, green: 60/255, blue: 60/255))
 
                         VStack{
-                            Text("Hi")
-                            //Text(r.nombre)
+                            Text(r.nombre.wrappedValue)
                             Slider(value:r.intensidad)
                                 .tint(accentColor(for: r.intensidad))
                                 .disabled(true)
@@ -45,15 +45,16 @@ struct UltimosDias: View {
         }
     }
     func accentColor(for value: Binding<Float>) -> Color {
-        let floatValue = value.wrappedValue
-        if floatValue < 0.33 {
-            return .green
-        } else if floatValue < 0.66 {
-            return .yellow
-        } else {
-            return .red
+            let floatValue = value.wrappedValue
+            if floatValue < 0.33 {
+                return .green
+            } else if floatValue < 0.66 {
+                return .yellow
+            } else {
+                return .red
+            }
         }
-    }
+
 }
 
 struct UltimosDias_Previews: PreviewProvider {
