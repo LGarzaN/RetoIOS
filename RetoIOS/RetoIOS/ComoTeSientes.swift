@@ -22,12 +22,7 @@ struct ComoTeSientes: View {
             Slider(value: $intensidad)
                 .padding(.horizontal, 30)
                 .padding(.bottom, 15)
-                .tint(accent)
-                .onChange(of: intensidad) { newValue in
-                    withAnimation (.easeOut(duration: 2)){
-                        accent = accentColor(for: newValue)
-                    }
-                }
+                .tint(accentColor(for: intensidad))
             Form{
                 Section{
                     TextEditor(text: $nota)
@@ -38,7 +33,6 @@ struct ComoTeSientes: View {
                 }
                 Section{
                     HStack{
-                        Text("Fecha")
                         DatePicker("Fecha", selection: $fecha, displayedComponents: .date)
                     }
                 }
