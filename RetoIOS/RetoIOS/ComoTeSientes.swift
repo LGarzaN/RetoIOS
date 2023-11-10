@@ -22,7 +22,7 @@ struct ComoTeSientes: View {
             Slider(value: $intensidad)
                 .padding(.horizontal, 30)
                 .padding(.bottom, 15)
-                .tint(accent)
+                .tint(accentColor(for: intensidad))
             Form{
                 Section{
                     TextEditor(text: $nota)

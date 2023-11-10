@@ -10,12 +10,12 @@ import SwiftUI
 struct UltimosDias: View {
     var dato : DatoSeguir
     @State var accent : Color = .black
-    @State var intensidad:Float = 0.0
-    var registro = [
-        registroDatos(id: 0, nombre: "dato", fecha: Date(), intensidad: 0.5, nota: ""),
-        registroDatos(id: 0, nombre: "dato", fecha: Date(), intensidad: 0.7, nota: ""),
-    registroDatos(id: 0, nombre: "dato", fecha: Date(), intensidad: 2, nota: ""),
-    registroDatos(id: 0, nombre: "dato", fecha: Date(), intensidad: 9, nota: "")
+    @State var inte = 0.5
+    @State var registro = [
+        registroDatos(id: 0, nombre: "dato1", fecha: Date(), intensidad: 0.5, nota: ""),
+        registroDatos(id: 1, nombre: "dato2", fecha: Date(), intensidad: 0.7, nota: ""),
+        registroDatos(id: 2, nombre: "dato3", fecha: Date(), intensidad: 0.4, nota: ""),
+        registroDatos(id: 3, nombre: "dato4", fecha: Date(), intensidad: 0.6, nota: "")
     ]
     var body: some View {
         VStack{
@@ -25,44 +25,34 @@ struct UltimosDias: View {
                 .frame(width: 333, alignment: .leading)
                 .padding()
             ScrollView(.vertical, showsIndicators: true) {
-                ForEach(registro){ r in
+                ForEach($registro){r in
                     ZStack{
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(Color(red: 60/255, green: 60/255, blue: 60/255))
 
                         VStack{
-                            Text("\(r.fecha.formatted(.dateTime.weekday(.wide).day()))")
-                            Slider(value: $intensidad)
-                                .padding(.horizontal, 30)
-                                .padding(.bottom, 15)
-                                .tint(accent)
+                            Text("Hi")
+                            //Text(r.nombre)
+                            Slider(value:r.intensidad)
+                                .tint(accentColor(for: r.intensidad))
                                 .disabled(true)
                         }
-                        .onChange(of: r.intensidad, perform: { newValue in
-                            f(val: r.intensidad)
-                        })
-                        .onAppear{
-                            f(val: r.intensidad)
-                        }
+                        .padding()
                     }
-
-
                     .padding(.horizontal, 25)
                 }
             }
         }
     }
-    func accentColor(for value: Double) -> Color {
-        if value < 0.33 {
+    func accentColor(for value: Binding<Float>) -> Color {
+        let floatValue = value.wrappedValue
+        if floatValue < 0.33 {
             return .green
-        } else if value < 0.66 {
+        } else if floatValue < 0.66 {
             return .yellow
         } else {
             return .red
         }
-    }
-    func f (val : Float) -> Void{
-        intensidad = val
     }
 }
 
