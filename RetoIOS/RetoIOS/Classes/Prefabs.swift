@@ -13,19 +13,15 @@ struct ButtonBlank : View{
     var c : Color
     
     var body : some View {
-        Button(action: {
-            print("Supreme Leader Blank")
-        }) {
-            Text(contentTxt)
-                .font(.title)
-                .foregroundColor(c)
-                .padding(.horizontal, 85.0)
-                .padding(.vertical, 10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 90)
-                        .stroke(c, lineWidth: 3)
-                )
-            }
+        Text(contentTxt)
+            .font(.title)
+            .foregroundColor(c)
+            .padding(.horizontal, 85.0)
+            .padding(.vertical, 10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 90)
+                    .stroke(c, lineWidth: 3)
+            )
     }
 }
 
@@ -34,18 +30,14 @@ struct ButtonFill : View{
     var c : Color
     
     var body : some View {
-        Button(action: {
-            print("Supreme Leader Fill")
-        }){
-            Text(contentTxt)
-        }
+        Text(contentTxt)
             .padding(.horizontal, 85.0)
             .padding(.vertical, 12)
             .font(.title)
-            .foregroundColor(Color.white)
+            .foregroundColor(Color("basic"))
             .background(c)
             .cornerRadius(90)
-        }
+    }
 }
 
 //Colors

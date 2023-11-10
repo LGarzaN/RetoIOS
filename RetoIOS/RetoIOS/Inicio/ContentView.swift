@@ -45,13 +45,7 @@ struct ContentView: View {
                     Button {
                         enter = true
                     } label: {
-                        Text("Iniciar Sesión")
-                            .padding(.horizontal, 85.0)
-                            .padding(.vertical, 12)
-                            .font(.title)
-                            .foregroundColor(Color("basic"))
-                            .background(Color.grn)
-                            .cornerRadius(90)
+                        ButtonFill(contentTxt: "Iniciar Sesión", c: .blu)
                     }
                     .fullScreenCover(isPresented : $enter) {
                         Homepage()
@@ -61,15 +55,7 @@ struct ContentView: View {
                     NavigationLink{
                         CrearCuenta1()
                     } label: {
-                        Text("Crear Cuenta")
-                            .font(.title)
-                            .foregroundColor(.grn)
-                            .padding(.horizontal, 85.0)
-                            .padding(.vertical, 10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 90)
-                                    .stroke(Color.grn, lineWidth: 3)
-                            )
+                        ButtonBlank(contentTxt: "Crear Cuenta", c: .grn)
                     }
                     Text("J C S L")
                         .bold()
@@ -77,6 +63,7 @@ struct ContentView: View {
                 }
             }
         }
+        .navigationTitle("hi")
     }
 }
 

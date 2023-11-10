@@ -37,9 +37,14 @@ struct ComoTeSientes: View {
                     }
                 }
             }
-            ButtonBlank(contentTxt: "Guardar", c: .purp)
+            Button {
+                //code
+            } label: {
+                ButtonBlank(contentTxt: "   Guardar      ", c: .purp)
+            }
             Spacer()
         }
+        .background(Color("basic"))
     }
     
     func accentColor(for value: Double) -> Color {

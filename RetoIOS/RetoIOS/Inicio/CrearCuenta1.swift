@@ -8,7 +8,6 @@ import SwiftUI
 
 
 struct CrearCuenta1: View {
-    //        .background(Color("inverted"))
     @State var fName = ""
     @State var lName = ""
     @State var email = ""
@@ -64,15 +63,7 @@ struct CrearCuenta1: View {
                     NavigationLink{
                         CrearCuenta2()
                     } label: {
-                        Text("Siguiente")
-                            .font(.title)
-                            .foregroundColor(.purp)
-                            .padding(.horizontal, 107.0)
-                            .padding(.vertical, 10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 90)
-                                    .stroke(Color.purp, lineWidth: 3)
-                            )
+                        ButtonBlank(contentTxt: "  Siguiente        ", c: .purp)
                     }
                     Text("J C S L")
                         .bold()

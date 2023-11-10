@@ -45,20 +45,18 @@ struct HPdatos: View {
                                                 Text("Dato")
                                                     .fontWeight(.bold)
                                                     .frame(width: 150, alignment: .leading)
-                                                    .foregroundColor(.white)
-                                                
-                                                
+                                                    .foregroundColor(Color("txt"))
                                                 Text(d.nombreDato)
                                                     .frame(width: 150, alignment: .leading)
-                                                    .foregroundColor(.white)
                                                     .padding(.bottom, 1)
+                                                    .foregroundColor(Color("txt"))
                                                 Text("Ultimo Registro")
                                                     .fontWeight(.bold)
                                                     .frame(width: 150, alignment: .leading)
-                                                    .foregroundColor(.white)
+                                                    .foregroundColor(Color("txt"))
                                                 Text("\(d.ultimoRegistro.formatted())")
                                                     .frame(width: 150, alignment: .leading)
-                                                    .foregroundColor(.white)
+                                                    .foregroundColor(Color("txt"))
                                                 
                                             }
                                             .padding()
@@ -80,8 +78,12 @@ struct HPdatos: View {
                             }
                         }
                     }
-                    ButtonBlank(contentTxt: "Agregar Dato", c: .white)
-                        .padding()
+                    Button {
+                        //
+                    } label: {
+                        ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
+                    }
+                    .padding()
                 }
             }
         }

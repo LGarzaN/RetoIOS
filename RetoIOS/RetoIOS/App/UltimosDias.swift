@@ -10,18 +10,17 @@ import SwiftUI
 
 struct UltimosDias: View {
     var dato : DatoSeguir
-    @State var accent : Color = .black
+    //@State var accent : Color = .black
     @State var inte = 0.5
     @State var registro = [
-        registroDatos(id: 0, nombre: "dato1", fecha: Date(), intensidad: 0.5, nota: ""),
+        registroDatos(id: 0, nombre: "dato1", fecha: Date(), intensidad: 0.5, nota: "El dia de ayer me estuvo doliendo la panza todo el dia y tenia ganas de vomi El dia de ayer me estuvo doliendo la panza todo el dia y tenia ganas de vomi"),
         registroDatos(id: 1, nombre: "dato2", fecha: Date(), intensidad: 0.7, nota: ""),
-        registroDatos(id: 2, nombre: "dato3", fecha: Date(), intensidad: 0.4, nota: ""),
+        registroDatos(id: 2, nombre: "dato3", fecha: Date(), intensidad: 0.2, nota: ""),
         registroDatos(id: 3, nombre: "dato4", fecha: Date(), intensidad: 0.6, nota: "")
     ]
     var body: some View {
         VStack{
             Text(dato.nombreDato)
-                .foregroundColor(.black)
                 .font(.system(size: 30))
                 .frame(width: 333, alignment: .leading)
                 .padding()
@@ -29,8 +28,7 @@ struct UltimosDias: View {
                 ForEach($registro){r in
                     ZStack{
                         RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(Color(red: 60/255, green: 60/255, blue: 60/255))
-
+                            .foregroundColor(Color("butts"))
                         VStack{
                             Text(r.nombre.wrappedValue)
                             Slider(value:r.intensidad)
@@ -39,10 +37,12 @@ struct UltimosDias: View {
                         }
                         .padding()
                     }
-                    .padding(.horizontal, 25)
+                    .padding(.horizontal, 20)
+                    .padding(5)
                 }
             }
         }
+        .background(Color("basic"))
     }
     func accentColor(for value: Binding<Float>) -> Color {
             let floatValue = value.wrappedValue

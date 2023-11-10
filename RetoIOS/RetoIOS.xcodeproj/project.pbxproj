@@ -27,7 +27,6 @@
 		BB0C33272AF594AA00AD93F7 /* CrearCuenta2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33262AF594AA00AD93F7 /* CrearCuenta2.swift */; };
 		BB0C33292AF59F4300AD93F7 /* AgregarAntecedente.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */; };
 		BB0C332B2AF59F9A00AD93F7 /* Antecedentes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */; };
-		BB41F1442ADF3EA50088D1C5 /* Cuenta.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */; };
 		BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1472ADF45840088D1C5 /* Prefabs.swift */; };
 		BBF993132AFC2930008AC049 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF993122AFC2930008AC049 /* SplashScreenView.swift */; };
 /* End PBXBuildFile section */
@@ -73,7 +72,6 @@
 		BB0C33262AF594AA00AD93F7 /* CrearCuenta2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearCuenta2.swift; sourceTree = "<group>"; };
 		BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgregarAntecedente.swift; sourceTree = "<group>"; };
 		BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Antecedentes.swift; sourceTree = "<group>"; };
-		BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cuenta.swift; sourceTree = "<group>"; };
 		BB41F1472ADF45840088D1C5 /* Prefabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefabs.swift; sourceTree = "<group>"; };
 		BBF993122AFC2930008AC049 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,24 +124,10 @@
 		4C2B0ECA2ADDDB8200693DC1 /* RetoIOS */ = {
 			isa = PBXGroup;
 			children = (
+				BB9B491D2AFDB6B00057C9BB /* App */,
+				BB9B491C2AFDB6A20057C9BB /* Inicio */,
+				BB9B491B2AFDB6370057C9BB /* Classes */,
 				4C2B0ECB2ADDDB8200693DC1 /* RetoIOSApp.swift */,
-				4C2B0ECD2ADDDB8200693DC1 /* ContentView.swift */,
-				BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */,
-				BB0C33262AF594AA00AD93F7 /* CrearCuenta2.swift */,
-				BBF993122AFC2930008AC049 /* SplashScreenView.swift */,
-				BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */,
-				BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */,
-				4C3693602AF309B30026CC52 /* Homepage.swift */,
-				4C36C7722AF590E900876275 /* DatoDetalle.swift */,
-				4C36C7762AFC3ED900876275 /* UltimosDias.swift */,
-				4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */,
-				4C36936A2AF436240026CC52 /* datos.swift */,
-				4C3693682AF30B330026CC52 /* HPusuario.swift */,
-				4C36C7702AF5881500876275 /* DatoSeguir.swift */,
-				4C3693662AF30B070026CC52 /* HPcalendario.swift */,
-				4C3693642AF30AF10026CC52 /* HPdatos.swift */,
-				BB41F1472ADF45840088D1C5 /* Prefabs.swift */,
-				BB41F1432ADF3EA50088D1C5 /* Cuenta.swift */,
 				4C2B0ECF2ADDDB8500693DC1 /* Assets.xcassets */,
 				4C2B0ED12ADDDB8500693DC1 /* Preview Content */,
 			);
@@ -173,6 +157,43 @@
 				4C2B0EE82ADDDB8600693DC1 /* RetoIOSUITestsLaunchTests.swift */,
 			);
 			path = RetoIOSUITests;
+			sourceTree = "<group>";
+		};
+		BB9B491B2AFDB6370057C9BB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */,
+				4C36936A2AF436240026CC52 /* datos.swift */,
+				4C36C7702AF5881500876275 /* DatoSeguir.swift */,
+				BB41F1472ADF45840088D1C5 /* Prefabs.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		BB9B491C2AFDB6A20057C9BB /* Inicio */ = {
+			isa = PBXGroup;
+			children = (
+				BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */,
+				4C2B0ECD2ADDDB8200693DC1 /* ContentView.swift */,
+				BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */,
+				BB0C33262AF594AA00AD93F7 /* CrearCuenta2.swift */,
+				BBF993122AFC2930008AC049 /* SplashScreenView.swift */,
+			);
+			path = Inicio;
+			sourceTree = "<group>";
+		};
+		BB9B491D2AFDB6B00057C9BB /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4C3693602AF309B30026CC52 /* Homepage.swift */,
+				4C36C7722AF590E900876275 /* DatoDetalle.swift */,
+				4C36C7762AFC3ED900876275 /* UltimosDias.swift */,
+				4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */,
+				4C3693682AF30B330026CC52 /* HPusuario.swift */,
+				4C3693662AF30B070026CC52 /* HPcalendario.swift */,
+				4C3693642AF30AF10026CC52 /* HPdatos.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,7 +330,6 @@
 				BB0C33252AF48C9400AD93F7 /* CrearCuenta1.swift in Sources */,
 				4C36C7772AFC3ED900876275 /* UltimosDias.swift in Sources */,
 				4C36C7732AF590E900876275 /* DatoDetalle.swift in Sources */,
-				BB41F1442ADF3EA50088D1C5 /* Cuenta.swift in Sources */,
 				4C3693652AF30AF10026CC52 /* HPdatos.swift in Sources */,
 				4C36C7712AF5881500876275 /* DatoSeguir.swift in Sources */,
 				4C3693692AF30B330026CC52 /* HPusuario.swift in Sources */,
