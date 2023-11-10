@@ -67,13 +67,7 @@ struct CrearCuenta2: View {
                 Button {
                     create = true
                 } label: {
-                    Text("Crear Cuenta")
-                        .padding(.horizontal, 85.0)
-                        .padding(.vertical, 12)
-                        .font(.title)
-                        .foregroundColor(Color.white)
-                        .background(Color.purp)
-                        .cornerRadius(90)
+                    ButtonFill(contentTxt: "Crear Cuenta", c: .purp)//85
                 }
                 .fullScreenCover(isPresented : $create) {
                     Homepage()

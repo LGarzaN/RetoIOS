@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct HPusuario: View {
-    @State var nombre = ""
-    @State var apellidos = ""
-    @State var correo = ""
-    @State var Num_tel_Usuario = ""
+    @State var nombre = "Juan"
+    @State var apellidos = "Lebrija"
+    @State var correo = "a01721659@tec.mx"
+    @State var Num_tel_Usuario = "81 23 45 67 89"
     @State var Doctor = ""
     @State var Num_tel_Doctor = ""
     var opciones = ["Sintomas" , "Calendario", "Usuario"]
@@ -19,34 +19,48 @@ struct HPusuario: View {
         NavigationStack{
             Form{
                 Section{
+                    //nombre
                     HStack{
                         NavigationLink{
                             Form{
                                 Section{
                                     HStack{
-                                        TextField("Luis pancho", text: $nombre)
+                                        TextField("nombre", text: $nombre)
                                     }
                                 }
                             }
                             .navigationTitle("Nombre")
                             .navigationBarTitleDisplayMode(.inline)
                         }label:{
-                            Text("Nombre                              \(nombre)")
+                            HStack{
+                                Text("Nombre")
+                                TextField("\(nombre)", text: $nombre)
+                                    .multilineTextAlignment(.trailing)
+                                    .disabled(true)
+                                    .foregroundColor(.gray)
+                            }
                         }
                     }
+                    //apellido
                     HStack{
                         NavigationLink{
                             Form{
                                 Section{
                                     HStack{
-                                        TextField("Garza Garza", text: $apellidos)
+                                        TextField("apellido", text: $apellidos)
                                     }
                                 }
                             }
-                            .navigationTitle("Apellidos")
+                            .navigationTitle("Apellido")
                             .navigationBarTitleDisplayMode(.inline)
                         }label:{
-                            Text("Apellidos                              \(apellidos)")
+                            HStack{
+                                Text("Apellido")
+                                TextField("\(apellidos)", text: $apellidos)
+                                    .multilineTextAlignment(.trailing)
+                                    .disabled(true)
+                                    .foregroundColor(.gray)
+                            }
                         }
                     }
                     
@@ -89,18 +103,17 @@ struct HPusuario: View {
                 } header: {
                     Text("Datos del contacto")
                 }
-                
                 Section{
                     HStack{
                         Text("Dr")
                         TextField("Dr bueno bueno", text: $Doctor)
-                            .textFieldStyle(.roundedBorder)
                             .disabled(true)
+                            .multilineTextAlignment(.trailing)
                     }
                     HStack{
                         Text("Num Cel.")
                         TextField("81 23 45 67 89", text: $Num_tel_Doctor)
-                            .textFieldStyle(.roundedBorder)
+                            .multilineTextAlignment(.trailing)
                             .disabled(true)
                     }
                 }header: {
