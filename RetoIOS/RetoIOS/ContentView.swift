@@ -49,7 +49,7 @@ struct ContentView: View {
                             .padding(.horizontal, 85.0)
                             .padding(.vertical, 12)
                             .font(.title)
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color("basic"))
                             .background(Color.grn)
                             .cornerRadius(90)
                     }
@@ -63,12 +63,12 @@ struct ContentView: View {
                     } label: {
                         Text("Crear Cuenta")
                             .font(.title)
-                            .foregroundColor(.blu)
+                            .foregroundColor(.grn)
                             .padding(.horizontal, 85.0)
                             .padding(.vertical, 10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 90)
-                                    .stroke(Color.blu, lineWidth: 3)
+                                    .stroke(Color.grn, lineWidth: 3)
                             )
                     }
                     Text("J C S L")
