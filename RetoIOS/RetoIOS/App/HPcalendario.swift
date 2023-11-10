@@ -7,6 +7,7 @@ struct DiaCalendario: Identifiable {
 }
 
 struct HPcalendario: View {
+    @State var mostrarDatos = false
     let columnLayout = Array(repeating: GridItem(.flexible(minimum: 20, maximum: 100)), count: 7)
     let dias = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"]
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
@@ -23,6 +24,7 @@ struct HPcalendario: View {
             Rectangle()
                 .frame(height: 1)
                 .foregroundColor(.gray)
+                .padding()
 
             VStack {
                 Text("\(meses[mesElegido]) \(String(format: "%04d", year))")
@@ -41,15 +43,19 @@ struct HPcalendario: View {
                     }
 
                     ForEach(daysInMonth, id: \.self) { dia in
-                        Button(action: {
-                            // Maneja la acción cuando se hace clic en un día
-                        }) {
+                        Button("\(dia)"){
+                            mostrarDatos = true
+                        }
+                        .sheet(isPresented: $mostrarDatos){
+                            HPcalendariodatos()
+                        
                             Text(dia)
                                 .frame(width: 30, height: 30)
                                 .cornerRadius(15)
                         }
                     }
                 }
+                .padding()
 
                 Picker("Selecciona un mes", selection: $mesElegido) {
                     ForEach(0..<12) { index in

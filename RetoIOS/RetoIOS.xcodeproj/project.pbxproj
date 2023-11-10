@@ -29,6 +29,7 @@
 		BB0C332B2AF59F9A00AD93F7 /* Antecedentes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */; };
 		BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1472ADF45840088D1C5 /* Prefabs.swift */; };
 		BBF993132AFC2930008AC049 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF993122AFC2930008AC049 /* SplashScreenView.swift */; };
+		FB9CDA822AFEDF0C007A44BD /* HPcalendariodatos.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9CDA812AFEDF0C007A44BD /* HPcalendariodatos.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Antecedentes.swift; sourceTree = "<group>"; };
 		BB41F1472ADF45840088D1C5 /* Prefabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefabs.swift; sourceTree = "<group>"; };
 		BBF993122AFC2930008AC049 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		FB9CDA812AFEDF0C007A44BD /* HPcalendariodatos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPcalendariodatos.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */,
 				4C3693682AF30B330026CC52 /* HPusuario.swift */,
 				4C3693662AF30B070026CC52 /* HPcalendario.swift */,
+				FB9CDA812AFEDF0C007A44BD /* HPcalendariodatos.swift */,
 				4C3693642AF30AF10026CC52 /* HPdatos.swift */,
 			);
 			path = App;
@@ -338,6 +341,7 @@
 				4C2B0ECC2ADDDB8200693DC1 /* RetoIOSApp.swift in Sources */,
 				BB0C33272AF594AA00AD93F7 /* CrearCuenta2.swift in Sources */,
 				BBF993132AFC2930008AC049 /* SplashScreenView.swift in Sources */,
+				FB9CDA822AFEDF0C007A44BD /* HPcalendariodatos.swift in Sources */,
 				4C3693672AF30B070026CC52 /* HPcalendario.swift in Sources */,
 				4C2B0ECC2ADDDB8200693DC1 /* RetoIOSApp.swift in Sources */,
 				4C36C7752AF5AB6000876275 /* ComoTeSientes.swift in Sources */,
