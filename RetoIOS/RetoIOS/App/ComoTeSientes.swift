@@ -42,7 +42,7 @@ struct ComoTeSientes: View {
             } label: {
                 ButtonBlank(contentTxt: "   Guardar      ", c: .purp)
             }
-            Spacer()
+            .padding()
         }
         .background(Color("basic"))
     }

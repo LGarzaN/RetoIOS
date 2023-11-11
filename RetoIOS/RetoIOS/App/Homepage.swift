@@ -30,9 +30,6 @@ struct Homepage: View {
                     Text("Profile")
                 }
         }
-        .onAppear(){
-            UITabBar.appearance().backgroundColor = .gray
-        }
         .tint(.grn)
     }
 }

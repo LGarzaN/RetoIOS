@@ -62,6 +62,7 @@ struct DatoDetalle: View {
                     } label: {
                         ButtonBlank(contentTxt: "Finalizar Dato", c: .red)
                     }
+                    .padding()
                 }
             }
         }

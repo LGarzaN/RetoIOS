@@ -7,6 +7,8 @@
 //.ignoresSafeArea()
 
 import SwiftUI
+import Foundation
+
 
 struct ContentView: View {
     @State var email = ""
@@ -40,6 +42,7 @@ struct ContentView: View {
                             Text("Contraseña")
                         }
                     }
+
                     Button {
                         enter = true
                     } label: {
@@ -60,11 +63,19 @@ struct ContentView: View {
                         .padding(.top,0.5)
                 }
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
         }
-        .navigationTitle("hi")
+        //.navigationTitle("hi")
     }
 }
 
+extension UIApplication{
+    func endEditing(){
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
