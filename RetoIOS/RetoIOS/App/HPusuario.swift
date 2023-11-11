@@ -126,6 +126,7 @@ struct HPusuario: View {
                         
                     }
                     .navigationTitle("Usuario")
+                    .scrollDisabled(true)
                     Image("Logo")
                         .resizable()
                         .frame(width: 200, height: 110)
