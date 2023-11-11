@@ -20,13 +20,13 @@ struct SplashScreenView: View {
                 Color("basic")
                 VStack{
                     VStack{
-                        Image(systemName: "apple.logo")
-                            .font(.system(size: 80))
-                            .foregroundColor(.blu)
+                        Image("Logo")
+                            .resizable()
+                            .frame(width: 200, height: 110)
                         Text("J C S L")
                             .bold()
                             .font(.system(size: 22))
-                            .foregroundColor(.blu)
+                            //.foregroundColor(.blu)
                     }
                     .scaleEffect(size)
                     .opacity(opacity)
@@ -41,7 +41,6 @@ struct SplashScreenView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                         withAnimation{
                             self.isActive = true
-                            print("hi")
                         }
                     }
                 }

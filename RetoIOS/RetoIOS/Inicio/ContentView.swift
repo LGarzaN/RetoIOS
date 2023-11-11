@@ -18,12 +18,10 @@ struct ContentView: View {
                 Color("basic")
                    .ignoresSafeArea()
                 VStack{
-                    Text("Bienvenido")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 20.0)
-                        .padding(.top, 20.0)
-                        .frame(width: 333, alignment: .leading)
+                    Image("Logo")
+                        .resizable()
+                        .frame(width: 200, height: 110)
+                        .padding(.top, 50)
                     Form{
                         Section{
                             HStack{
