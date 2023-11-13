@@ -10,6 +10,7 @@ import Charts
 
 struct DatoDetalle: View {
     var dato : DatoSeguir
+    @State var alrt : Bool = false
     var listaRegistro  = [
         registroDatos(id: 0, nombre: "Tos", fecha: Date(), intensidad: 4, nota: ""),
         registroDatos(id: 1, nombre: "Tos", fecha: Date(), intensidad: 2, nota: ""),
@@ -58,9 +59,13 @@ struct DatoDetalle: View {
                             }                        }
                     }
                     Button {
-                        //
+                        alrt = true
                     } label: {
                         ButtonBlank(contentTxt: "Finalizar Dato", c: .red)
+                    }
+                    .alert("¿Está seguro que desea eliminar este dato?", isPresented: $alrt) {
+                        Button("Cancelar", role: .cancel) {}
+                        Button("Eliminar", role: .destructive) {}
                     }
                 }
             }

@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 
 struct HPdatos: View {
+    @State var alrt = false
     var datos = [
         DatoSeguir(id: 0, nombreDato: "Tos", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
         DatoSeguir(id: 1, nombreDato: "Dolor de Cabeza", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
@@ -16,6 +17,8 @@ struct HPdatos: View {
         DatoSeguir(id: 3, nombreDato: "Congestion", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
         DatoSeguir(id: 4, nombreDato: "Dolor uña enterrada", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356)
     ]
+    let options = ["Option 1", "Option 2", "Option 3"]
+    @State private var selectedOption = 0
     var body: some View {
         NavigationStack{
             ZStack{
@@ -79,11 +82,19 @@ struct HPdatos: View {
                         }
                     }
                     Button {
-                        //
+                        alrt = true
                     } label: {
                         ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
                     }
                     .padding()
+                    .alert("Hola", isPresented: $alrt) {
+                        Picker("picker", selection: $selectedOption) {
+                            ForEach(options, id: \.self){ opt in
+                                Text(opt)
+                            }
+                        }
+                        
+                    }
                 }
             }
         }
