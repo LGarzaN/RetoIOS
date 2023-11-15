@@ -17,7 +17,7 @@ struct ButtonBlank : View{
             .font(.title)
             .foregroundColor(c)
             .padding(.horizontal, 85.0)
-            .padding(.vertical, 10)
+            .padding(.vertical, 4)
             .overlay(
                 RoundedRectangle(cornerRadius: 90)
                     .stroke(c, lineWidth: 3)
@@ -32,7 +32,7 @@ struct ButtonFill : View{
     var body : some View {
         Text(contentTxt)
             .padding(.horizontal, 85.0)
-            .padding(.vertical, 12)
+            .padding(.vertical, 6)
             .font(.title)
             .foregroundColor(Color("basic"))
             .background(c)
@@ -42,7 +42,7 @@ struct ButtonFill : View{
 
 //Colors
 extension Color {
-    static let blu = Color(red: 0/255, green: 167/255, blue: 225/255)
+    static let blu = Color(red: 0/255, green: 167/255, blue: 255/255)
     static let purp = Color(red: 218/255, green: 64/255, blue: 210/255)
     static let grn = Color(red: 44/255, green: 222/255, blue: 126/255)
     static let bg = Color(red: 35/255, green: 35/255, blue: 40/255)
