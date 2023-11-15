@@ -23,6 +23,7 @@
 		4C36C7732AF590E900876275 /* DatoDetalle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36C7722AF590E900876275 /* DatoDetalle.swift */; };
 		4C36C7752AF5AB6000876275 /* ComoTeSientes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */; };
 		4C36C7772AFC3ED900876275 /* UltimosDias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36C7762AFC3ED900876275 /* UltimosDias.swift */; };
+		4CCA40E32B02E7D500F954DF /* DetalleDia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA40E22B02E7D500F954DF /* DetalleDia.swift */; };
 		BB0C33252AF48C9400AD93F7 /* CrearCuenta1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */; };
 		BB0C33272AF594AA00AD93F7 /* CrearCuenta2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33262AF594AA00AD93F7 /* CrearCuenta2.swift */; };
 		BB0C33292AF59F4300AD93F7 /* AgregarAntecedente.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */; };
@@ -68,6 +69,7 @@
 		4C36C7722AF590E900876275 /* DatoDetalle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatoDetalle.swift; sourceTree = "<group>"; };
 		4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComoTeSientes.swift; sourceTree = "<group>"; };
 		4C36C7762AFC3ED900876275 /* UltimosDias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UltimosDias.swift; sourceTree = "<group>"; };
+		4CCA40E22B02E7D500F954DF /* DetalleDia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleDia.swift; sourceTree = "<group>"; };
 		BB0C33242AF48C9400AD93F7 /* CrearCuenta1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearCuenta1.swift; sourceTree = "<group>"; };
 		BB0C33262AF594AA00AD93F7 /* CrearCuenta2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrearCuenta2.swift; sourceTree = "<group>"; };
 		BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgregarAntecedente.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				4C3693682AF30B330026CC52 /* HPusuario.swift */,
 				4C3693662AF30B070026CC52 /* HPcalendario.swift */,
 				4C3693642AF30AF10026CC52 /* HPdatos.swift */,
+				4CCA40E22B02E7D500F954DF /* DetalleDia.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				4C36C7752AF5AB6000876275 /* ComoTeSientes.swift in Sources */,
 				4C36936B2AF436240026CC52 /* datos.swift in Sources */,
 				4C3693612AF309B30026CC52 /* Homepage.swift in Sources */,
+				4CCA40E32B02E7D500F954DF /* DetalleDia.swift in Sources */,
 				BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
