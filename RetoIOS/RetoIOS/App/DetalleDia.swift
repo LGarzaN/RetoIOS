@@ -28,7 +28,6 @@ struct DetalleDia: View {
                 .padding(.horizontal, 30)
                 .foregroundColor(Color("txt"))
                 .padding(.bottom, 1)
-            
             Text(dato.nota)
                 .multilineTextAlignment(.leading)
                 .foregroundColor(Color("gry"))

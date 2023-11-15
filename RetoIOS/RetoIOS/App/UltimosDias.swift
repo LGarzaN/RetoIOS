@@ -25,7 +25,6 @@ struct UltimosDias: View {
                 ScrollView(.vertical, showsIndicators: true) {
                     ForEach($registro){r in
                         NavigationLink{
-                            EmptyView()
                         } label: {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 10)

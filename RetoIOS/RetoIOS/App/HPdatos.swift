@@ -87,13 +87,14 @@ struct HPdatos: View {
                         ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
                     }
                     .padding()
-                    .alert("Hola", isPresented: $alrt) {
+                    .sheet(isPresented: $alrt) {
                         Picker("picker", selection: $selectedOption) {
                             ForEach(options, id: \.self){ opt in
                                 Text(opt)
                             }
                         }
-                        
+                        Text("Hola")
+                        .presentationDetents([.medium, .large])
                     }
                 }
             }
