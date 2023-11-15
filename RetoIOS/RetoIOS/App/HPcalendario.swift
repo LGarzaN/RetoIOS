@@ -47,7 +47,7 @@ struct HPcalendario: View {
                             mostrarDatos = true
                         }
                         .sheet(isPresented: $mostrarDatos){
-                            HPcalendariodatos()
+                            HPcalendariodatos(selectedDay: dia, selectedMonth: meses[mesElegido], selectedYear: year)
                         
                             Text(dia)
                                 .frame(width: 30, height: 30)
@@ -87,7 +87,7 @@ struct HPcalendario: View {
         var components = DateComponents()
         components.year = year
         components.month = mes
-        let date = calendar.date(from: components)!
+        _ = calendar.date(from: components)!
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"

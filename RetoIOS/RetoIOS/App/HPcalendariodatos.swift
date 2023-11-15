@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct HPcalendariodatos: View {
+    let selectedDay: String
+    let selectedMonth: String
+    let selectedYear: Int
+
     let data: [(date: Date, symptoms: String, registrationTime: String, averageOfDay: String)] = [
             (date: Date(), symptoms: "Dolor de cabeza", registrationTime: "10:30 AM", averageOfDay: "Bueno"),
             (date: Date().addingTimeInterval(86400), symptoms: "Fatiga", registrationTime: "02:45 PM", averageOfDay: "Moderado"),
@@ -34,7 +38,7 @@ struct HPcalendariodatos: View {
                         }
                     }
                 }
-                .navigationBarTitle(formattedDate(data[0].date), displayMode: .inline)
+                .navigationBarTitle("\(selectedDay) \(selectedMonth) \(String(format: "%04d", selectedYear))", displayMode: .inline)
             }
         }
 
@@ -55,6 +59,6 @@ struct HPcalendariodatos: View {
 
 struct HPcalendariodatos_Previews: PreviewProvider {
     static var previews: some View {
-        HPcalendariodatos()
+        HPcalendariodatos(selectedDay: "2", selectedMonth: "Enero", selectedYear: 2023)
     }
 }
