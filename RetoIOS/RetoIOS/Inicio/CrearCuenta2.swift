@@ -98,7 +98,7 @@ struct CrearCuenta2: View {
     }
     
     func postData(postData: Usuario) async {
-        guard let url = URL(string: "http://10.22.133.47:5000/agregausuario)") else {
+        guard let url = URL(string: "http://10.22.133.47:5000/agregausuario") else {
             print("Wrong URL")
             return
         }

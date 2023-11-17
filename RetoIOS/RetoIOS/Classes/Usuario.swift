@@ -12,8 +12,9 @@ class Usuario : Codable{
     var apellido : String
     var fechanac : String
     var correo : String
-    var contrasena : String
     var telefono : Int
+    var contrasena : String
+
     
     init(nombre: String, apellido: String, fecha: String, correo: String, contrasena: String, telefono: Int) {
         self.nombre = nombre
