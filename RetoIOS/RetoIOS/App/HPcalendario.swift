@@ -7,12 +7,14 @@ struct DiaCalendario: Identifiable {
 }
 
 struct HPcalendario: View {
+    @State var mostrarDatos = false
     let columnLayout = Array(repeating: GridItem(.flexible(minimum: 20, maximum: 100)), count: 7)
     let dias = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"]
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
     @State var mesElegido = Calendar.current.component(.month, from: Date()) - 1
     @State var year = Calendar.current.component(.year, from: Date())
+    @State var diaElegido = ""
 
     var body: some View {
         VStack {
@@ -23,6 +25,7 @@ struct HPcalendario: View {
             Rectangle()
                 .frame(height: 1)
                 .foregroundColor(.gray)
+                .padding()
 
             VStack {
                 Text("\(meses[mesElegido]) \(String(format: "%04d", year))")
@@ -41,15 +44,20 @@ struct HPcalendario: View {
                     }
 
                     ForEach(daysInMonth, id: \.self) { dia in
-                        Button(action: {
-                            // Maneja la acción cuando se hace clic en un día
-                        }) {
-                            Text(dia)
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(15)
+                        Button("\(dia)"){
+                            mostrarDatos = true
+                            diaElegido = dia
+                        }
+                        .sheet(isPresented: $mostrarDatos){
+                            HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
+                        
+                //            Text(dia)
+                  //              .frame(width: 30, height: 30)
+                    //            .cornerRadius(15)
                         }
                     }
                 }
+                .padding()
 
                 Picker("Selecciona un mes", selection: $mesElegido) {
                     ForEach(0..<12) { index in
@@ -81,7 +89,7 @@ struct HPcalendario: View {
         var components = DateComponents()
         components.year = year
         components.month = mes
-        let date = calendar.date(from: components)!
+        _ = calendar.date(from: components)!
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
