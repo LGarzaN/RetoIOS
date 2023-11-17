@@ -114,7 +114,9 @@ struct CrearCuenta2: View {
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
             
-            print(data)
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+            }
             create = true
         } catch {
             print("Check out failed: \(error.localizedDescription)")
