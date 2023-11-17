@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HPcalendariodatos: View {
-    let selectedDay: String
+    @State var selectedDay: String
     let selectedMonth: String
     let selectedYear: Int
 

@@ -14,6 +14,7 @@ struct HPcalendario: View {
 
     @State var mesElegido = Calendar.current.component(.month, from: Date()) - 1
     @State var year = Calendar.current.component(.year, from: Date())
+    @State var diaElegido = ""
 
     var body: some View {
         VStack {
@@ -45,13 +46,14 @@ struct HPcalendario: View {
                     ForEach(daysInMonth, id: \.self) { dia in
                         Button("\(dia)"){
                             mostrarDatos = true
+                            diaElegido = dia
                         }
                         .sheet(isPresented: $mostrarDatos){
-                            HPcalendariodatos(selectedDay: dia, selectedMonth: meses[mesElegido], selectedYear: year)
+                            HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
                         
-                            Text(dia)
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(15)
+                //            Text(dia)
+                  //              .frame(width: 30, height: 30)
+                    //            .cornerRadius(15)
                         }
                     }
                 }
