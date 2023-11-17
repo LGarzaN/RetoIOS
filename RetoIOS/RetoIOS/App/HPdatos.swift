@@ -17,7 +17,7 @@ struct HPdatos: View {
         DatoSeguir(id: 3, nombreDato: "Congestion", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
         DatoSeguir(id: 4, nombreDato: "Dolor uña enterrada", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356)
     ]
-    let options = ["Option 1", "Option 2", "Option 3"]
+    let options = ["Tos", "Dolor de Cabeza", "Otro"]
     @State private var selectedOption = 0
     var body: some View {
         NavigationStack{
