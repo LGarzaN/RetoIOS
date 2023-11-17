@@ -5,6 +5,7 @@
 //  Created by Juan Lebrija on 11/3/23.
 //
 import SwiftUI
+import CryptoKit
 
 
 struct CrearCuenta2: View {
@@ -12,6 +13,7 @@ struct CrearCuenta2: View {
     @State var peso = ""
     @State var estatura = ""
     @State var create = false
+    var user = Usuario(nombre: "Saul", apellido: "Vazquez", fecha: "hoy", correo: "saul@gmail.com", contrasena: "", telefono: 12345678)
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
     
@@ -65,7 +67,11 @@ struct CrearCuenta2: View {
                     .navigationTitle("Cuenta")
                 }
                 Button {
-                    create = true
+                    user.contrasena = hashPassword(user.contrasena)
+                    Task{
+                        await postData(postData: user)
+                    }
+                    
                 } label: {
                     ButtonFill(contentTxt: "Crear Cuenta", c: .purp)//85
                 }
@@ -82,6 +88,39 @@ struct CrearCuenta2: View {
     func deleteArticle(at offsets:IndexSet){
         listaAntecedentes.antecedentes.remove(atOffsets: offsets)
     }//func close
+    
+    func hashPassword(_ password: String) -> String {
+        if let data = password.data(using: .utf8) {
+            let hashed = SHA256.hash(data: data)
+            return hashed.compactMap { String(format: "%02x", $0) }.joined()
+        }
+        return ""
+    }
+    
+    func postData(postData: Usuario) async {
+        guard let url = URL(string: "http://10.22.133.47:5000/agregausuario)") else {
+            print("Wrong URL")
+            return
+        }
+        
+        guard let encoded = try? JSONEncoder().encode(postData) else {
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            
+            print(data)
+            create = true
+        } catch {
+            print("Check out failed: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 struct CrearCuenta2_Previews: PreviewProvider {
