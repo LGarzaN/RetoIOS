@@ -13,7 +13,9 @@ struct HPusuario: View {
     @State var correo = "a01721659@tec.mx"
     @State var Num_tel_Usuario = "81 23 45 67 89"
     @State var Doctor = ""
+    @State var logOut = false
     @State var Num_tel_Doctor = ""
+    @AppStorage("usu") var usu = 0
     var opciones = ["Sintomas" , "Calendario", "Usuario"]
     var body: some View {
         NavigationStack{
@@ -127,6 +129,16 @@ struct HPusuario: View {
                     }
                     .navigationTitle("Usuario")
                     .scrollDisabled(true)
+                    Button{
+                        usu = 0
+                        logOut = true
+                    } label: {
+                        Text("Cerrar Sesión")
+                    }
+                    .fullScreenCover(isPresented : $logOut) {
+                        ContentView()
+                    }
+                    
                     Image("Logo")
                         .resizable()
                         .frame(width: 200, height: 110)

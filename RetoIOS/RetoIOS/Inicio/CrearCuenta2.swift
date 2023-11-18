@@ -13,7 +13,7 @@ struct CrearCuenta2: View {
     @State var peso = ""
     @State var estatura = ""
     @State var create = false
-    var user = Usuario(nombre: "Saul", apellido: "Vazquez", fecha: "hoy", correo: "saul@gmail.com", contrasena: "", telefono: 12345678)
+    var user = Usuario(nombre: "Saul", apellido: "Vazquez", fecha: "2002-10-10", correo: "saul@gmail.com", contrasena: "", telefono: 12345678)
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
     

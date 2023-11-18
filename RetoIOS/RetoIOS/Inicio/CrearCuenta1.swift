@@ -12,6 +12,12 @@ struct CrearCuenta1: View {
     @State var lName = ""
     @State var email = ""
     @State var cellNum = ""
+    @State var pswd1 = ""
+    @State var pswd2 = ""
+    @State var errorMsg = ""
+    @State var error = false
+    @State var next = false
+    @State var user = Usuario(nombre: "", apellido: "", fecha: "", correo: "", contrasena: "", telefono: 0)
     var body: some View {
         NavigationStack{
             ZStack{
@@ -35,7 +41,7 @@ struct CrearCuenta1: View {
                         Section{
                             //Correo Electronico
                             HStack{
-                                TextField("correo",text: $fName)
+                                TextField("correo",text: $email)
                             }
                             //Num Celular
                             HStack{
@@ -48,11 +54,11 @@ struct CrearCuenta1: View {
                         Section{
                             //Contraseña
                             HStack{
-                                TextField("contraseña",text: $fName)
+                                TextField("contraseña",text: $pswd1)
                             }
                             //Confirmar Contraseña
                             HStack{
-                                TextField("confirmar contraseña",text: $cellNum)
+                                TextField("confirmar contraseña",text: $pswd2)
                             }
                         }
                         header : {
@@ -60,11 +66,33 @@ struct CrearCuenta1: View {
                         }
                     }
                     .navigationTitle("Cuenta")
-                    NavigationLink{
-                        CrearCuenta2()
+                    Button {
+                        if (fName != "" && lName != "" && email != "" && cellNum != ""){
+                            if (pswd1 == pswd2){
+                                user.correo = email
+                                user.contrasena = pswd1
+                                user.nombre = fName
+                                user.apellido = lName
+                                next = true
+                            }
+                            else {
+                                errorMsg = "Las contraseñas no coinciden"
+                                error = true
+                            }
+                        }
+                        else {
+                            errorMsg = "Llene todos los campos"
+                            error = true
+                        }
                     } label: {
                         ButtonBlank(contentTxt: "  Siguiente        ", c: .purp)
                     }
+                    .fullScreenCover(isPresented : $next) {
+                        CrearCuenta2()
+                    }
+                    .alert(errorMsg, isPresented: $error) {
+                    }
+                    
                     Text("J C S L")
                         .bold()
                         .padding(.top,0.5)
