@@ -26,7 +26,7 @@ struct DatoDetalle: View {
                 Color("basic")
                    .ignoresSafeArea()
                 VStack{
-                    Text(dato.nombreDato)
+                    Text(dato.SeguirNombre)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 20.0)
@@ -75,7 +75,7 @@ struct DatoDetalle: View {
 
 struct DatoDetalle_Previews: PreviewProvider {
     static var previews: some View {
-        DatoDetalle(dato: DatoSeguir(id: 0, nombreDato: "Dato", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 0))
+        DatoDetalle(dato: DatoSeguir(idSintomaSeguir: 0, SeguirNombre: "Dato", SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: 0, Paciente_idPaciente: 0))
     }
 }
 

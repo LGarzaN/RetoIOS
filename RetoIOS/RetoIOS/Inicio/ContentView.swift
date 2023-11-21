@@ -22,6 +22,7 @@ struct ContentView: View {
     @State var alrta = false
     @State var alrtaMsg = ""
     @State var pass = DataModel(contrasena: "hi", idUsuario: 1)
+    @AppStorage("usu") var usu = 0
     var body: some View {
         NavigationStack{
             ZStack{
@@ -58,6 +59,7 @@ struct ContentView: View {
                             await loadData(correo: email)
                         }
                         if (hashPassword(password) == pass.contrasena){
+                            usu = pass.idUsuario
                             enter = true
                         }
                         else {
@@ -99,7 +101,7 @@ struct ContentView: View {
     }
     
     func loadData(correo:String) async {
-        guard let url = URL(string: "http://10.22.133.47:5000/usuario/"+correo) else {
+        guard let url = URL(string: "http://10.22.140.168:5000/usuario/"+correo) else {
             print("Wrong URL")
             return
         }

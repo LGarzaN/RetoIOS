@@ -8,10 +8,13 @@ import SwiftUI
 
 
 struct CrearCuenta1: View {
-    @State var fName = ""
-    @State var lName = ""
-    @State var email = ""
     @State var cellNum = ""
+    @State var pswd1 = ""
+    @State var pswd2 = ""
+    @State var errorMsg = ""
+    @State var error = false
+    @State var next = false
+    @State var user = Usuario(nombre: "", apellido: "", fecha: "", correo: "", contrasena: "", telefono: 0)
     var body: some View {
         NavigationStack{
             ZStack{
@@ -22,11 +25,11 @@ struct CrearCuenta1: View {
                         Section{
                             //Nombre
                             HStack{
-                                TextField("nombre",text: $fName)
+                                TextField("nombre",text: $user.nombre)
                             }
                             //Apellido
                             HStack{
-                                TextField("apellido",text: $lName)
+                                TextField("apellido",text: $user.apellido)
                             }
                         }
                         header : {
@@ -35,7 +38,8 @@ struct CrearCuenta1: View {
                         Section{
                             //Correo Electronico
                             HStack{
-                                TextField("correo",text: $fName)
+                                TextField("correo",text: $user.correo)
+                                    .autocapitalization(.none)
                             }
                             //Num Celular
                             HStack{
@@ -48,11 +52,13 @@ struct CrearCuenta1: View {
                         Section{
                             //Contraseña
                             HStack{
-                                TextField("contraseña",text: $fName)
+                                TextField("contraseña",text: $pswd1)
+                                    .autocapitalization(.none)
                             }
                             //Confirmar Contraseña
                             HStack{
-                                TextField("confirmar contraseña",text: $cellNum)
+                                TextField("confirmar contraseña",text: $pswd2)
+                                    .autocapitalization(.none)
                             }
                         }
                         header : {
@@ -60,11 +66,36 @@ struct CrearCuenta1: View {
                         }
                     }
                     .navigationTitle("Cuenta")
-                    NavigationLink{
-                        CrearCuenta2()
+                    Button {
+                        if (user.nombre != "" && user.apellido != "" && user.correo != "" && cellNum != "" && pswd1 != ""){
+                            if let psw = Int(cellNum){
+                                user.telefono = psw
+                            } else {
+                                errorMsg = "Ingrese un telefono válido"
+                                error = true
+                            }
+                            
+                            if (pswd1 == pswd2){
+                                next = true
+                                user.contrasena = pswd1
+                            } else {
+                                errorMsg = "Las contraseñas no coinciden"
+                                error = true
+                            }
+                        }
+                        else {
+                            errorMsg = "Llene todos los campos"
+                            error = true
+                        }
                     } label: {
                         ButtonBlank(contentTxt: "  Siguiente        ", c: .purp)
                     }
+                    .fullScreenCover(isPresented : $next) {
+                        CrearCuenta2(user: $user)
+                    }
+                    .alert(errorMsg, isPresented: $error) {
+                    }
+                    
                     Text("J C S L")
                         .bold()
                         .padding(.top,0.5)

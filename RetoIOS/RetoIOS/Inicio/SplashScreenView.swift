@@ -12,9 +12,15 @@ struct SplashScreenView: View {
     @State private var isActive = false
     @State private var size = 0.8
     @State private var opacity = 0.5
+    @AppStorage("usu") var usu = 0
     var body: some View {
         if isActive{
-            ContentView()
+            if (usu != 0){
+                Homepage()
+            }
+            else {
+                ContentView()
+            }
         }else{
             ZStack{
                 Color("basic")

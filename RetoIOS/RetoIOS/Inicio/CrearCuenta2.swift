@@ -13,9 +13,16 @@ struct CrearCuenta2: View {
     @State var peso = ""
     @State var estatura = ""
     @State var create = false
-    var user = Usuario(nombre: "Saul", apellido: "Vazquez", fecha: "hoy", correo: "saul@gmail.com", contrasena: "", telefono: 12345678)
+    @Binding var user : Usuario
+    @AppStorage("usu") var usu = 0
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
     
     @State var tryAddArticle = false
     var body: some View {
@@ -68,6 +75,7 @@ struct CrearCuenta2: View {
                 }
                 Button {
                     user.contrasena = hashPassword(user.contrasena)
+                    user.fechanac = formatDate(FechaNac)
                     Task{
                         await postData(postData: user)
                     }
@@ -76,7 +84,7 @@ struct CrearCuenta2: View {
                     ButtonFill(contentTxt: "Crear Cuenta", c: .purp)//85
                 }
                 .fullScreenCover(isPresented : $create) {
-                    Homepage()
+                    ContentView()
                 }
                 Text("J C S L")
                     .bold()
@@ -97,8 +105,12 @@ struct CrearCuenta2: View {
         return ""
     }
     
+    func formatDate(_ date: Date) -> String {
+        return dateFormatter.string(from: date)
+    }
+    
     func postData(postData: Usuario) async {
-        guard let url = URL(string: "http://10.22.133.47:5000/agregausuario") else {
+        guard let url = URL(string: "http://10.0.0.26:5000/agregausuario") else {
             print("Wrong URL")
             return
         }
@@ -114,7 +126,9 @@ struct CrearCuenta2: View {
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
             
-            print(data)
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+            }
             create = true
         } catch {
             print("Check out failed: \(error.localizedDescription)")
@@ -125,7 +139,7 @@ struct CrearCuenta2: View {
 
 struct CrearCuenta2_Previews: PreviewProvider {
     static var previews: some View {
-        CrearCuenta2()
+        CrearCuenta2(user: .constant(Usuario(nombre: "", apellido: "", fecha: "", correo: "", contrasena: "", telefono: 0)))
     }
 }
 
