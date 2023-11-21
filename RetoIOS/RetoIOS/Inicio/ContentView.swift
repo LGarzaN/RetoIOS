@@ -101,7 +101,7 @@ struct ContentView: View {
     }
     
     func loadData(correo:String) async {
-        guard let url = URL(string: "http://10.0.0.26:5000/usuario/"+correo) else {
+        guard let url = URL(string: "http://10.22.140.168:5000/usuario/"+correo) else {
             print("Wrong URL")
             return
         }

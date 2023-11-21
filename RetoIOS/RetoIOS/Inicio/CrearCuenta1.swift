@@ -39,6 +39,7 @@ struct CrearCuenta1: View {
                             //Correo Electronico
                             HStack{
                                 TextField("correo",text: $user.correo)
+                                    .autocapitalization(.none)
                             }
                             //Num Celular
                             HStack{
@@ -52,10 +53,12 @@ struct CrearCuenta1: View {
                             //Contraseña
                             HStack{
                                 TextField("contraseña",text: $pswd1)
+                                    .autocapitalization(.none)
                             }
                             //Confirmar Contraseña
                             HStack{
                                 TextField("confirmar contraseña",text: $pswd2)
+                                    .autocapitalization(.none)
                             }
                         }
                         header : {
@@ -74,6 +77,7 @@ struct CrearCuenta1: View {
                             
                             if (pswd1 == pswd2){
                                 next = true
+                                user.contrasena = pswd1
                             } else {
                                 errorMsg = "Las contraseñas no coinciden"
                                 error = true

@@ -10,15 +10,17 @@ import Charts
 
 struct HPdatos: View {
     @State var alrt = false
+    @State var tip = 0
     var datos = [
-        DatoSeguir(id: 0, nombreDato: "Tos", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
-        DatoSeguir(id: 1, nombreDato: "Dolor de Cabeza", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
-        DatoSeguir(id: 2, nombreDato: "Resequedad", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
-        DatoSeguir(id: 3, nombreDato: "Congestion", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356),
-        DatoSeguir(id: 4, nombreDato: "Dolor uña enterrada", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 356)
+        DatoSeguir(idSintomaSeguir: 0, SeguirNombre: "Tos", SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: 0, Paciente_idPaciente: 0),
+        DatoSeguir(idSintomaSeguir: 1, SeguirNombre: "Tos", SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: 0, Paciente_idPaciente: 0)
     ]
     let options = ["Tos", "Dolor de Cabeza", "Otro"]
-    @State private var selectedOption = 0
+    let tipoOpciones = ["Cualitativo", "Cuantitativo"]
+    @State var tipo = ""
+    @State var datoExtra = ""
+    @State private var selectedOption = ""
+    @AppStorage("usu") var usu = 0
     var body: some View {
         NavigationStack{
             ZStack{
@@ -26,7 +28,7 @@ struct HPdatos: View {
                     .ignoresSafeArea()
                 VStack{
                     Form{
-                        ForEach(datos) { d in
+                        ForEach(datos, id: \.self.idSintomaSeguir) { d in
                             Section{
                                 NavigationLink {
                                     DatoDetalle(dato: d)
@@ -34,12 +36,11 @@ struct HPdatos: View {
                                     HStack{
                                         VStack(alignment: .leading){
                                             Text("Dato")
-                                            Text(d.nombreDato)
+                                            Text(d.SeguirNombre)
                                                 .foregroundColor(.secondary)
                                                 .padding(.bottom, 5)
                                             Text("Ultimo Registro")
-                                            Text("\(d.ultimoRegistro.formatted())")
-                                                .foregroundColor(.secondary)
+                                            Text(d.UltimoRegistro)
                                         }
                                         .padding(.trailing, 10)
                                         Chart{
@@ -63,18 +64,78 @@ struct HPdatos: View {
                     }
                     .padding()
                     .sheet(isPresented: $alrt) {
-                        Picker("picker", selection: $selectedOption) {
-                            ForEach(options, id: \.self){ opt in
-                                Text(opt)
+                        VStack{
+                            Picker("picker", selection: $selectedOption) {
+                                ForEach(options, id: \.self){ opt in
+                                    Text(opt)
+                                }
+                            }
+                            if (selectedOption == "Otro"){
+                                TextField("Dato a seguir", text: $datoExtra)
+                                    .textFieldStyle(.roundedBorder)
+                                    .padding()
+                                Picker("picker", selection: $tipo) {
+                                    ForEach(tipoOpciones, id: \.self){ opt in
+                                        Text(opt)
+                                    }
+                                }
+                            }
+                            Button{
+                                if (selectedOption == "Otro"){
+                                    selectedOption = datoExtra
+                                }
+                                
+                                if (tipo == "Cualitativo"){
+                                    tip = 0
+                                } else {
+                                    tip = 1
+                                }
+                                
+                                let datoS = DatoSeguir(idSintomaSeguir: 0, SeguirNombre: selectedOption, SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: tip, Paciente_idPaciente: usu)
+                                datoS.formatDate(Date())
+                                
+                                Task{
+                                    await postData(postData: datoS)
+                                }
+                                alrt = false
+                                
+                            } label: {
+                                Text("Agregar")
                             }
                         }
-                        Text("Hola")
                         .presentationDetents([.medium, .large])
                     }
                 }
             }
         }
     }
+    
+    func postData(postData: DatoSeguir) async {
+        guard let url = URL(string: "http://10.22.140.168:5000/agregadatoseguir") else {
+            print("Wrong URL")
+            return
+        }
+        
+        guard let encoded = try? JSONEncoder().encode(postData) else {
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+            }
+        } catch {
+            print("Check out failed: \(error.localizedDescription)")
+        }
+    }
+    
+    
 }
 
 struct HPdatos_Previews: PreviewProvider {

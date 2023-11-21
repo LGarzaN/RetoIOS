@@ -65,7 +65,7 @@ struct UltimosDias: View {
                         DetalleDia(dato: regis)
                             .presentationDetents([.medium, .large])
                     }
-                    .navigationBarTitle(dato.nombreDato)
+                    .navigationBarTitle(dato.SeguirNombre)
                 }
             }
             .background(Color("basic"))
@@ -86,6 +86,6 @@ struct UltimosDias: View {
 
 struct UltimosDias_Previews: PreviewProvider {
     static var previews: some View {
-        UltimosDias(dato: DatoSeguir(id: 0, nombreDato: "Dato", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 0))
+        UltimosDias(dato: DatoSeguir(idSintomaSeguir: 0, SeguirNombre: "Dato", SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: 0, Paciente_idPaciente: 0))
     }
 }

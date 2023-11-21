@@ -18,6 +18,12 @@ struct CrearCuenta2: View {
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
     
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
+    
     @State var tryAddArticle = false
     var body: some View {
         ZStack{
@@ -69,6 +75,7 @@ struct CrearCuenta2: View {
                 }
                 Button {
                     user.contrasena = hashPassword(user.contrasena)
+                    user.fechanac = formatDate(FechaNac)
                     Task{
                         await postData(postData: user)
                     }
@@ -96,6 +103,10 @@ struct CrearCuenta2: View {
             return hashed.compactMap { String(format: "%02x", $0) }.joined()
         }
         return ""
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        return dateFormatter.string(from: date)
     }
     
     func postData(postData: Usuario) async {
