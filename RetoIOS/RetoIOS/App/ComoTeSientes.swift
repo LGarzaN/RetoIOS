@@ -12,6 +12,8 @@ struct ComoTeSientes: View {
     @State var accent : Color = .black
     @State var nota : String = ""
     @State var fecha : Date = Date()
+    @State var alerta = false
+    @State var cont = ""
     var body: some View {
         VStack{
             Text("¿Cómo te sientes hoy?")
@@ -38,11 +40,23 @@ struct ComoTeSientes: View {
                 }
             }
             Button {
-                //code
+                if(intensidad == 0){
+                    alerta = true
+                    cont = "No modificó la intensidad ¿Desea Continuar?"
+                }
+                
+                else if (nota == ""){
+                    alerta = true
+                    cont = "No agregó una nota, ¿Desea Continuar?"
+                }
             } label: {
                 ButtonBlank(contentTxt: "   Guardar      ", c: .purp)
             }
             .padding()
+            .alert(cont, isPresented: $alerta) {
+                Button("Regresar", role: .cancel) {}
+                Button("Continuar") {}
+            }
         }
         .background(Color("basic"))
     }

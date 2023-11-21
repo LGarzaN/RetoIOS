@@ -13,7 +13,8 @@ struct CrearCuenta2: View {
     @State var peso = ""
     @State var estatura = ""
     @State var create = false
-    var user = Usuario(nombre: "Saul", apellido: "Vazquez", fecha: "2002-10-10", correo: "saul@gmail.com", contrasena: "", telefono: 12345678)
+    @Binding var user : Usuario
+    @AppStorage("usu") var usu = 0
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
     
@@ -76,7 +77,7 @@ struct CrearCuenta2: View {
                     ButtonFill(contentTxt: "Crear Cuenta", c: .purp)//85
                 }
                 .fullScreenCover(isPresented : $create) {
-                    Homepage()
+                    ContentView()
                 }
                 Text("J C S L")
                     .bold()
@@ -98,7 +99,7 @@ struct CrearCuenta2: View {
     }
     
     func postData(postData: Usuario) async {
-        guard let url = URL(string: "http://10.22.133.47:5000/agregausuario") else {
+        guard let url = URL(string: "http://10.0.0.26:5000/agregausuario") else {
             print("Wrong URL")
             return
         }
@@ -127,7 +128,7 @@ struct CrearCuenta2: View {
 
 struct CrearCuenta2_Previews: PreviewProvider {
     static var previews: some View {
-        CrearCuenta2()
+        CrearCuenta2(user: .constant(Usuario(nombre: "", apellido: "", fecha: "", correo: "", contrasena: "", telefono: 0)))
     }
 }
 

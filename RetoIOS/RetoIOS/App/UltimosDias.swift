@@ -14,7 +14,7 @@ struct UltimosDias: View {
     @State private var regis: registroDatos = registroDatos(id: 1, nombre: "dato2", fecha: Date(), intensidad: 0.7, nota: "")
     @State private var isDetailPresented = false
     @State var registro = [
-        registroDatos(id: 0, nombre: "dato1", fecha: Date(), intensidad: 0.5, nota: "El dia de ayer me estuvo doliendo la panza todo el dia y tenia ganas de vomitar"),
+        registroDatos(id: 0, nombre: "dato1", fecha: Date(), intensidad: 0.5, nota: "Tengo mas tos por las tardes"),
         registroDatos(id: 1, nombre: "dato2", fecha: Date(), intensidad: 0.7, nota: "hola"),
         registroDatos(id: 2, nombre: "dato3", fecha: Date(), intensidad: 0.2, nota: ""),
         registroDatos(id: 3, nombre: "dato4", fecha: Date(), intensidad: 0.6, nota: "")

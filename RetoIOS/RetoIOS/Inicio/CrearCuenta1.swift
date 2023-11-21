@@ -8,9 +8,6 @@ import SwiftUI
 
 
 struct CrearCuenta1: View {
-    @State var fName = ""
-    @State var lName = ""
-    @State var email = ""
     @State var cellNum = ""
     @State var pswd1 = ""
     @State var pswd2 = ""
@@ -28,11 +25,11 @@ struct CrearCuenta1: View {
                         Section{
                             //Nombre
                             HStack{
-                                TextField("nombre",text: $fName)
+                                TextField("nombre",text: $user.nombre)
                             }
                             //Apellido
                             HStack{
-                                TextField("apellido",text: $lName)
+                                TextField("apellido",text: $user.apellido)
                             }
                         }
                         header : {
@@ -41,7 +38,7 @@ struct CrearCuenta1: View {
                         Section{
                             //Correo Electronico
                             HStack{
-                                TextField("correo",text: $email)
+                                TextField("correo",text: $user.correo)
                             }
                             //Num Celular
                             HStack{
@@ -67,15 +64,17 @@ struct CrearCuenta1: View {
                     }
                     .navigationTitle("Cuenta")
                     Button {
-                        if (fName != "" && lName != "" && email != "" && cellNum != ""){
-                            if (pswd1 == pswd2){
-                                user.correo = email
-                                user.contrasena = pswd1
-                                user.nombre = fName
-                                user.apellido = lName
-                                next = true
+                        if (user.nombre != "" && user.apellido != "" && user.correo != "" && cellNum != "" && pswd1 != ""){
+                            if let psw = Int(cellNum){
+                                user.telefono = psw
+                            } else {
+                                errorMsg = "Ingrese un telefono válido"
+                                error = true
                             }
-                            else {
+                            
+                            if (pswd1 == pswd2){
+                                next = true
+                            } else {
                                 errorMsg = "Las contraseñas no coinciden"
                                 error = true
                             }
@@ -88,7 +87,7 @@ struct CrearCuenta1: View {
                         ButtonBlank(contentTxt: "  Siguiente        ", c: .purp)
                     }
                     .fullScreenCover(isPresented : $next) {
-                        CrearCuenta2()
+                        CrearCuenta2(user: $user)
                     }
                     .alert(errorMsg, isPresented: $error) {
                     }
