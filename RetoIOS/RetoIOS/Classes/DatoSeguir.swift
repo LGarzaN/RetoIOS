@@ -9,7 +9,7 @@ import Foundation
 
 
 class DatoSeguir : Identifiable, Codable{
-    var Paciente_idPaciente: Int
+    var Usuario_idUsuario: Int
     var SeguirFechaFinal: String
     var SeguirFechaInicial: String
     var SeguirNombre: String
@@ -17,8 +17,8 @@ class DatoSeguir : Identifiable, Codable{
     var UltimoRegistro: String
     var idSintomasSeguir: Int
     
-    init(Paciente_idPaciente: Int, SeguirFechaFinal: String, SeguirFechaInicial: String, SeguirNombre: String, SeguirTipo: Int, UltimoRegistro: String, idSintomasSeguir: Int) {
-        self.Paciente_idPaciente = Paciente_idPaciente
+    init(Usuario_idUsuario: Int, SeguirFechaFinal: String, SeguirFechaInicial: String, SeguirNombre: String, SeguirTipo: Int, UltimoRegistro: String, idSintomasSeguir: Int) {
+        self.Usuario_idUsuario = Usuario_idUsuario
         self.SeguirFechaFinal = SeguirFechaFinal
         self.SeguirFechaInicial = SeguirFechaInicial
         self.SeguirNombre = SeguirNombre

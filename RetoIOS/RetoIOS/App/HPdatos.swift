@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct HPdatos: View {
-    let dbLink = "http://10.22.140.168:5000"
+    let dbLink = "http://10.22.129.138:5000"
     @State var alrt = false
     @State var tip = 0
     @State var datosList = [DatoSeguir]()
@@ -33,12 +33,14 @@ struct HPdatos: View {
                                 } label:{
                                     HStack{
                                         VStack(alignment: .leading){
-                                            Text("Dato")
+                                            //Text("Dato")
                                             Text(d.SeguirNombre)
                                                 .foregroundColor(.secondary)
                                                 .padding(.bottom, 5)
                                             Text("Ultimo Registro")
                                             Text(d.UltimoRegistro)
+                                                .foregroundColor(.secondary)
+
                                         }
                                         .padding(.trailing, 10)
                                         Chart{
@@ -55,11 +57,20 @@ struct HPdatos: View {
                         }
                     }
                     .navigationTitle("Seguimiento")
-                    Button {
-                        alrt = true
-                    } label: {
-                        ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
+                    /*
+                    .toolbar{
+                        Button{
+                            alrt = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
+                     */
+                     Button {
+                         alrt = true
+                     } label: {
+                         ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
+                     }
                     .padding()
                     .sheet(isPresented: $alrt) {
                         VStack{
@@ -87,7 +98,7 @@ struct HPdatos: View {
                                 } else {
                                     tip = 1
                                 }
-                                let datoS = DatoSeguir(Paciente_idPaciente: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0)
+                                let datoS = DatoSeguir(Usuario_idUsuario: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0)
                                 datoS.formatDate(Date())
                                 
                                 Task{

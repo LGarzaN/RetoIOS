@@ -16,6 +16,7 @@ struct DataModel : Codable{
 }
 
 struct ContentView: View {
+    let dbLink = "http://10.22.129.138:5000"
     @State var email = ""
     @State var password = ""
     @State var enter = false
@@ -31,7 +32,7 @@ struct ContentView: View {
                 VStack{
                     Image("Logo")
                         .resizable()
-                        .frame(width: 200, height: 110)
+                        .frame(width: 110, height: 110)
                         .padding(.top, 50)
                     Form{
                         Section{
@@ -54,9 +55,10 @@ struct ContentView: View {
                         }
                     }
                     .scrollDisabled(true)
+                    .frame(height: 200)
                     Button {
                         Task{
-                            await loadData(correo: email)
+                            await loadData(link: dbLink,correo: email)
                         }
                         if (hashPassword(password) == pass.contrasena){
                             usu = pass.idUsuario
@@ -97,8 +99,8 @@ struct ContentView: View {
         return ""
     }
     
-    func loadData(correo:String) async {
-        guard let url = URL(string: "http://10.22.140.168:5000/usuario/"+correo) else {
+    func loadData(link : String, correo:String) async {
+        guard let url = URL(string: link+"/usuario/"+correo) else {
             print("Wrong URL")
             return
         }

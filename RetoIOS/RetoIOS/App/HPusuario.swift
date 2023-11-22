@@ -14,7 +14,10 @@ struct HPusuario: View {
     @State var Num_tel_Usuario = "81 23 45 67 89"
     @State var Doctor = ""
     @State var logOut = false
+    @State var checkLogOut = false
     @State var Num_tel_Doctor = ""
+    @State var peso = 1.1
+    @State var estatura = 2.2
     @AppStorage("usu") var usu = 0
     var opciones = ["Sintomas" , "Calendario", "Usuario"]
     var body: some View {
@@ -75,6 +78,7 @@ struct HPusuario: View {
                         }
                         
                         Section{
+                            //correo
                             HStack{
                                 NavigationLink{
                                     Form{
@@ -90,6 +94,7 @@ struct HPusuario: View {
                                     Text("Correo")
                                 }
                             }
+                            //cel
                             HStack{
                                 NavigationLink{
                                     Form{
@@ -110,12 +115,86 @@ struct HPusuario: View {
                             Text("Datos del contacto")
                         }
                         Section{
+                            //peso
+                            HStack{
+                                NavigationLink{
+                                    Form{
+                                        Section{
+                                            HStack{
+                                                TextField("Peso", text: Binding(get: {
+                                                                            "\(peso)"
+                                                                        }, set: { newValue in
+                                                                            if let value = Double(newValue) {
+                                                                                peso = value
+                                                                            }
+                                                                        }))
+                                                    .keyboardType(.decimalPad)
+                                            }
+                                        }
+                                    }
+                                    .navigationTitle("Nombre")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                }label:{
+                                    HStack{
+                                        Text("Peso")
+                                        TextField("Peso", text: Binding(get: {"\(peso)"
+                                                                }, set: { newValue in
+                                                                    if let value = Double(newValue) {
+                                                                        peso = value
+                                                                    }
+                                                                }))
+                                            .multilineTextAlignment(.trailing)
+                                            .disabled(true)
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                            //estatura
+                            HStack{
+                                NavigationLink{
+                                    Form{
+                                        Section{
+                                            HStack{
+                                                TextField("Estatura", text: Binding(get: {
+                                                                            "\(estatura)"
+                                                                        }, set: { newValue in
+                                                                            if let value = Double(newValue) {
+                                                                                estatura = value
+                                                                            }
+                                                                        }))
+                                                    .keyboardType(.decimalPad)
+                                            }
+                                        }
+                                    }
+                                    .navigationTitle("Nombre")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                }label:{
+                                    HStack{
+                                        Text("Estatura")
+                                        TextField("Estatura", text: Binding(get: {"\(estatura)"
+                                                                }, set: { newValue in
+                                                                    if let value = Double(newValue) {
+                                                                        estatura = value
+                                                                    }
+                                                                }))
+                                            .multilineTextAlignment(.trailing)
+                                            .disabled(true)
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                        }header : {
+                            Text("Datos Generales")
+                        }
+                        Section{
+                            //dr nombre
                             HStack{
                                 Text("Dr")
                                 TextField("Dr bueno bueno", text: $Doctor)
                                     .disabled(true)
                                     .multilineTextAlignment(.trailing)
                             }
+                            //dr num
                             HStack{
                                 Text("Num Cel.")
                                 TextField("81 23 45 67 89", text: $Num_tel_Doctor)
@@ -125,24 +204,28 @@ struct HPusuario: View {
                         }header: {
                             Text("Datos del Doctor")
                         }
-                        
+                        Section{
+                            HStack{
+                                Button{
+                                    checkLogOut = true
+                                } label: {
+                                    Text("Cerrar Sesión")
+                                        .foregroundColor(.purp)
+                                }
+                            }
+                        }
                     }
                     .navigationTitle("Usuario")
-                    .scrollDisabled(true)
-                    Button{
-                        usu = 0
-                        logOut = true
-                    } label: {
-                        Text("Cerrar Sesión")
-                    }
                     .fullScreenCover(isPresented : $logOut) {
                         ContentView()
                     }
-                    
-                    Image("Logo")
-                        .resizable()
-                        .frame(width: 200, height: 110)
-                        .padding(.bottom, 60)
+                    .alert("¿Está seguro que desea Cerrar Sesión?", isPresented: $checkLogOut) {
+                        Button("Cancelar", role: .cancel) {}
+                        Button("Cerrar Sesión", role: .destructive) {
+                            usu = 0
+                            logOut = true
+                        }
+                    }
                 }
             }
         }
@@ -154,3 +237,21 @@ struct HPusuario_Previews: PreviewProvider {
         HPusuario()
     }
 }
+/*
+ .alert("¿Está seguro que desea eliminar este dato?", isPresented: $alrt) {
+     Button("Cancelar", role: .cancel) {}
+     Button("Eliminar", role: .destructive) {}
+ }
+ 
+ Section{
+     HStack{
+         Button{
+             usu = 0
+             logOut = true
+         } label: {
+             Text("Cerrar Sesión")
+                 .foregroundColor(.purp)
+         }
+     }
+ }
+ */

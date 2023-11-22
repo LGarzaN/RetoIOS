@@ -9,6 +9,7 @@ import CryptoKit
 
 
 struct CrearCuenta2: View {
+    let dbLink = "http://10.22.129.138:5000"
     @State var FechaNac = Date()
     @State var peso = ""
     @State var estatura = ""
@@ -37,7 +38,6 @@ struct CrearCuenta2: View {
                             }
                             //Peso
                             HStack{
-                                Text("Peso")
                                 TextField("peso",text: $peso)
                             }
                             //Estatura
@@ -46,7 +46,7 @@ struct CrearCuenta2: View {
                             }
                         }
                         header : {
-                            Text("Datos")
+                            Text("Datos Generales")
                         }
                         Section{
                             ForEach(listaAntecedentes.antecedentes){ ant in
@@ -77,7 +77,7 @@ struct CrearCuenta2: View {
                     user.contrasena = hashPassword(user.contrasena)
                     user.fechanac = formatDate(FechaNac)
                     Task{
-                        await postData(postData: user)
+                        await postData(link: dbLink, postData: user)
                     }
                     
                 } label: {
@@ -109,8 +109,8 @@ struct CrearCuenta2: View {
         return dateFormatter.string(from: date)
     }
     
-    func postData(postData: Usuario) async {
-        guard let url = URL(string: "http://10.0.0.26:5000/agregausuario") else {
+    func postData(link : String, postData: Usuario) async {
+        guard let url = URL(string: link+"/agregausuario") else {
             print("Wrong URL")
             return
         }
