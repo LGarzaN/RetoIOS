@@ -9,24 +9,23 @@ import Foundation
 
 
 class DatoSeguir : Identifiable, Codable{
-    var idSintomaSeguir : Int
-    var SeguirNombre : String
-    var SeguirFechaInicial : String
-    var SeguirFechaFinal : String
-    var UltimoRegistro : String
+    var Paciente_idPaciente: Int
+    var SeguirFechaFinal: String
+    var SeguirFechaInicial: String
+    var SeguirNombre: String
     var SeguirTipo : Int
-    var Paciente_idPaciente : Int
+    var UltimoRegistro: String
+    var idSintomasSeguir: Int
     
-    init(idSintomaSeguir: Int, SeguirNombre: String, SeguirFechaInicial: String, SeguirFechaFinal: String, ultimoRegistro: String, SeguirTipo: Int, Paciente_idPaciente: Int) {
-        self.idSintomaSeguir = idSintomaSeguir
-        self.SeguirNombre = SeguirNombre
-        self.SeguirFechaInicial = SeguirFechaInicial
-        self.SeguirFechaFinal = SeguirFechaFinal
-        self.UltimoRegistro = ultimoRegistro
-        self.SeguirTipo = SeguirTipo
+    init(Paciente_idPaciente: Int, SeguirFechaFinal: String, SeguirFechaInicial: String, SeguirNombre: String, SeguirTipo: Int, UltimoRegistro: String, idSintomasSeguir: Int) {
         self.Paciente_idPaciente = Paciente_idPaciente
+        self.SeguirFechaFinal = SeguirFechaFinal
+        self.SeguirFechaInicial = SeguirFechaInicial
+        self.SeguirNombre = SeguirNombre
+        self.SeguirTipo = SeguirTipo
+        self.UltimoRegistro = UltimoRegistro
+        self.idSintomasSeguir = idSintomasSeguir
     }
-    
     func formatDate(_ date: Date) -> Void {
         let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -41,3 +40,40 @@ class DatoSeguir : Identifiable, Codable{
     }
     
 }
+/*
+ 
+ class DatoSeguir : Identifiable, Codable{
+     var idSintomaSeguir : Int
+     var SeguirNombre : String
+     var SeguirFechaInicial : String
+     var SeguirFechaFinal : String
+     var UltimoRegistro : String
+     var SeguirTipo : Int
+     var Paciente_idPaciente : Int
+     
+     init(idSintomaSeguir: Int, SeguirNombre: String, SeguirFechaInicial: String, SeguirFechaFinal: String, ultimoRegistro: String, SeguirTipo: Int, Paciente_idPaciente: Int) {
+         self.idSintomaSeguir = idSintomaSeguir
+         self.SeguirNombre = SeguirNombre
+         self.SeguirFechaInicial = SeguirFechaInicial
+         self.SeguirFechaFinal = SeguirFechaFinal
+         self.UltimoRegistro = ultimoRegistro
+         self.SeguirTipo = SeguirTipo
+         self.Paciente_idPaciente = Paciente_idPaciente
+     }
+     
+     func formatDate(_ date: Date) -> Void {
+         let dateFormatter: DateFormatter = {
+             let formatter = DateFormatter()
+             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+             return formatter
+         }()
+         
+         self.UltimoRegistro = dateFormatter.string(from: date)
+         self.SeguirFechaFinal = dateFormatter.string(from: date)
+         self.SeguirFechaInicial = dateFormatter.string(from: date)
+
+     }
+     
+ }
+
+ */
