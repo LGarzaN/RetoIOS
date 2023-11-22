@@ -41,7 +41,7 @@ struct DatoDetalle: View {
                     Form{
                         Section{
                             NavigationLink {
-                                ComoTeSientes()
+                                ComoTeSientes(dato: dato)
                             } label: {
                                 Text("¿Cómo te sientes?")
                             }
@@ -53,6 +53,7 @@ struct DatoDetalle: View {
                                 Text("Últimos Días")
                             }                        }
                     }
+                    .scrollDisabled(true)
                     Button {
                         alrt = true
                     } label: {
