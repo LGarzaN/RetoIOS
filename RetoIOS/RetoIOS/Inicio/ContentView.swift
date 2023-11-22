@@ -69,12 +69,10 @@ struct ContentView: View {
                     } label: {
                         ButtonFill(contentTxt: "Iniciar Sesión", c: .blu)
                     }
-                    .fullScreenCover(isPresented : $enter) {
-                        Homepage()
-                    }
                     .alert(alrtaMsg, isPresented: $alrta){
                     }
-                    .padding(.bottom, 300)
+                    //.padding(.bottom, 300)
+                    Spacer()
                     NavigationLink{
                         CrearCuenta1()
                     } label: {
@@ -89,7 +87,6 @@ struct ContentView: View {
                 UIApplication.shared.endEditing()
             }
         }
-        //.navigationTitle("hi")
     }
     
     func hashPassword(_ password: String) -> String {

@@ -86,6 +86,6 @@ struct UltimosDias: View {
 
 struct UltimosDias_Previews: PreviewProvider {
     static var previews: some View {
-        UltimosDias(dato: DatoSeguir(idSintomaSeguir: 0, SeguirNombre: "Dato", SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: 0, Paciente_idPaciente: 0))
+        UltimosDias(dato: DatoSeguir(Paciente_idPaciente: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0))
     }
 }

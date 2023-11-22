@@ -75,7 +75,7 @@ struct DatoDetalle: View {
 
 struct DatoDetalle_Previews: PreviewProvider {
     static var previews: some View {
-        DatoDetalle(dato: DatoSeguir(idSintomaSeguir: 0, SeguirNombre: "Dato", SeguirFechaInicial: "", SeguirFechaFinal: "", ultimoRegistro: "", SeguirTipo: 0, Paciente_idPaciente: 0))
+        DatoDetalle(dato: DatoSeguir(Paciente_idPaciente: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0))
     }
 }
 
