@@ -9,23 +9,24 @@ import Foundation
 
 
 class DatoSeguir : Identifiable, Codable{
-    var Paciente_idPaciente: Int
-    var SeguirFechaFinal: String
-    var SeguirFechaInicial: String
+    var idSintomasSeguir: Int
     var SeguirNombre: String
     var SeguirTipo : Int
     var UltimoRegistro: String
-    var idSintomasSeguir: Int
+    var SeguirFechaInicial: String
+    var SeguirFechaFinal: String
+    var Usuario_idUsuario: Int
     
-    init(Paciente_idPaciente: Int, SeguirFechaFinal: String, SeguirFechaInicial: String, SeguirNombre: String, SeguirTipo: Int, UltimoRegistro: String, idSintomasSeguir: Int) {
-        self.Paciente_idPaciente = Paciente_idPaciente
-        self.SeguirFechaFinal = SeguirFechaFinal
-        self.SeguirFechaInicial = SeguirFechaInicial
+    init(idSintomasSeguir: Int, SeguirNombre: String, SeguirTipo: Int, UltimoRegistro: String, SeguirFechaInicial: String, SeguirFechaFinal: String, Usuario_idUsuario: Int) {
+        self.idSintomasSeguir = idSintomasSeguir
         self.SeguirNombre = SeguirNombre
         self.SeguirTipo = SeguirTipo
         self.UltimoRegistro = UltimoRegistro
-        self.idSintomasSeguir = idSintomasSeguir
+        self.SeguirFechaInicial = SeguirFechaInicial
+        self.SeguirFechaFinal = SeguirFechaFinal
+        self.Usuario_idUsuario = Usuario_idUsuario
     }
+    
     func formatDate(_ date: Date) -> Void {
         let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -38,6 +39,8 @@ class DatoSeguir : Identifiable, Codable{
         self.SeguirFechaInicial = dateFormatter.string(from: date)
 
     }
+    
+    
     
 }
 /*

@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct Antecedente: Identifiable{
-    var id = UUID()
-    var titulo : String
-    var content : String
-    var patientId : Int
+struct Antecedente: Codable{
+    var idAntecedentes : Int
+    var Titulo : String
+    var Contenido : String
+    var Usuario_idUsuario : Int
+    
+    init(idAntecedentes: Int, Titulo: String, Contenido: String, Usuario_idUsuario: Int) {
+        self.idAntecedentes = idAntecedentes
+        self.Titulo = Titulo
+        self.Contenido = Contenido
+        self.Usuario_idUsuario = Usuario_idUsuario
+    }
 }
 
 class ListaAntecedentes : ObservableObject{

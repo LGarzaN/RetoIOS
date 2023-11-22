@@ -49,8 +49,8 @@ struct CrearCuenta2: View {
                             Text("Datos")
                         }
                         Section{
-                            ForEach(listaAntecedentes.antecedentes){ ant in
-                                Text(ant.titulo)
+                            ForEach(listaAntecedentes.antecedentes, id: \.self.idAntecedentes){ ant in
+                                Text(ant.Titulo)
                             }
                             .onDelete(perform: deleteArticle)
                             HStack{
@@ -95,7 +95,7 @@ struct CrearCuenta2: View {
     }
     func deleteArticle(at offsets:IndexSet){
         listaAntecedentes.antecedentes.remove(atOffsets: offsets)
-    }//func close
+    }
     
     func hashPassword(_ password: String) -> String {
         if let data = password.data(using: .utf8) {
@@ -110,7 +110,7 @@ struct CrearCuenta2: View {
     }
     
     func postData(postData: Usuario) async {
-        guard let url = URL(string: "http://10.0.0.26:5000/agregausuario") else {
+        guard let url = URL(string: "http://10.22.129.138:5000/agregausuario") else {
             print("Wrong URL")
             return
         }

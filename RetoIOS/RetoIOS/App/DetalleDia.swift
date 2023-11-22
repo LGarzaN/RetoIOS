@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct DetalleDia: View {
-    @State var dato : registroDatos
+    @State var dato : RegistroDatos
     var body: some View {
         VStack{
-            Text("\(dato.fecha.formatted(.dateTime.weekday().day().month().hour()))")
+            Text(dato.RegistroFecha)
                 .foregroundColor(Color("txt"))
-            Slider(value:$dato.intensidad)
-                .tint(accentColor(for: $dato.intensidad))
+            Slider(value:$dato.RegistroIntensidad)
+                .tint(accentColor(for: $dato.RegistroIntensidad))
                 .disabled(true)
                 .padding(.bottom)
                 .padding(.horizontal, 30)
             HStack{
                 Text("Intensidad: ")
-                Text("\((dato.intensidad*10).formatted()) / 10")
+                Text("\((dato.RegistroIntensidad*10).formatted()) / 10")
             }
             .padding()
             Text("Nota")
@@ -28,7 +28,7 @@ struct DetalleDia: View {
                 .padding(.horizontal, 30)
                 .foregroundColor(Color("txt"))
                 .padding(.bottom, 1)
-            Text(dato.nota)
+            Text(dato.RegistroNota)
                 .multilineTextAlignment(.leading)
                 .foregroundColor(Color("gry"))
                 .padding(.horizontal)
@@ -49,6 +49,6 @@ struct DetalleDia: View {
 
 struct DetalleDia_Previews: PreviewProvider {
     static var previews: some View {
-        DetalleDia(dato: registroDatos(id: 0, nombre: "nmbre", fecha: Date(), intensidad: 0, nota: "Nota"))
+        DetalleDia(dato: RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0))
     }
 }

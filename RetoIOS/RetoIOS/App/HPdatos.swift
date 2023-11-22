@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct HPdatos: View {
-    let dbLink = "http://10.22.140.168:5000"
+    let dbLink = "http://10.22.129.138:5000"
     @State var alrt = false
     @State var tip = 0
     @State var datosList = [DatoSeguir]()
@@ -19,6 +19,7 @@ struct HPdatos: View {
     @State var datoExtra = ""
     @State private var selectedOption = ""
     @AppStorage("usu") var usu = 0
+    @AppStorage ("API_KEY") var key = "Juan"
     var body: some View {
         NavigationStack{
             ZStack{
@@ -87,11 +88,12 @@ struct HPdatos: View {
                                 } else {
                                     tip = 1
                                 }
-                                let datoS = DatoSeguir(Paciente_idPaciente: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0)
+                                let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
                                 datoS.formatDate(Date())
                                 
                                 Task{
                                     await postData(link: dbLink, postData: datoS)
+                                    await getData(link: dbLink, numId: usu)
                                 }
                                 alrt = false
                                 
@@ -103,7 +105,7 @@ struct HPdatos: View {
                     }
                     .onAppear(){
                         Task{
-                            await getData(link: dbLink, numId: 1)
+                            await getData(link: dbLink, numId: usu)
                         }
                     }
                 }
