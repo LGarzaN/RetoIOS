@@ -17,101 +17,90 @@ struct HPcalendario: View {
     @State var diaElegido = ""
 
     var body: some View {
-        NavigationStack{
-            ZStack{
-                Color("basic")
-                    .ignoresSafeArea()
-                VStack{
-                    HStack{
-                        //month
-                        Menu{
-                            Picker(selection: $mesElegido) {
-                                ForEach(0..<12) { index in
-                                    Text(meses[index])
-                                        .tag(index)
-                                }
-                            }label: {}
-                        }label: {
-                            Text(meses[mesElegido])
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding(.bottom, 20.0)
-                                .padding(.top, 20.0)
-                                .foregroundColor(.blu)
-                                .padding(.leading)
+        GeometryReader{geo in
+            NavigationStack{
+                ZStack{
+                    Color("basic")
+                        .ignoresSafeArea()
+                    Image("Logo")
+                        .frame(width: geo.size.width, height: geo.size.height/2, alignment: .leading)
+                        .opacity(0.12)
+                    VStack{
+                        HStack{
+                            //month
+                            Menu{
+                                Picker(selection: $mesElegido) {
+                                    ForEach(0..<12) { index in
+                                        Text(meses[index])
+                                            .tag(index)
+                                    }
+                                }label: {}
+                            }label: {
+                                Text(meses[mesElegido])
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .padding(.bottom, 20.0)
+                                    .padding(.top, 20.0)
+                                    .foregroundColor(.blu)
+                                    .padding(.leading)
+                            }
+                            //year
+                            Menu{
+                                Picker(selection: $year) {
+                                    ForEach(2000...2030, id: \.self) { year in
+                                        Text(String(format: "%04d", year))
+                                            .tag(year)
+                                    }
+                                }label: {}
+                            }label: {
+                                Text(String(format: "%04d", year))
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .padding(.bottom, 20.0)
+                                    .padding(.top, 20.0)
+                                    .foregroundColor(.blu)
+                            }
+                            Spacer()
                         }
-                        //year
-                        Menu{
-                            Picker(selection: $year) {
-                                ForEach(2000...2030, id: \.self) { year in
-                                    Text(String(format: "%04d", year))
-                                        .tag(year)
+                        LazyVGrid(columns: columnLayout) {
+                            ForEach(dias, id: \.self) { dia in
+                                Text(dia)
+                                    .bold()
+                            }
+
+                            let firstDayOfMonth = obtenerPrimerDiaDelMes(mes: mesElegido + 1, year: year)
+                            let daysInMonth = obtenerDiasEnMes(mes: mesElegido + 1, year: year)
+                            let emptySlots = Array(0..<firstDayOfMonth)
+                            ForEach(emptySlots, id: \.self) { _ in
+                                Text("")
+                            }
+
+                            ForEach(daysInMonth, id: \.self) { dia in
+                                VStack{
+                                    Rectangle()
+                                        //.frame(width: 54, height: 0.7)
+                                        .frame(width: geo.size.width/7, height: 0.7)
+                                        .foregroundColor(.blu)
+                                    Button(action: {
+                                        mostrarDatos = true
+                                        diaElegido = dia
+                                    }, label: {
+                                        Text("\(dia)")
+                                            .foregroundColor(.primary)
+                                    })
+                                    .sheet(isPresented: $mostrarDatos){
+                                        HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
+                                    }
                                 }
-                            }label: {}
-                        }label: {
-                            Text(String(format: "%04d", year))
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding(.bottom, 20.0)
-                                .padding(.top, 20.0)
-                                .foregroundColor(.blu)
+                                .padding(.bottom, 30)
+                            }
                         }
+                        .padding(.horizontal)
                         Spacer()
                     }
-                    LazyVGrid(columns: columnLayout) {
-                        ForEach(dias, id: \.self) { dia in
-                            Text(dia)
-                                .bold()
-                        }
-
-                        let firstDayOfMonth = obtenerPrimerDiaDelMes(mes: mesElegido + 1, year: year)
-                        let daysInMonth = obtenerDiasEnMes(mes: mesElegido + 1, year: year)
-                        let emptySlots = Array(0..<firstDayOfMonth)
-                        ForEach(emptySlots, id: \.self) { _ in
-                            Text("")
-                        }
-
-                        ForEach(daysInMonth, id: \.self) { dia in
-                            VStack{
-                                Rectangle()
-                                    .frame(width: 53, height: 0.7)
-                                    .foregroundColor(.blu)
-                                Button(action: {
-                                    mostrarDatos = true
-                                    diaElegido = dia
-                                }, label: {
-                                    Text("\(dia)")
-                                        .foregroundColor(.primary)
-                                })
-                                .sheet(isPresented: $mostrarDatos){
-                                    HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
-                                }
-                            }
-                            .padding(.bottom, 30)
-                        }
-                    }
-                    .padding(.horizontal)
-                    /*
-                     Form{
-                         Section{
-                             Picker("Selecciona un Mes", selection: $mesElegido) {
-                                 ForEach(0..<12) { index in
-                                     Text(meses[index])
-                                 }
-                             }
-                         }
-                         Section{
-                             Picker("Selecciona un Año", selection: $year) {
-                                 ForEach(2000...2030, id: \.self) { year in
-                                     Text(String(format: "%04d", year))
-                                 }
-                             }
-                         }
-                     }
-                     */
                 }
+                .navigationTitle("Calendario")
             }
-            .navigationTitle("Calendario")
         }
     }
 
