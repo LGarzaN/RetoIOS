@@ -16,7 +16,7 @@ class DatoSeguir : Identifiable, Codable{
     var SeguirFechaInicial: String
     var SeguirFechaFinal: String
     var Usuario_idUsuario: Int
-    
+   
     init(idSintomasSeguir: Int, SeguirNombre: String, SeguirTipo: Int, UltimoRegistro: String, SeguirFechaInicial: String, SeguirFechaFinal: String, Usuario_idUsuario: Int) {
         self.idSintomasSeguir = idSintomasSeguir
         self.SeguirNombre = SeguirNombre

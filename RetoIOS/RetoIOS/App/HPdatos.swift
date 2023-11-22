@@ -34,12 +34,14 @@ struct HPdatos: View {
                                 } label:{
                                     HStack{
                                         VStack(alignment: .leading){
-                                            Text("Dato")
+                                            //Text("Dato")
                                             Text(d.SeguirNombre)
                                                 .foregroundColor(.secondary)
                                                 .padding(.bottom, 5)
                                             Text("Ultimo Registro")
                                             Text(d.UltimoRegistro)
+                                                .foregroundColor(.secondary)
+
                                         }
                                         .padding(.trailing, 10)
                                         Chart{
@@ -56,11 +58,20 @@ struct HPdatos: View {
                         }
                     }
                     .navigationTitle("Seguimiento")
-                    Button {
-                        alrt = true
-                    } label: {
-                        ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
+                    /*
+                    .toolbar{
+                        Button{
+                            alrt = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
+                     */
+                     Button {
+                         alrt = true
+                     } label: {
+                         ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
+                     }
                     .padding()
                     .sheet(isPresented: $alrt) {
                         VStack{

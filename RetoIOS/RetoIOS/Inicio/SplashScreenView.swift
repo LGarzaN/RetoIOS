@@ -28,11 +28,10 @@ struct SplashScreenView: View {
                     VStack{
                         Image("Logo")
                             .resizable()
-                            .frame(width: 200, height: 110)
+                            .frame(width: 110, height: 110)
                         Text("J C S L")
                             .bold()
                             .font(.system(size: 22))
-                            //.foregroundColor(.blu)
                     }
                     .scaleEffect(size)
                     .opacity(opacity)
