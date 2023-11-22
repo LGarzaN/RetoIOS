@@ -10,22 +10,17 @@ import Charts
 
 struct DatoDetalle: View {
     var dato : DatoSeguir
+    @State var registros = [RegistroDatos]()
     @State var alrt : Bool = false
-    var listaRegistro  = [
-        registroDatos(id: 0, nombre: "Tos", fecha: Date(), intensidad: 4, nota: ""),
-        registroDatos(id: 1, nombre: "Tos", fecha: Date(), intensidad: 2, nota: ""),
-        registroDatos(id: 2, nombre: "Tos", fecha: Date(), intensidad: 7, nota: ""),
-        registroDatos(id: 3, nombre: "Tos", fecha: Date(), intensidad: 5, nota: ""),
-        registroDatos(id: 4, nombre: "Tos", fecha: Date(), intensidad: 9, nota: ""),
-        registroDatos(id: 5, nombre: "Tos", fecha: Date(), intensidad: 3, nota: ""),
-        registroDatos(id: 6, nombre: "Tos", fecha: Date(), intensidad: 1, nota: "")
-    ]
+    @AppStorage("usu") var usu = 0
+    @State var homeP = false
     var body: some View {
         NavigationStack{
             ZStack{
                 Color("basic")
                    .ignoresSafeArea()
                 VStack{
+                    Text("")
                     Text(dato.SeguirNombre)
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -33,8 +28,8 @@ struct DatoDetalle: View {
                         .padding(.top, 20.0)
                         .frame(width: 333, alignment: .leading)
                     Chart{
-                        ForEach(listaRegistro) { registro in
-                            BarMark(x: .value("Ciudad", registro.id), y: .value("Poblacion", registro.intensidad))
+                        ForEach(registros, id: \.self.idRegistroSintomas) { registro in
+                            BarMark(x: .value("Ciudad", registro.idRegistroSintomas), y: .value("Poblacion", registro.RegistroIntensidad))
                         }
                     }
                     .frame(width: 330, height: 200)
@@ -65,17 +60,74 @@ struct DatoDetalle: View {
                     }
                     .alert("¿Está seguro que desea eliminar este dato?", isPresented: $alrt) {
                         Button("Cancelar", role: .cancel) {}
-                        Button("Eliminar", role: .destructive) {}
+                        Button("Eliminar", role: .destructive) {
+                            Task{
+                                await finSintoma(link: "http://10.22.129.138:5000", idSintoma: dato.idSintomasSeguir)
+                            }
+                            homeP = true
+                            
+                        }
+                    }
+                    .fullScreenCover(isPresented : $homeP) {
+                        Homepage()
                     }
                 }
             }
+            .onAppear(){
+                Task{
+                    await getRegistros(link:"http://10.22.129.138:5000", idUsu: usu,idSintoma:dato.idSintomasSeguir)
+                }
+            }
         }
+    }
+    
+    func getRegistros(link : String, idUsu: Int, idSintoma: Int) async {
+        print("1--")
+        guard let url = URL(string: "\(link)/registros/\(idUsu)/\(idSintoma)") else {
+            print("Wrong URL")
+            return
+        }
+        
+        //link+"/registros/"+String(idUsu)+"/"+String(idSintoma)
+        print("2")
+        do {
+            print("in")
+            let(data, _) = try await URLSession.shared.data(from: url)
+            if let decodedData = try? JSONDecoder().decode([RegistroDatos].self, from: data){
+                let datos = decodedData
+                registros = datos
+                print("success")
+            }
+        }
+        catch {
+            print("Error: Couldnt bring back data")
+        }
+        print("4")
+    }
+    
+    func finSintoma(link : String, idSintoma: Int) async {
+        print("1--")
+        guard let url = URL(string: "\(link)/finSintoma/\(idSintoma)") else {
+            print("Wrong URL")
+            return
+        }
+        
+        //link+"/registros/"+String(idUsu)+"/"+String(idSintoma)
+        print("2")
+        do {
+            print("in")
+            let(_, _) = try await URLSession.shared.data(from: url)
+        }
+        catch {
+            print("Error: Couldnt bring back data")
+        }
+        print("4")
     }
 }
 
 struct DatoDetalle_Previews: PreviewProvider {
     static var previews: some View {
-        DatoDetalle(dato: DatoSeguir(Usuario_idUsuario: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0))
+        DatoDetalle(dato: DatoSeguir(idSintomasSeguir: 0, SeguirNombre: "", SeguirTipo: 0, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: 0))
     }
 }
 

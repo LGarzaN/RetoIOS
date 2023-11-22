@@ -15,6 +15,7 @@ struct AgregarAntecedente: View {
     @Environment(\.dismiss) var removeWindow
     @FocusState var keyboard : Bool
     @State var valnull = false
+    @AppStorage("usu") var usu = 0
  
     var body: some View {
         NavigationView{
@@ -42,7 +43,7 @@ struct AgregarAntecedente: View {
             .toolbar{
                 Button("Agregar"){
                     if title != "" && contenido != ""{
-                        let nuevoAnt = Antecedente(titulo: title, content: contenido, patientId: pID)
+                        let nuevoAnt = Antecedente(idAntecedentes: 0, Titulo: title, Contenido: contenido, Usuario_idUsuario: usu)
                         listaAntecedentes.antecedentes.append(nuevoAnt)
                         
                         removeWindow()

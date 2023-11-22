@@ -19,6 +19,7 @@ struct HPdatos: View {
     @State var datoExtra = ""
     @State private var selectedOption = ""
     @AppStorage("usu") var usu = 0
+    @AppStorage ("API_KEY") var key = "Juan"
     var body: some View {
         NavigationStack{
             ZStack{
@@ -98,11 +99,12 @@ struct HPdatos: View {
                                 } else {
                                     tip = 1
                                 }
-                                let datoS = DatoSeguir(Usuario_idUsuario: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0)
+                                let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
                                 datoS.formatDate(Date())
                                 
                                 Task{
                                     await postData(link: dbLink, postData: datoS)
+                                    await getData(link: dbLink, numId: usu)
                                 }
                                 alrt = false
                                 
@@ -114,7 +116,7 @@ struct HPdatos: View {
                     }
                     .onAppear(){
                         Task{
-                            await getData(link: dbLink, numId: 1)
+                            await getData(link: dbLink, numId: usu)
                         }
                     }
                 }

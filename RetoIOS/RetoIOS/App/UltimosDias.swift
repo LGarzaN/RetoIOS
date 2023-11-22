@@ -11,13 +11,10 @@ import SwiftUI
 struct UltimosDias: View {
     var dato : DatoSeguir
     @State var inte = 0.5
-    @State private var regis: registroDatos = registroDatos(id: 1, nombre: "dato2", fecha: Date(), intensidad: 0.7, nota: "")
+    @State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
     @State private var isDetailPresented = false
     @State var registro = [
-        registroDatos(id: 0, nombre: "dato1", fecha: Date(), intensidad: 0.5, nota: "Tengo mas tos por las tardes"),
-        registroDatos(id: 1, nombre: "dato2", fecha: Date(), intensidad: 0.7, nota: "hola"),
-        registroDatos(id: 2, nombre: "dato3", fecha: Date(), intensidad: 0.2, nota: ""),
-        registroDatos(id: 3, nombre: "dato4", fecha: Date(), intensidad: 0.6, nota: "")
+        RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
     ]
     var body: some View {
         NavigationStack {
@@ -30,10 +27,10 @@ struct UltimosDias: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .foregroundColor(Color("butts"))
                                 VStack{
-                                    Text("\(r.fecha.wrappedValue.formatted(.dateTime.weekday().day().month().hour()))")
+                                    Text(r.RegistroFecha.wrappedValue)
                                         .foregroundColor(Color("txt"))
-                                    Slider(value:r.intensidad)
-                                        .tint(accentColor(for: r.intensidad))
+                                    Slider(value:r.RegistroIntensidad)
+                                        .tint(accentColor(for: r.RegistroIntensidad))
                                         .disabled(true)
                                         .padding(.bottom)
                                         .padding(.horizontal)
@@ -43,7 +40,7 @@ struct UltimosDias: View {
                                         .foregroundColor(Color("txt"))
                                         .padding(.bottom, 1)
                                     
-                                    Text(r.nota.wrappedValue)
+                                    Text(r.RegistroNota.wrappedValue)
                                         .multilineTextAlignment(.leading)
                                         .foregroundColor(Color("gry"))
                                         .lineLimit(2)
@@ -86,6 +83,6 @@ struct UltimosDias: View {
 
 struct UltimosDias_Previews: PreviewProvider {
     static var previews: some View {
-        UltimosDias(dato: DatoSeguir(Usuario_idUsuario: 0, SeguirFechaFinal: "_", SeguirFechaInicial: "_", SeguirNombre: "_", SeguirTipo: 0, UltimoRegistro: "_", idSintomasSeguir: 0))
+        UltimosDias(dato: DatoSeguir(idSintomasSeguir: 0, SeguirNombre: "", SeguirTipo: 0, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: 0))
     }
 }

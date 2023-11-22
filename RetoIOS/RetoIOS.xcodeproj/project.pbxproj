@@ -18,7 +18,7 @@
 		4C3693652AF30AF10026CC52 /* HPdatos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3693642AF30AF10026CC52 /* HPdatos.swift */; };
 		4C3693672AF30B070026CC52 /* HPcalendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3693662AF30B070026CC52 /* HPcalendario.swift */; };
 		4C3693692AF30B330026CC52 /* HPusuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3693682AF30B330026CC52 /* HPusuario.swift */; };
-		4C36936B2AF436240026CC52 /* datos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36936A2AF436240026CC52 /* datos.swift */; };
+		4C36936B2AF436240026CC52 /* RegistroDatos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36936A2AF436240026CC52 /* RegistroDatos.swift */; };
 		4C36C7712AF5881500876275 /* DatoSeguir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36C7702AF5881500876275 /* DatoSeguir.swift */; };
 		4C36C7732AF590E900876275 /* DatoDetalle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36C7722AF590E900876275 /* DatoDetalle.swift */; };
 		4C36C7752AF5AB6000876275 /* ComoTeSientes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */; };
@@ -66,7 +66,7 @@
 		4C3693642AF30AF10026CC52 /* HPdatos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPdatos.swift; sourceTree = "<group>"; };
 		4C3693662AF30B070026CC52 /* HPcalendario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPcalendario.swift; sourceTree = "<group>"; };
 		4C3693682AF30B330026CC52 /* HPusuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPusuario.swift; sourceTree = "<group>"; };
-		4C36936A2AF436240026CC52 /* datos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = datos.swift; sourceTree = "<group>"; };
+		4C36936A2AF436240026CC52 /* RegistroDatos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroDatos.swift; sourceTree = "<group>"; };
 		4C36C7702AF5881500876275 /* DatoSeguir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatoSeguir.swift; sourceTree = "<group>"; };
 		4C36C7722AF590E900876275 /* DatoDetalle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatoDetalle.swift; sourceTree = "<group>"; };
 		4C36C7742AF5AB6000876275 /* ComoTeSientes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComoTeSientes.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */,
-				4C36936A2AF436240026CC52 /* datos.swift */,
+				4C36936A2AF436240026CC52 /* RegistroDatos.swift */,
 				4C36C7702AF5881500876275 /* DatoSeguir.swift */,
 				BB41F1472ADF45840088D1C5 /* Prefabs.swift */,
 				4C6652982B074350004230D8 /* Usuario.swift */,
@@ -352,7 +352,7 @@
 				4C3693672AF30B070026CC52 /* HPcalendario.swift in Sources */,
 				4C2B0ECC2ADDDB8200693DC1 /* RetoIOSApp.swift in Sources */,
 				4C36C7752AF5AB6000876275 /* ComoTeSientes.swift in Sources */,
-				4C36936B2AF436240026CC52 /* datos.swift in Sources */,
+				4C36936B2AF436240026CC52 /* RegistroDatos.swift in Sources */,
 				4C3693612AF309B30026CC52 /* Homepage.swift in Sources */,
 				4CCA40E32B02E7D500F954DF /* DetalleDia.swift in Sources */,
 				BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */,
