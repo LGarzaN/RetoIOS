@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct UltimosDias: View {
+    @State var registros : [RegistroDatos]
     var dato : DatoSeguir
     @State var inte = 0.5
     @State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
@@ -20,7 +21,7 @@ struct UltimosDias: View {
         NavigationStack {
             VStack{
                 ScrollView(.vertical, showsIndicators: true) {
-                    ForEach($registro){r in
+                    ForEach($registros){r in
                         NavigationLink{
                         } label: {
                             ZStack{
@@ -83,6 +84,6 @@ struct UltimosDias: View {
 
 struct UltimosDias_Previews: PreviewProvider {
     static var previews: some View {
-        UltimosDias(dato: DatoSeguir(idSintomasSeguir: 0, SeguirNombre: "", SeguirTipo: 0, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: 0))
+        UltimosDias(registros: [], dato: DatoSeguir(idSintomasSeguir: 0, SeguirNombre: "", SeguirTipo: 0, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: 0))
     }
 }

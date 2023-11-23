@@ -29,8 +29,8 @@ struct DatoDetalle: View {
                         .padding(.top, 20.0)
                         .frame(width: 333, alignment: .leading)
                     Chart{
-                        ForEach(registros, id: \.self.idRegistroSintomas) { registro in
-                            BarMark(x: .value("Ciudad", String(registro.RegistroFecha.prefix(11))), y: .value("Poblacion", registro.RegistroIntensidad))
+                        ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
+                            BarMark(x: .value("Ciudad",registro.RegistroFecha), y: .value("Poblacion", registro.RegistroIntensidad))
                         }
                     }
                     .frame(width: 330, height: 200)
@@ -49,7 +49,7 @@ struct DatoDetalle: View {
                         }
                         Section{
                             NavigationLink {
-                                UltimosDias(dato: dato)
+                                UltimosDias(registros: registros, dato: dato)
                             } label: {
                                 Text("Últimos Días")
                             }                        }
