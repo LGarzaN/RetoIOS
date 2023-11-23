@@ -30,8 +30,7 @@ struct DatoDetalle: View {
                         .frame(width: 333, alignment: .leading)
                     Chart{
                         ForEach(registros, id: \.self.idRegistroSintomas) { registro in
-                            let fech = formattedDate(from: registro.RegistroFecha)
-                            BarMark(x: .value("Ciudad", fech ?? "Jan. 1"), y: .value("Poblacion", registro.RegistroIntensidad))
+                            BarMark(x: .value("Ciudad", String(registro.RegistroFecha.prefix(11))), y: .value("Poblacion", registro.RegistroIntensidad))
                         }
                     }
                     .frame(width: 330, height: 200)
@@ -110,7 +109,8 @@ struct DatoDetalle: View {
     
     func formattedDate(from dateString: String) -> String? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E, dd MMM yyyy HH:mm:ss z"
+        dateFormatter.dateFormat = "E, d MMM yyyy HH:mm:ss z"
+        print(dateString)
 
         if let date = dateFormatter.date(from: dateString) {
             dateFormatter.dateFormat = "E, MMM d"
