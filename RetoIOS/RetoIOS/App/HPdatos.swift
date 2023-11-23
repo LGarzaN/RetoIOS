@@ -21,106 +21,105 @@ struct HPdatos: View {
     @AppStorage("usu") var usu = 0
     @AppStorage ("API_KEY") var key = "Juan"
     var body: some View {
-        NavigationStack{
-            ZStack{
-                Color("basic")
-                    .ignoresSafeArea()
-                VStack{
-                    Form{
-                        ForEach(datosList, id: \.self.idSintomasSeguir) { d in
-                            Section{
-                                NavigationLink {
-                                    DatoDetalle(dato: d)
-                                } label:{
-                                    HStack{
-                                        VStack(alignment: .leading){
-                                            //Text("Dato")
-                                            Text(d.SeguirNombre)
-                                                .foregroundColor(.secondary)
-                                                .padding(.bottom, 5)
-                                            Text("Ultimo Registro")
-                                            Text(d.UltimoRegistro)
-                                                .foregroundColor(.secondary)
+        GeometryReader{geo in
+            NavigationStack{
+                ZStack{
+                    Color("basic")
+                        .ignoresSafeArea()
+                    Image("Logo")
+                        .frame(width: geo.size.width, height: geo.size.height/2, alignment: .leading)
+                        .opacity(0.12)
+                    VStack{
+                        Form{
+                            ForEach(datosList, id: \.self.idSintomasSeguir) { d in
+                                Section{
+                                    NavigationLink {
+                                        DatoDetalle(dato: d)
+                                    } label:{
+                                        HStack{
+                                            VStack(alignment: .leading){
+                                                //Text("Dato")
+                                                Text(d.SeguirNombre)
+                                                    .foregroundColor(.secondary)
+                                                    .padding(.bottom, 5)
+                                                Text("Ultimo Registro")
+                                                Text(d.UltimoRegistro)
+                                                    .foregroundColor(.secondary)
 
+                                            }
+                                            .padding(.trailing, 10)
+                                            Chart{
+                                                LineMark(x: .value("Ciudad", "1"), y: .value("Poblacion", 4))
+                                                LineMark(x: .value("Ciudad", "2"), y: .value("Poblacion", 7))
+                                                LineMark(x: .value("Ciudad", "3"), y: .value("Poblacion", 2))
+                                                LineMark(x: .value("Ciudad", "4"), y: .value("Poblacion", 10))
+                                            }
+                                            .frame(width: 120, height: 70)
                                         }
-                                        .padding(.trailing, 10)
-                                        Chart{
-                                            LineMark(x: .value("Ciudad", "1"), y: .value("Poblacion", 4))
-                                            LineMark(x: .value("Ciudad", "2"), y: .value("Poblacion", 7))
-                                            LineMark(x: .value("Ciudad", "3"), y: .value("Poblacion", 2))
-                                            LineMark(x: .value("Ciudad", "4"), y: .value("Poblacion", 10))
-                                        }
-                                        .frame(width: 120, height: 70)
+                                        .padding(.vertical, 5)
                                     }
-                                    .padding(.vertical, 5)
                                 }
                             }
                         }
-                    }
-                    .navigationTitle("Seguimiento")
-                    /*
-                    .toolbar{
-                        Button{
-                            alrt = true
-                        } label: {
-                            Image(systemName: "plus")
-                        }
-                    }
-                     */
-                     Button {
-                         alrt = true
-                     } label: {
-                         ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
-                     }
-                    .padding()
-                    .sheet(isPresented: $alrt) {
-                        VStack{
-                            Picker("picker", selection: $selectedOption) {
-                                ForEach(options, id: \.self){ opt in
-                                    Text(opt)
-                                }
-                            }
-                            if (selectedOption == "Otro"){
-                                TextField("Dato a seguir", text: $datoExtra)
-                                    .textFieldStyle(.roundedBorder)
-                                    .padding()
-                                Picker("picker", selection: $tipo) {
-                                    ForEach(tipoOpciones, id: \.self){ opt in
+                        .navigationTitle("Seguimiento")
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                         Button {
+                             alrt = true
+                         } label: {
+                             ButtonBlank(contentTxt: "Agregar Dato", c: .blu)
+                         }
+                        .padding()
+                        .sheet(isPresented: $alrt) {
+                            VStack{
+                                Picker("picker", selection: $selectedOption) {
+                                    ForEach(options, id: \.self){ opt in
                                         Text(opt)
                                     }
                                 }
-                            }
-                            Button{
                                 if (selectedOption == "Otro"){
-                                    selectedOption = datoExtra
+                                    TextField("Dato a seguir", text: $datoExtra)
+                                        .textFieldStyle(.roundedBorder)
+                                        .padding()
+                                    Picker("picker", selection: $tipo) {
+                                        ForEach(tipoOpciones, id: \.self){ opt in
+                                            Text(opt)
+                                        }
+                                    }
                                 }
-                                if (tipo == "Cualitativo"){
-                                    tip = 0
-                                } else {
-                                    tip = 1
+                                Button{
+                                    if (selectedOption == "Otro"){
+                                        selectedOption = datoExtra
+                                    }
+                                    if (tipo == "Cualitativo"){
+                                        tip = 0
+                                    } else {
+                                        tip = 1
+                                    }
+                                    let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
+                                    datoS.formatDate(Date())
+                                    
+                                    Task{
+                                        await postData(link: dbLink, postData: datoS)
+                                        await getData(link: dbLink, numId: usu)
+                                    }
+                                    alrt = false
+                                    
+                                } label: {
+                                    Text("Agregar")
                                 }
-                                let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
-                                datoS.formatDate(Date())
-                                
-                                Task{
-                                    await postData(link: dbLink, postData: datoS)
-                                    await getData(link: dbLink, numId: usu)
-                                }
-                                alrt = false
-                                
-                            } label: {
-                                Text("Agregar")
                             }
+                            .presentationDetents([.medium, .large])
                         }
-                        .presentationDetents([.medium, .large])
-                    }
-                    .onAppear(){
-                        Task{
-                            await getData(link: dbLink, numId: usu)
+                        .onAppear(){
+                            Task{
+                                await getData(link: dbLink, numId: usu)
+                            }
                         }
                     }
                 }
             }
+            
         }
     }
     
@@ -180,6 +179,10 @@ struct HPdatos_Previews: PreviewProvider {
     }
 }
 /*
+ Image("Logo")
+     .frame(width: geo.size.width, height: geo.size.height/2, alignment: .leading)
+     .opacity(0.12)
+ 
  //
  //  HPdatos.swift
  //  RetoIOS
