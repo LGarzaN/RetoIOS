@@ -14,6 +14,7 @@ struct DatoDetalle: View {
     @State var alrt : Bool = false
     @AppStorage("usu") var usu = 0
     @State var homeP = false
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -29,7 +30,8 @@ struct DatoDetalle: View {
                         .frame(width: 333, alignment: .leading)
                     Chart{
                         ForEach(registros, id: \.self.idRegistroSintomas) { registro in
-                            BarMark(x: .value("Ciudad", registro.idRegistroSintomas), y: .value("Poblacion", registro.RegistroIntensidad))
+                            let fech = formattedDate(from: registro.RegistroFecha)
+                            BarMark(x: .value("Ciudad", fech ?? "Jan. 1"), y: .value("Poblacion", registro.RegistroIntensidad))
                         }
                     }
                     .frame(width: 330, height: 200)
@@ -104,6 +106,18 @@ struct DatoDetalle: View {
             print("Error: Couldnt bring back data")
         }
         print("4")
+    }
+    
+    func formattedDate(from dateString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, dd MMM yyyy HH:mm:ss z"
+
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "E, MMM d"
+            return dateFormatter.string(from: date)
+        } else {
+            return nil
+        }
     }
     
     func finSintoma(link : String, idSintoma: Int) async {

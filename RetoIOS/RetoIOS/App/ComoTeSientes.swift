@@ -85,7 +85,7 @@ struct ComoTeSientes: View {
                 }
             }
             .fullScreenCover(isPresented : $added) {
-                DatoDetalle(dato: dato)
+                Homepage()
             }
         }
         .background(Color("basic"))
