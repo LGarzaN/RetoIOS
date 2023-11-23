@@ -149,6 +149,8 @@ struct HPdatos: View {
         }
     }
     
+    
+    
     func getData(link : String, numId: Int) async {
         print("1--")
         guard let url = URL(string: link+"/datoshp/"+String(numId)) else {

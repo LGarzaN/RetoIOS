@@ -14,6 +14,7 @@ struct DatoDetalle: View {
     @State var alrt : Bool = false
     @AppStorage("usu") var usu = 0
     @State var homeP = false
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -28,8 +29,8 @@ struct DatoDetalle: View {
                         .padding(.top, 20.0)
                         .frame(width: 333, alignment: .leading)
                     Chart{
-                        ForEach(registros, id: \.self.idRegistroSintomas) { registro in
-                            BarMark(x: .value("Ciudad", registro.idRegistroSintomas), y: .value("Poblacion", registro.RegistroIntensidad))
+                        ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
+                            BarMark(x: .value("Ciudad",registro.RegistroFecha), y: .value("Poblacion", registro.RegistroIntensidad))
                         }
                     }
                     .frame(width: 330, height: 200)
@@ -41,18 +42,19 @@ struct DatoDetalle: View {
                     Form{
                         Section{
                             NavigationLink {
-                                ComoTeSientes()
+                                ComoTeSientes(dato: dato)
                             } label: {
                                 Text("¿Cómo te sientes?")
                             }
                         }
                         Section{
                             NavigationLink {
-                                UltimosDias(dato: dato)
+                                UltimosDias(registros: registros, dato: dato)
                             } label: {
                                 Text("Últimos Días")
                             }                        }
                     }
+                    .scrollDisabled(true)
                     Button {
                         alrt = true
                     } label: {
@@ -103,6 +105,19 @@ struct DatoDetalle: View {
             print("Error: Couldnt bring back data")
         }
         print("4")
+    }
+    
+    func formattedDate(from dateString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, d MMM yyyy HH:mm:ss z"
+        print(dateString)
+
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "E, MMM d"
+            return dateFormatter.string(from: date)
+        } else {
+            return nil
+        }
     }
     
     func finSintoma(link : String, idSintoma: Int) async {
