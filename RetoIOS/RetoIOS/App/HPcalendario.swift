@@ -77,21 +77,30 @@ struct HPcalendario: View {
                                 }
 
                                 ForEach(daysInMonth, id: \.self) { dia in
+                                    let currentDate = Calendar.current.component(.day, from: Date())
+                                    let currentMonth = Calendar.current.component(.month, from: Date())
+                                    let currentYear = Calendar.current.component(.year, from: Date())
+                                    let isCurrentDate = dia == String(currentDate) && (mesElegido + 1) == currentMonth && year == currentYear
+
                                     VStack{
                                         Rectangle()
-                                            //.frame(width: 54, height: 0.7)
                                             .frame(width: geo.size.width/7, height: 0.7)
-                                            .foregroundColor(.blu)
+                                            .foregroundColor(.blue)
+                                        
                                         Button(action: {
                                             mostrarDatos = true
                                             diaElegido = dia
-                                        }, label: {
+                                        }) {
                                             Text("\(dia)")
-                                                .foregroundColor(.primary)
-                                        })
+                                                .foregroundColor(isCurrentDate ? .blue : .primary)
+                                                //.background(.red)
+                                                .fontWeight(isCurrentDate ? .bold : .regular)
+                                        }
+                                        .buttonStyle(isCurrentDate ? DateButtonStyle() : nil)
                                         .sheet(isPresented: $mostrarDatos){
                                             HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
                                         }
+                                        
                                     }
                                     .padding(.bottom, 30)
                                 }
@@ -164,6 +173,23 @@ struct HPcalendario: View {
             }
         }
         return daysInMonth
+    }
+    struct DateButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .frame(width: 30, height: 30)
+                .font(.body)
+                .foregroundColor(.primary)
+                .padding(5)
+                .background(Color.blue)
+                .cornerRadius(15)
+        }
+    }
+    struct DateButtonModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .buttonStyle(DateButtonStyle())
+        }
     }
 }
 
