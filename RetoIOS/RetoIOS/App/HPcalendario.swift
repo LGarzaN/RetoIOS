@@ -86,23 +86,26 @@ struct HPcalendario: View {
                                         Rectangle()
                                             .frame(width: geo.size.width/7, height: 0.7)
                                             .foregroundColor(.blue)
-                                        
                                         Button(action: {
                                             mostrarDatos = true
                                             diaElegido = dia
                                         }) {
-                                            Text("\(dia)")
-                                                .foregroundColor(isCurrentDate ? .blue : .primary)
-                                                //.background(.red)
-                                                .fontWeight(isCurrentDate ? .bold : .regular)
+                                            ZStack{
+                                                Rectangle()
+                                                        .foregroundColor(isCurrentDate ? .blu : .clear)
+                                                        .frame(height: geo.size.height/15.2)
+                                                        .cornerRadius(10)
+                                                Text("\(dia)")
+                                                    .foregroundColor(.primary)
+                                                    .fontWeight(isCurrentDate ? .bold : .regular)
+                                                    .padding(.bottom, 20)
+                                            }
                                         }
-                                        .buttonStyle(isCurrentDate ? DateButtonStyle() : nil)
                                         .sheet(isPresented: $mostrarDatos){
                                             HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
                                         }
                                         
                                     }
-                                    .padding(.bottom, 30)
                                 }
                             }
                             .padding(.horizontal)
@@ -185,10 +188,9 @@ struct HPcalendario: View {
                 .cornerRadius(15)
         }
     }
-    struct DateButtonModifier: ViewModifier {
-        func body(content: Content) -> some View {
-            content
-                .buttonStyle(DateButtonStyle())
+    struct EmptyButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
         }
     }
 }
