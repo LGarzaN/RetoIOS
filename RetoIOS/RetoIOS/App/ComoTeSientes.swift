@@ -17,6 +17,7 @@ struct ComoTeSientes: View {
     @State var cont = ""
     @State var added = false
     @State var reg = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    @AppStorage ("JWT") var jwt = ""
     
     var body: some View {
         VStack{
@@ -61,7 +62,7 @@ struct ComoTeSientes: View {
                     reg.SintomasSeguir_idSintomasSeguir = dato.idSintomasSeguir
                     reg.RegistroFecha = formatDate(fecha)
                     Task{
-                        await postData(link: "http://10.22.129.138:5000", postData: reg)
+                        await postData(link: "http://10.22.129.138:5001", postData: reg)
                     }
                     added = true
                 }
@@ -79,7 +80,7 @@ struct ComoTeSientes: View {
                     reg.SintomasSeguir_idSintomasSeguir = dato.idSintomasSeguir
                     reg.RegistroFecha = formatDate(fecha)
                     Task{
-                        await postData(link: "http://10.22.129.138:5000", postData: reg)
+                        await postData(link: "http://10.22.129.138:5001", postData: reg)
                     }
                     added = true
                 }
@@ -111,7 +112,7 @@ struct ComoTeSientes: View {
     }
     
     func postData(link : String, postData: RegistroDatos) async {
-        guard let url = URL(string: link+"/agregaregistro") else {
+        guard let url = URL(string: link+"/agregaregistro/?jwt=\(jwt)") else {
             print("Wrong URL")
             return
         }
@@ -123,6 +124,8 @@ struct ComoTeSientes: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)

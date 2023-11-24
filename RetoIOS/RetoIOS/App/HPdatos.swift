@@ -9,8 +9,7 @@ import SwiftUI
 import Charts
 
 struct HPdatos: View {
-    let dbLink = "http://10.22.129.138:5000"
-    @AppStorage("usu") var usu = 0
+    let dbLink = "http://10.22.129.138:5001"
     @State var alrt = false
     @State var tip = 0
     @State var datosList = [DatoSeguir]()
@@ -22,6 +21,8 @@ struct HPdatos: View {
     @AppStorage ("API_KEY") var key = "Juan"
     @State var registros = [RegistroDatos]()
     @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
+    @AppStorage("usu") var usu = 0
+    @AppStorage ("JWT") var jwt = ""
     var body: some View {
         GeometryReader{geo in
             NavigationStack{
@@ -142,7 +143,7 @@ struct HPdatos: View {
     }//body
     
     func postData(link : String, postData: DatoSeguir) async {
-        guard let url = URL(string: link+"/agregadatoseguir") else {
+        guard let url = URL(string: link+"/agregadatoseguir/?jwt=\(jwt)") else {
             print("Wrong URL")
             return
         }
@@ -154,6 +155,10 @@ struct HPdatos: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        print(request.allHTTPHeaderFields ?? "No headers")
+
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
@@ -166,46 +171,29 @@ struct HPdatos: View {
         }
     }
     
-    
-    
-    func getData(link : String, numId: Int) async {
-        guard let url = URL(string: link+"/datoshp/"+String(numId)) else {
+    func getData(link: String, numId: Int) async {
+        guard let url = URL(string: link + "/datoshp/" + String(numId)) else {
             print("Wrong URL")
             return
         }
+
+        var request = URLRequest(url: url)
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let (data, _) = try await URLSession.shared.data(for: request)
             if let decodedData = try? JSONDecoder().decode([DatoSeguir].self, from: data) {
-                let datos = decodedData
-                datosList = datos
-                print(datosList)
-            }
-            
-        } catch {
-            print("Error: Couldn't bring back data")
-        }
-    }
-    func getRegistros(link : String, idUsu: Int, idSintoma: Int) async {
-        print("1--")
-        guard let url = URL(string: "\(link)/registros/\(idUsu)/\(idSintoma)") else {
-            print("Wrong URL")
-            return
-         }
-        print("2")
-        do {
-            print("in")
-            let(data, _) = try await URLSession.shared.data(from: url)
-            if let decodedData = try? JSONDecoder().decode([RegistroDatos].self, from: data){
                 let datos = decodedData
                 registros = datos
                 print("success")
             }
+        } catch {
+            print("Error: Couldn't bring back data")
         }
-        catch {
-            print("Error: Couldnt bring back data")
-        }
-        print("4")
     }
+
+
 }
 
 struct HPdatos_Previews: PreviewProvider {

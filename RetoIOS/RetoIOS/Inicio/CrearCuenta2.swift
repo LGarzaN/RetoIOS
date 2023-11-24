@@ -9,7 +9,7 @@ import CryptoKit
 
 
 struct CrearCuenta2: View {
-    let dbLink = "http://10.22.129.138:5000"
+    let dbLink = "http://10.22.129.138:5001"
     @State var FechaNac = Date()
     @State var peso = ""
     @State var estatura = ""
@@ -111,6 +111,32 @@ struct CrearCuenta2: View {
     
     func postData(link : String, postData: Usuario) async {
         guard let url = URL(string: link+"/agregausuario") else {
+            print("Wrong URL")
+            return
+        }
+        
+        guard let encoded = try? JSONEncoder().encode(postData) else {
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+            }
+            create = true
+        } catch {
+            print("Check out failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func postAntecedentes(link : String, postData: Antecedente) async {
+        guard let url = URL(string: link+"/agregarAntecedentes") else {
             print("Wrong URL")
             return
         }

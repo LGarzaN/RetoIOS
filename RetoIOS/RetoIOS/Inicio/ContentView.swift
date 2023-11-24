@@ -12,18 +12,23 @@ import CryptoKit
 
 struct DataModel : Codable{
     var contrasena : String
+    var correo : String
+}
+
+struct Response : Codable{
+    var JW_token : String
     var idUsuario : Int
 }
 
 struct ContentView: View {
-    let dbLink = "http://10.22.129.138:5000"
+    let dbLink = "http://10.22.129.138:5001"
     @State var email = ""
     @State var password = ""
     @State var enter = false
     @State var alrta = false
     @State var alrtaMsg = ""
-    @State var pass = DataModel(contrasena: "hi", idUsuario: 1)
     @AppStorage("usu") var usu = 0
+    @AppStorage("JWT") var jwt = ""
     var body: some View {
         NavigationStack{
             ZStack{
@@ -64,20 +69,21 @@ struct ContentView: View {
                     .frame(height: 200)
                     Button {
                         Task{
-                            await loadData(link: dbLink,correo: email)
+                            await postData(link:dbLink, postData: DataModel(contrasena: hashPassword(password), correo: email))
                         }
-                        if (hashPassword(password) == pass.contrasena){
-                            usu = pass.idUsuario
+                        if (jwt != "" && usu != 0){
                             enter = true
-                        }
-                        else {
-                            alrtaMsg = "Datos incorrectos"
+                        } else {
+                            alrtaMsg = "Datos Incorrectos"
                             alrta = true
                         }
                     } label: {
                         ButtonFill(contentTxt: "Iniciar Sesión", c: .blu)
                     }
                     .alert(alrtaMsg, isPresented: $alrta){
+                    }
+                    .fullScreenCover(isPresented : $enter) {
+                        Homepage()
                     }
                     //.padding(.bottom, 300)
                     Spacer()
@@ -105,27 +111,36 @@ struct ContentView: View {
         return ""
     }
     
-    func loadData(link : String, correo:String) async {
-        guard let url = URL(string: link+"/usuario/"+correo) else {
+    func postData(link : String, postData: DataModel) async {
+        guard let url = URL(string: link+"/login") else {
             print("Wrong URL")
             return
         }
-        do {
-            let(data, _) = try await URLSession.shared.data(from: url)
-            if let decodedData = try? JSONDecoder().decode([DataModel].self, from: data){
-                let pa = decodedData
-                if pa.count > 0{
-                    print(pa[0].contrasena)
-                    pass = pa[0]
-                }
-                else{
-                    alrtaMsg = "correo no registrado"
-                }
-
-            }
+        
+        guard let encoded = try? JSONEncoder().encode(postData) else {
+            return
         }
-        catch {
-            print("Error: Couldnt bring back data")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Juan123", forHTTPHeaderField: "X-API-Key")
+        
+        do {
+            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            
+            if let decodedData = try? JSONDecoder().decode(Response.self, from: data){
+                let pa = decodedData
+                usu = pa.idUsuario
+                jwt = pa.JW_token
+                print(jwt)
+            } else {
+                alrtaMsg = "Datos Incorrectos"
+                alrta = true
+            }
+            
+        } catch {
+            print("Check out failed: \(error.localizedDescription)")
         }
     }
 }
@@ -159,7 +174,7 @@ struct ContentView_Previews: PreviewProvider {
  }
 
  struct ContentView: View {
-     let dbLink = "http://10.22.129.138:5000"
+     let dbLink = "http://10.22.129.138:5001"
      @State var email = ""
      @State var password = ""
      @State var enter = false
