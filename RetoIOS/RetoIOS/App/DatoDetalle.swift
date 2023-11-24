@@ -14,7 +14,7 @@ struct DatoDetalle: View {
     @State var alrt : Bool = false
     @AppStorage("usu") var usu = 0
     @State var homeP = false
-    
+    @AppStorage ("JWT") var jwt = ""
     var body: some View {
         NavigationStack{
             ZStack{
@@ -64,7 +64,7 @@ struct DatoDetalle: View {
                         Button("Cancelar", role: .cancel) {}
                         Button("Eliminar", role: .destructive) {
                             Task{
-                                await finSintoma(link: "http://10.22.129.138:5000", idSintoma: dato.idSintomasSeguir)
+                                await finSintoma(link: "http://10.22.129.138:5001", idSintoma: dato.idSintomasSeguir)
                             }
                             homeP = true
                             
@@ -77,7 +77,7 @@ struct DatoDetalle: View {
             }
             .onAppear(){
                 Task{
-                    await getRegistros(link:"http://10.22.129.138:5000", idUsu: usu,idSintoma:dato.idSintomasSeguir)
+                    await getRegistros(link:"http://10.22.129.138:5001", idUsu: usu,idSintoma:dato.idSintomasSeguir)
                 }
             }
         }
@@ -90,11 +90,14 @@ struct DatoDetalle: View {
             return
         }
         
-        //link+"/registros/"+String(idUsu)+"/"+String(idSintoma)
+        var request = URLRequest(url: url)
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
         print("2")
         do {
             print("in")
-            let(data, _) = try await URLSession.shared.data(from: url)
+            let(data, _) = try await URLSession.shared.data(for: request)
             if let decodedData = try? JSONDecoder().decode([RegistroDatos].self, from: data){
                 let datos = decodedData
                 registros = datos
@@ -120,24 +123,29 @@ struct DatoDetalle: View {
         }
     }
     
-    func finSintoma(link : String, idSintoma: Int) async {
-        print("1--")
+    func finSintoma(link: String, idSintoma: Int) async {
         guard let url = URL(string: "\(link)/finSintoma/\(idSintoma)") else {
             print("Wrong URL")
             return
         }
-        
-        //link+"/registros/"+String(idUsu)+"/"+String(idSintoma)
-        print("2")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+
         do {
-            print("in")
-            let(_, _) = try await URLSession.shared.data(from: url)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+            }
+            
+        } catch {
+            print("Error: Couldn't bring back data")
         }
-        catch {
-            print("Error: Couldnt bring back data")
-        }
-        print("4")
     }
+
 }
 
 struct DatoDetalle_Previews: PreviewProvider {
