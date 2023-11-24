@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct HPdatos: View {
-    let dbLink = "http://10.22.129.138:5000"
+    let dbLink = "http://10.22.129.138:5001"
     @State var alrt = false
     @State var tip = 0
     @State var datosList = [DatoSeguir]()
@@ -19,7 +19,7 @@ struct HPdatos: View {
     @State var datoExtra = ""
     @State private var selectedOption = ""
     @AppStorage("usu") var usu = 0
-    @AppStorage ("API_KEY") var key = "Juan"
+    @AppStorage ("JWT") var jwt = ""
     var body: some View {
         GeometryReader{geo in
             NavigationStack{
@@ -124,7 +124,7 @@ struct HPdatos: View {
     }
     
     func postData(link : String, postData: DatoSeguir) async {
-        guard let url = URL(string: link+"/agregadatoseguir") else {
+        guard let url = URL(string: link+"/agregadatoseguir/?jwt=\(jwt)") else {
             print("Wrong URL")
             return
         }
@@ -136,6 +136,10 @@ struct HPdatos: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        print(request.allHTTPHeaderFields ?? "No headers")
+
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
@@ -148,29 +152,29 @@ struct HPdatos: View {
         }
     }
     
-    
-    
-    func getData(link : String, numId: Int) async {
-        print("1--")
-        guard let url = URL(string: link+"/datoshp/"+String(numId)) else {
+    func getData(link: String, numId: Int) async {
+        guard let url = URL(string: link + "/datoshp/" + String(numId)) else {
             print("Wrong URL")
             return
         }
-        print("2")
+
+        var request = URLRequest(url: url)
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
         do {
-            print("in")
-            let(data, _) = try await URLSession.shared.data(from: url)
-            if let decodedData = try? JSONDecoder().decode([DatoSeguir].self, from: data){
+            let (data, _) = try await URLSession.shared.data(for: request)
+            if let decodedData = try? JSONDecoder().decode([DatoSeguir].self, from: data) {
                 let datos = decodedData
                 datosList = datos
                 print("success")
             }
+        } catch {
+            print("Error: Couldn't bring back data")
         }
-        catch {
-            print("Error: Couldnt bring back data")
-        }
-        print("4")
     }
+
+
 }
 
 struct HPdatos_Previews: PreviewProvider {

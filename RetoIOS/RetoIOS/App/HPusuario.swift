@@ -19,6 +19,7 @@ struct HPusuario: View {
     @State var peso = 1.1
     @State var estatura = 2.2
     @AppStorage("usu") var usu = 0
+    @AppStorage("JWT") var jwt = ""
     
     var opciones = ["Sintomas" , "Calendario", "Usuario"]
     var body: some View {
@@ -228,6 +229,7 @@ struct HPusuario: View {
                             Button("Cancelar", role: .cancel) {}
                             Button("Cerrar Sesión", role: .destructive) {
                                 usu = 0
+                                jwt = ""
                                 logOut = true
                             }
                         }
