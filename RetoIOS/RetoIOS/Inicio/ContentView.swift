@@ -39,6 +39,8 @@ struct ContentView: View {
                             HStack{
                                 TextField(" ",text: $email)
                                     .autocapitalization(.none)
+                                    .autocorrectionDisabled()
+                                    .textContentType(.emailAddress)
                             }
                         }
                         header : {
@@ -48,6 +50,10 @@ struct ContentView: View {
                             HStack{
                                 TextField(" ",text: $password)
                                     .autocapitalization(.none)
+                                    .autocorrectionDisabled()
+                                    //.textContentType(.password)
+                                //Text(String(repeating: "•", count: password.count))
+                                            //.foregroundColor(.black)
                             }
                         }
                         header : {
