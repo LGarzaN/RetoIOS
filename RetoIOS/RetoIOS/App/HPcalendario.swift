@@ -111,7 +111,7 @@ struct HPcalendario: View {
                             .padding(.horizontal)
                             Spacer()
                         }
-                        .frame(height: 424)
+                        .frame(height: 426)
                         HStack(alignment: .center){
                             Button(action: {
                                 mesElegido -= 1

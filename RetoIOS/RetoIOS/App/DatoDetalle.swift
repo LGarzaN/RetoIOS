@@ -10,7 +10,9 @@ import Charts
 
 struct DatoDetalle: View {
     var dato : DatoSeguir
+    let dblink = "http://10.22.129.138:5000"
     @State var registros = [RegistroDatos]()
+    @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
     @State var alrt : Bool = false
     @AppStorage("usu") var usu = 0
     @State var homeP = false
@@ -29,8 +31,20 @@ struct DatoDetalle: View {
                         .padding(.top, 20.0)
                         .frame(width: 333, alignment: .leading)
                     Chart{
-                        ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
-                            BarMark(x: .value("Ciudad",registro.RegistroFecha), y: .value("Poblacion", registro.RegistroIntensidad))
+                        if registros.count < 5{
+                            ForEach(Array(registrosNull.suffix(5-registros.count)), id: \.self.idRegistroSintomas) { registro in
+                                BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
+                                .foregroundStyle(.clear)
+                            }
+                            ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
+                                BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
+                                    
+                            }
+                        }else{
+                            ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
+                                BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
+                                    
+                            }
                         }
                     }
                     .frame(width: 330, height: 200)
@@ -77,7 +91,7 @@ struct DatoDetalle: View {
             }
             .onAppear(){
                 Task{
-                    await getRegistros(link:"http://10.22.129.138:5001", idUsu: usu,idSintoma:dato.idSintomasSeguir)
+                    await getRegistros(link:dblink, idUsu: usu,idSintoma:dato.idSintomasSeguir)
                 }
             }
         }
@@ -85,10 +99,18 @@ struct DatoDetalle: View {
     
     func getRegistros(link : String, idUsu: Int, idSintoma: Int) async {
         print("1--")
-        guard let url = URL(string: "\(link)/registros/\(idUsu)/\(idSintoma)") else {
+        /*
+        guard let url = URL(string: "\(link)/registros/5/6") else {
             print("Wrong URL")
             return
         }
+         */
+        
+         guard let url = URL(string: "\(link)/registros/\(idUsu)/\(idSintoma)") else {
+             print("Wrong URL")
+             return
+         }
+         
         
         var request = URLRequest(url: url)
         request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
@@ -153,68 +175,3 @@ struct DatoDetalle_Previews: PreviewProvider {
         DatoDetalle(dato: DatoSeguir(idSintomasSeguir: 0, SeguirNombre: "", SeguirTipo: 0, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: 0))
     }
 }
-
-/*
- 
- import SwiftUI
- import Charts
-
- struct DatoDetalle: View {
-     var dato : DatoSeguir
-     var listaRegistro  = [
-         registroDatos(id: 0, nombre: "Tos", fecha: Date(), intensidad: 4, nota: ""),
-         registroDatos(id: 1, nombre: "Tos", fecha: Date(), intensidad: 2, nota: ""),
-         registroDatos(id: 2, nombre: "Tos", fecha: Date(), intensidad: 7, nota: ""),
-         registroDatos(id: 3, nombre: "Tos", fecha: Date(), intensidad: 5, nota: ""),
-         registroDatos(id: 4, nombre: "Tos", fecha: Date(), intensidad: 9, nota: ""),
-         registroDatos(id: 5, nombre: "Tos", fecha: Date(), intensidad: 3, nota: ""),
-         registroDatos(id: 6, nombre: "Tos", fecha: Date(), intensidad: 1, nota: "")
-     ]
-     var body: some View {
-         NavigationStack{
-             VStack{
-                 Text(dato.nombreDato)
-                     .foregroundColor(.black)
-                     .font(.system(size: 30))
-                     .frame(width: 333, alignment: .leading)
-                     .padding()
-                 Chart{
-                     ForEach(listaRegistro) { registro in
-                         BarMark(x: .value("Ciudad", registro.id), y: .value("Poblacion", registro.intensidad))
-                     }
-                 }
-                 .frame(width: 333, height: 200)
-                 Text("Seguimiento")
-                     .foregroundColor(.gray)
-                     .frame(width: 333, alignment: .leading)
-                     .padding()
-                     .font(.system(size: 25))
-             }
-
-             Form{
-                 Section{
-                     NavigationLink {
-                         ComoTeSientes()
-                     } label: {
-                         Text("¿Cómo te sientes?")
-                     }
-                 }
-                 Section{
-                     NavigationLink {
-                         
-                     } label: {
-                         Text("Últimos Días")
-                     }                        }
-             }
-             ButtonBlank(contentTxt: "Finalizar dato", c: .black)
-         }
-     }
- }
-
- struct DatoDetalle_Previews: PreviewProvider {
-     static var previews: some View {
-         DatoDetalle(dato: DatoSeguir(id: 0, nombreDato: "Dato", fechaIni: Date(), fechaFin: Date(), ultimoRegistro: Date(), tipo: 0, idPaciente: 0))
-     }
- }
-
- */
