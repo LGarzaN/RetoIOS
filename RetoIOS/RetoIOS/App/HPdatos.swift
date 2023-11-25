@@ -19,8 +19,8 @@ struct HPdatos: View {
     @State var datoExtra = ""
     @State private var selectedOption = ""
     @AppStorage ("API_KEY") var key = "Juan"
-    @State var registros = [RegistroDatos]()
-    @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
+    @State var registros = [DatoCharts]()
+    //@State var registrosNull = [DatoCharts(RegistroFecha: " ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "  ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "   ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "    ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "     ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69)]
     @AppStorage("usu") var usu = 0
     @AppStorage ("JWT") var jwt = ""
     var body: some View {
@@ -46,24 +46,12 @@ struct HPdatos: View {
                                                 Text("Ultimo Registro")
                                                 Text(d.UltimoRegistro)
                                                     .foregroundColor(.secondary)
-
                                             }
                                             .padding(.trailing, 10)
-                                        
-                                            Chart{
-                                                if registros.count < 5{
-                                                    ForEach(Array(registrosNull.suffix(5-registros.count)), id: \.self.idRegistroSintomas) { registro in
-                                                        BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
-                                                        .foregroundStyle(.clear)
-                                                    }
-                                                    ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
-                                                        BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
-                                                            
-                                                    }
-                                                }else{
-                                                    ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
-                                                        BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
-                                                            
+                                            Chart {
+                                                ForEach(Array(registros), id: \.id) { registro in
+                                                    if registro.SintomasSeguir_idSintomasSeguir == d.idSintomasSeguir{
+                                                        BarMark(x: .value("Dia", registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
                                                     }
                                                 }
                                             }
@@ -140,6 +128,10 @@ struct HPdatos: View {
                         .onAppear(){
                             Task {
                                 await getData(link: dbLink, numId: usu)
+                                await getChartsData(link: dbLink, usuId: usu)
+                                sortRegistros()
+                                var matrix = createMatrix()
+                                print(matrix)
                             }
                         }//onAppear
                     }//vStack
@@ -190,14 +182,56 @@ struct HPdatos: View {
             if let decodedData = try? JSONDecoder().decode([DatoSeguir].self, from: data) {
                 let datos = decodedData
                 datosList = datos
-                print("success")
+                print(datosList)
             }
         } catch {
             print("Error: Couldn't bring back data")
         }
     }
+    
+    func getChartsData(link: String, usuId: Int) async {
+        print("fme")
+        guard let url = URL(string: link + "/getcharts/" + String(usuId)) else {
+            print("Wrong URL")
+            return
+        }
 
+        var request = URLRequest(url: url)
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        print("lemme")
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            if let decodedData = try? JSONDecoder().decode([DatoCharts].self, from: data) {
+                let datos = decodedData
+                registros = datos
+                print(registros)
+                print("yay")
+            }
+        } catch {
+            print("Error: Couldn't bring back data")
+        }
+    }
+    func sortRegistros() {
+        registros.sort { $0.SintomasSeguir_idSintomasSeguir < $1.SintomasSeguir_idSintomasSeguir }
+    }
+    func createMatrix() -> [Int: [DatoCharts]] {
+            var matrix: [Int: [DatoCharts]] = [:]
 
+            for registro in registros {
+                let id = registro.SintomasSeguir_idSintomasSeguir
+                
+                if matrix[id] != nil {
+                    matrix[id]?.append(registro)
+                } else {
+                    matrix[id] = [registro]
+                }
+            }
+
+            return matrix
+        }
+    
+    
 }
 
 struct HPdatos_Previews: PreviewProvider {
@@ -212,5 +246,26 @@ struct HPdatos_Previews: PreviewProvider {
      LineMark(x: .value("Ciudad", "2"), y: .value("Poblacion", 7))
      LineMark(x: .value("Ciudad", "3"), y: .value("Poblacion", 2))
      LineMark(x: .value("Ciudad", "4"), y: .value("Poblacion", 10))
+ }
+
+ ForEach(Array(datosList.enumerated()), id:\.d){index, d in
+     await getRegistros(link: dbLink, idUsu: usu, idSintoma: d.idSintomasSeguir, inde: index)
+ }
+ ForEach(datosList, id:\.self){d in
+     await getRegistros(link: dbLink, idUsu: usu, idSintoma: d.idSintomasSeguir)
+ }
+ 
+ if registros.count < 5{
+     ForEach(Array(registrosNull.suffix(5-registros.count)), id: \.self.idRegistroSintomas) { registro in
+         BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
+         .foregroundStyle(.clear)
+     }
+     ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
+         BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
+     }
+ }else{
+     ForEach(Array(registros.suffix(5)), id: \.self.idRegistroSintomas) { registro in
+         BarMark(x: .value("Dia",registro.RegistroFecha), y: .value("Que tan mal", registro.RegistroIntensidad), width: 10)
+     }
  }
  */

@@ -30,6 +30,7 @@
 		BB0C33292AF59F4300AD93F7 /* AgregarAntecedente.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */; };
 		BB0C332B2AF59F9A00AD93F7 /* Antecedentes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */; };
 		BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41F1472ADF45840088D1C5 /* Prefabs.swift */; };
+		BBC551862B1176130096A833 /* DatoCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC551852B1176130096A833 /* DatoCharts.swift */; };
 		BBF993132AFC2930008AC049 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF993122AFC2930008AC049 /* SplashScreenView.swift */; };
 		FB9CDA822AFEDF0C007A44BD /* HPcalendariodatos.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9CDA812AFEDF0C007A44BD /* HPcalendariodatos.swift */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		BB0C33282AF59F4300AD93F7 /* AgregarAntecedente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgregarAntecedente.swift; sourceTree = "<group>"; };
 		BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Antecedentes.swift; sourceTree = "<group>"; };
 		BB41F1472ADF45840088D1C5 /* Prefabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefabs.swift; sourceTree = "<group>"; };
+		BBC551852B1176130096A833 /* DatoCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatoCharts.swift; sourceTree = "<group>"; };
 		BBF993122AFC2930008AC049 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		FB9CDA812AFEDF0C007A44BD /* HPcalendariodatos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPcalendariodatos.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +173,7 @@
 				BB0C332A2AF59F9A00AD93F7 /* Antecedentes.swift */,
 				4C36936A2AF436240026CC52 /* RegistroDatos.swift */,
 				4C36C7702AF5881500876275 /* DatoSeguir.swift */,
+				BBC551852B1176130096A833 /* DatoCharts.swift */,
 				BB41F1472ADF45840088D1C5 /* Prefabs.swift */,
 				4C6652982B074350004230D8 /* Usuario.swift */,
 			);
@@ -353,6 +356,7 @@
 				4C2B0ECC2ADDDB8200693DC1 /* RetoIOSApp.swift in Sources */,
 				4C36C7752AF5AB6000876275 /* ComoTeSientes.swift in Sources */,
 				4C36936B2AF436240026CC52 /* RegistroDatos.swift in Sources */,
+				BBC551862B1176130096A833 /* DatoCharts.swift in Sources */,
 				4C3693612AF309B30026CC52 /* Homepage.swift in Sources */,
 				4CCA40E32B02E7D500F954DF /* DetalleDia.swift in Sources */,
 				BB41F1482ADF45840088D1C5 /* Prefabs.swift in Sources */,
