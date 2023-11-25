@@ -10,7 +10,7 @@ struct HPcalendario: View {
     @State var mostrarDatos = false
     let columnLayout = Array(repeating: GridItem(.flexible(minimum: 20, maximum: 100)), count: 7)
     let dias = ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
-    let meses = ["En", "Feb", "Mzo", "Abr", "Myo", "Jun", "Jul", "Ago", "Sept", "Oct", "Nov", "Dic"]
+    let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
     @State var mesElegido = Calendar.current.component(.month, from: Date()) - 1
     @State var year = Calendar.current.component(.year, from: Date())

@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ComoTeSientes: View {
     var dato : DatoSeguir
+    @State var intensidadStr = ""
     @State var intensidad = 0.0
     @State var accent : Color = .black
     @State var nota : String = ""
     @State var fecha : Date = Date()
     @State var alerta = false
+    @State var alerta2 = false
     @State var cont = ""
     @State var added = false
     @State var reg = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
@@ -23,13 +25,20 @@ struct ComoTeSientes: View {
         VStack{
             Text("¿Cómo te sientes hoy?")
                 .foregroundColor(.gray)
-                .frame(width: 333, alignment: .leading)
+                .frame(width: 333, alignment: .center)
                 .padding()
                 .font(.system(size: 25))
-            Slider(value: $intensidad)
-                .padding(.horizontal, 30)
-                .padding(.bottom, 15)
-                .tint(accentColor(for: intensidad))
+            if (dato.SeguirTipo == 1){
+                Slider(value: $intensidad)
+                    .padding(.horizontal, 30)
+                    .padding(.bottom, 15)
+                    .tint(accentColor(for: intensidad))
+            } else {
+                TextField("Escribe un dato", text: $intensidadStr)
+                    .padding()
+                    .padding(.horizontal, 80)
+                    .textFieldStyle(.roundedBorder)
+            }
             Form{
                 Section{
                     TextEditor(text: $nota)
@@ -45,12 +54,20 @@ struct ComoTeSientes: View {
                 }
             }
             Button {
-                if(intensidad == 0){
-                    alerta = true
-                    cont = "No modificó la intensidad ¿Desea Continuar?"
+                if (dato.SeguirTipo == 0){
+                    if let intst = Double(intensidadStr){
+                        intensidad = intst
+                    } else {
+                        cont = "La intensidad debe ser un dato numerico"
+                        alerta2 = true
+                    }
+                } else {
+                    if (intensidad == 0){
+                        alerta = true
+                        cont = "No modificó la intensidad ¿Desea Continuar?"
+                    }
                 }
-                
-                else if (nota == ""){
+                if (nota == "" && alerta2 != true){
                     alerta = true
                     cont = "No agregó una nota, ¿Desea Continuar?"
                 }
@@ -84,6 +101,9 @@ struct ComoTeSientes: View {
                     }
                     added = true
                 }
+            }
+            .alert(cont, isPresented: $alerta2){
+                Button("Regresar", role: .cancel) {}
             }
             .fullScreenCover(isPresented : $added) {
                 Homepage()

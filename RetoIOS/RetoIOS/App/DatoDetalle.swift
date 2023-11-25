@@ -99,7 +99,6 @@ struct DatoDetalle: View {
     
     func getRegistros(link : String, idUsu: Int, idSintoma: Int) async {
         print("1--")
-        
          guard let url = URL(string: "\(link)/registros/\(idUsu)/\(idSintoma)") else {
              print("Wrong URL")
              return

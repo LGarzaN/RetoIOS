@@ -11,6 +11,7 @@ import Charts
 struct HPdatos: View {
     let dbLink = "http://10.22.129.138:5001"
     @State var alrt = false
+    @State private var animate: Bool = false
     @State var tip = 0
     @State var datosList = [DatoSeguir]()
     let tipoOpciones = ["Cualitativo", "Cuantitativo"]
@@ -60,6 +61,12 @@ struct HPdatos: View {
                                     }
                                 }
                             }
+                            .onAppear {
+                                withAnimation {
+                                    animate = true
+                                }
+                            }
+                            .opacity(animate ? 1 : 0)
                         }//form
                         .navigationTitle("Seguimiento")
                         .scrollContentBackground(.hidden)
@@ -99,9 +106,9 @@ struct HPdatos: View {
                                 Button{
                                     selectedOption = datoExtra
                                     if (tipo == "Cualitativo"){
-                                        tip = 0
-                                    } else {
                                         tip = 1
+                                    } else {
+                                        tip = 0
                                     }
                                     let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
                                     datoS.formatDate(Date())
@@ -148,8 +155,6 @@ struct HPdatos: View {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
         request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
-        print(request.allHTTPHeaderFields ?? "No headers")
-
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)

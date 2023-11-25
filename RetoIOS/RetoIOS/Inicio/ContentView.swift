@@ -70,13 +70,14 @@ struct ContentView: View {
                     Button {
                         Task{
                             await postData(link:dbLink, postData: DataModel(contrasena: hashPassword(password), correo: email))
+                            if (jwt != "" && usu != 0){
+                                enter = true
+                            } else {
+                                alrtaMsg = "Datos Incorrectos"
+                                alrta = true
+                            }
                         }
-                        if (jwt != "" && usu != 0){
-                            enter = true
-                        } else {
-                            alrtaMsg = "Datos Incorrectos"
-                            alrta = true
-                        }
+
                     } label: {
                         ButtonFill(contentTxt: "Iniciar Sesión", c: .blu)
                     }
