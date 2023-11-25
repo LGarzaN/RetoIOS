@@ -45,8 +45,6 @@ struct HPdatos: View {
                                                 Text("Ultimo Registro")
                                                 Text(d.UltimoRegistro)
                                                     .foregroundColor(.secondary)
-                                                //Text(d.idSintomasSeguir)
-
                                             }
                                             .padding(.trailing, 10)
                                             Chart {
@@ -124,6 +122,9 @@ struct HPdatos: View {
                             Task {
                                 await getData(link: dbLink, numId: usu)
                                 await getChartsData(link: dbLink, usuId: usu)
+                                sortRegistros()
+                                var matrix = createMatrix()
+                                print(matrix)
                             }
                         }//onAppear
                     }//vStack
@@ -206,6 +207,24 @@ struct HPdatos: View {
             print("Error: Couldn't bring back data")
         }
     }
+    func sortRegistros() {
+        registros.sort { $0.SintomasSeguir_idSintomasSeguir < $1.SintomasSeguir_idSintomasSeguir }
+    }
+    func createMatrix() -> [Int: [DatoCharts]] {
+            var matrix: [Int: [DatoCharts]] = [:]
+
+            for registro in registros {
+                let id = registro.SintomasSeguir_idSintomasSeguir
+                
+                if matrix[id] != nil {
+                    matrix[id]?.append(registro)
+                } else {
+                    matrix[id] = [registro]
+                }
+            }
+
+            return matrix
+        }
     
     
 }
