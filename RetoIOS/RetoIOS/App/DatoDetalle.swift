@@ -10,7 +10,7 @@ import Charts
 
 struct DatoDetalle: View {
     var dato : DatoSeguir
-    let dblink = "http://10.22.129.138:5000"
+    let dblink = "http://10.22.129.138:5001"
     @State var registros = [RegistroDatos]()
     @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
     @State var alrt : Bool = false
@@ -99,13 +99,6 @@ struct DatoDetalle: View {
     
     func getRegistros(link : String, idUsu: Int, idSintoma: Int) async {
         print("1--")
-        /*
-        guard let url = URL(string: "\(link)/registros/5/6") else {
-            print("Wrong URL")
-            return
-        }
-         */
-        
          guard let url = URL(string: "\(link)/registros/\(idUsu)/\(idSintoma)") else {
              print("Wrong URL")
              return

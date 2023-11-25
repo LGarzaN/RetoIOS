@@ -19,54 +19,60 @@ struct UltimosDias: View {
     ]
     var body: some View {
         NavigationStack {
-            VStack{
-                ScrollView(.vertical, showsIndicators: true) {
-                    ForEach($registros){r in
-                        NavigationLink{
-                        } label: {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(Color("butts"))
-                                VStack{
-                                    Text(r.RegistroFecha.wrappedValue)
-                                        .foregroundColor(Color("txt"))
-                                    Slider(value:r.RegistroIntensidad)
-                                        .tint(accentColor(for: r.RegistroIntensidad))
-                                        .disabled(true)
-                                        .padding(.bottom)
-                                        .padding(.horizontal)
-                                    Text("Nota")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.horizontal)
-                                        .foregroundColor(Color("txt"))
-                                        .padding(.bottom, 1)
-                                    
-                                    Text(r.RegistroNota.wrappedValue)
-                                        .multilineTextAlignment(.leading)
-                                        .foregroundColor(Color("gry"))
-                                        .lineLimit(2)
-                                        .truncationMode(.tail)
-                                        .padding(.horizontal)
-                                    
+            if (registros.isEmpty){
+                Text("No hay registros")
+                    .font(.largeTitle)
+            } else {
+                VStack{
+                    ScrollView(.vertical, showsIndicators: true) {
+                        ForEach($registros){r in
+                            NavigationLink{
+                            } label: {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundColor(Color("butts"))
+                                    VStack{
+                                        Text(r.RegistroFecha.wrappedValue)
+                                            .foregroundColor(Color("txt"))
+                                        Slider(value:r.RegistroIntensidad)
+                                            .tint(accentColor(for: r.RegistroIntensidad))
+                                            .disabled(true)
+                                            .padding(.bottom)
+                                            .padding(.horizontal)
+                                        Text("Nota")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(Color("txt"))
+                                            .padding(.bottom, 1)
+                                        
+                                        Text(r.RegistroNota.wrappedValue)
+                                            .multilineTextAlignment(.leading)
+                                            .foregroundColor(Color("gry"))
+                                            .lineLimit(2)
+                                            .truncationMode(.tail)
+                                            .padding(.horizontal)
+                                        
+                                    }
+                                    .padding()
                                 }
-                                .padding()
-                            }
-                            .padding(.horizontal, 20)
-                            .padding(5)
-                            .onTapGesture {
-                                regis = r.wrappedValue
-                                isDetailPresented = true
+                                .padding(.horizontal, 20)
+                                .padding(5)
+                                .onTapGesture {
+                                    regis = r.wrappedValue
+                                    isDetailPresented = true
+                                }
                             }
                         }
+                        .sheet(isPresented: $isDetailPresented) {
+                            DetalleDia(dato: regis)
+                                .presentationDetents([.medium, .large])
+                        }
+                        .navigationBarTitle(dato.SeguirNombre)
                     }
-                    .sheet(isPresented: $isDetailPresented) {
-                        DetalleDia(dato: regis)
-                            .presentationDetents([.medium, .large])
-                    }
-                    .navigationBarTitle(dato.SeguirNombre)
                 }
+                .background(Color("basic"))
             }
-            .background(Color("basic"))
+
         }
     }
     func accentColor(for value: Binding<Float>) -> Color {
