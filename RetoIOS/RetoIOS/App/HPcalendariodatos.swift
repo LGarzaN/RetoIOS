@@ -9,51 +9,147 @@ import SwiftUI
 
 struct HPcalendariodatos: View {
     @State var selectedDay: String
+    let dbLink = "http://10.22.129.138:5001"
     let selectedMonth: String
+    @State var fecha = ""
     let selectedYear: Int
+    @AppStorage("usu") var usu = 0
+    @AppStorage ("JWT") var jwt = ""
+    @State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    @State var registros = [RegistroDatos]()
+    @State private var isDetailPresented = false
 
-    let data: [(date: Date, symptoms: String, registrationTime: String, averageOfDay: String)] = [
-            (date: Date(), symptoms: "Dolor de cabeza", registrationTime: "10:30 AM", averageOfDay: "Bueno"),
-            (date: Date().addingTimeInterval(86400), symptoms: "Fatiga", registrationTime: "02:45 PM", averageOfDay: "Moderado"),
-        ]
-        
         var body: some View {
             NavigationView {
-                List(data, id: \.date) { item in
-                    Section {
-                        HStack {
-                            Text("Síntoma:")
-                            Spacer()
-                            Text(item.symptoms)
-                        }
-                        HStack {
-                            Text("Hora de registro:")
-                            Spacer()
-                            Text(item.registrationTime)
-                        }
-                        HStack {
-                            Text("Promedio del día:")
-                            Spacer()
-                            Text(item.averageOfDay)
+                if (registros.isEmpty){
+                    Text("No hay registros")
+                        .font(.largeTitle)
+                } else {
+                    VStack{
+                        Text("\(selectedDay) \(selectedMonth) "+String(selectedYear))
+                            .padding()
+                            .font(.largeTitle)
+                        ScrollView(.vertical, showsIndicators: true) {
+                            ForEach($registros){r in
+                                NavigationLink{
+                                } label: {
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(Color("butts"))
+                                        VStack{
+                                            Text(r.RegistroSintoma.wrappedValue)
+                                                .foregroundColor(Color("txt"))
+                                            if (r.RegistroIntensidad.wrappedValue > 1){
+                                                Text(roundedString(value: Double(r.RegistroIntensidad.wrappedValue), decimalPlaces: 2))
+                                                    .padding()
+                                                    .foregroundColor(.primary)
+                                            } else {
+                                                Slider(value:r.RegistroIntensidad)
+                                                    .tint(accentColor(for: r.RegistroIntensidad))
+                                                    .disabled(true)
+                                                    .padding(.bottom)
+                                                    .padding(.horizontal)
+                                            }
+
+                                            Text("Nota")
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(.horizontal)
+                                                .foregroundColor(Color("txt"))
+                                                .padding(.bottom, 1)
+                                            
+                                            Text(r.RegistroNota.wrappedValue)
+                                                .multilineTextAlignment(.leading)
+                                                .foregroundColor(Color("gry"))
+                                                .lineLimit(2)
+                                                .truncationMode(.tail)
+                                                .padding(.horizontal)
+                                            
+                                        }
+                                        .padding()
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(5)
+                                    .onTapGesture {
+                                        regis = r.wrappedValue
+                                        isDetailPresented = true
+                                    }
+                                }
+                            }
+                            .sheet(isPresented: $isDetailPresented) {
+                                DetalleDia(dato: regis)
+                                    .presentationDetents([.medium, .large])
+                            }
+                            .navigationBarTitle(regis.RegistroSintoma)
                         }
                     }
+                    .navigationBarTitle("\(selectedDay) \(selectedMonth) \(String(format: "%04d", selectedYear))", displayMode: .inline)
                 }
-                .navigationBarTitle("\(selectedDay) \(selectedMonth) \(String(format: "%04d", selectedYear))", displayMode: .inline)
+            }
+            .onAppear(){
+                if selectedDay == ""{
+                    fecha = "2023-11-2"
+                } else {
+                    fecha = formattedDateString(ano: selectedYear, mes: selectedMonth, d: selectedDay)!
+                }
+                Task{
+                    await getData(link: dbLink, numId: usu, fecha: fecha)
+                }
             }
         }
 
-        func formattedDate(_ date: Date) -> String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "es_ES")
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-            let formattedDate = dateFormatter.string(from: date)
-            
-            let dayFormatter = DateFormatter()
-            dayFormatter.locale = Locale(identifier: "es_ES")
-            dayFormatter.dateFormat = "EEEE"
-            let formattedDay = dayFormatter.string(from: date)
-            
-            return "\(formattedDay), \(formattedDate)"
+    func formattedDateString(ano: Int, mes:String, d:String) -> String? {
+        // Create a DateFormatter
+        let dateFormatter = DateFormatter()
+        print(ano)
+        print(mes)
+        print(d)
+
+        dateFormatter.locale = Locale(identifier: "es")
+
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+
+        if let date = dateFormatter.date(from: "\(ano)-\(mes)-\(d)") {
+            return dateFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
+    
+    func roundedString(value: Double, decimalPlaces: Int) -> String {
+        return String(format: "%.\(decimalPlaces)f", value)
+    }
+    
+    func getData(link: String, numId: Int, fecha: String) async {
+        guard let url = URL(string: link + "/registrosDia/" + String(numId) + "/" + fecha) else {
+            print("Wrong URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            if let decodedData = try? JSONDecoder().decode([RegistroDatos].self, from: data) {
+                let datos = decodedData
+                registros = datos
+                print("success")
+            }
+        } catch {
+            print("Error: Couldn't bring back data")
+        }
+    }
+    
+    func accentColor(for value: Binding<Float>) -> Color {
+            let floatValue = value.wrappedValue
+            if floatValue < 0.33 {
+                return .green
+            } else if floatValue < 0.66 {
+                return .yellow
+            } else {
+                return .red
+            }
         }
 }
 

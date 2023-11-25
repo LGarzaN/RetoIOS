@@ -11,16 +11,16 @@ import Charts
 struct HPdatos: View {
     let dbLink = "http://10.22.129.138:5001"
     @State var alrt = false
+    @State private var animate: Bool = false
     @State var tip = 0
     @State var datosList = [DatoSeguir]()
-    @State var mat = [[RegistroDatos]]()
     let tipoOpciones = ["Cualitativo", "Cuantitativo"]
     @State var tipo = ""
     @State var datoExtra = ""
     @State private var selectedOption = ""
     @AppStorage ("API_KEY") var key = "Juan"
     @State var registros = [RegistroDatos]()
-    @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
+    @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
     @AppStorage("usu") var usu = 0
     @AppStorage ("JWT") var jwt = ""
     var body: some View {
@@ -73,6 +73,12 @@ struct HPdatos: View {
                                     }
                                 }
                             }
+                            .onAppear {
+                                withAnimation {
+                                    animate = true
+                                }
+                            }
+                            .opacity(animate ? 1 : 0)
                         }//form
                         .navigationTitle("Seguimiento")
                         .scrollContentBackground(.hidden)
@@ -112,9 +118,9 @@ struct HPdatos: View {
                                 Button{
                                     selectedOption = datoExtra
                                     if (tipo == "Cualitativo"){
-                                        tip = 0
-                                    } else {
                                         tip = 1
+                                    } else {
+                                        tip = 0
                                     }
                                     let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
                                     datoS.formatDate(Date())
@@ -157,8 +163,6 @@ struct HPdatos: View {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
         request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
-        print(request.allHTTPHeaderFields ?? "No headers")
-
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
@@ -185,7 +189,7 @@ struct HPdatos: View {
             let (data, _) = try await URLSession.shared.data(for: request)
             if let decodedData = try? JSONDecoder().decode([DatoSeguir].self, from: data) {
                 let datos = decodedData
-                registros = datos
+                datosList = datos
                 print("success")
             }
         } catch {
