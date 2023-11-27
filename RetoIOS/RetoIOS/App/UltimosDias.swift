@@ -30,11 +30,17 @@ struct UltimosDias: View {
                                 VStack{
                                     Text(r.RegistroFecha.wrappedValue)
                                         .foregroundColor(Color("txt"))
-                                    Slider(value:r.RegistroIntensidad)
-                                        .tint(accentColor(for: r.RegistroIntensidad))
-                                        .disabled(true)
-                                        .padding(.bottom)
-                                        .padding(.horizontal)
+                                    if (dato.SeguirTipo == 0){
+                                        Text(roundedString(value: Double(r.RegistroIntensidad.wrappedValue), decimalPlaces: 2))
+                                            .padding()
+                                            .foregroundColor(.primary)
+                                    } else {
+                                        Slider(value:r.RegistroIntensidad)
+                                            .tint(accentColor(for: r.RegistroIntensidad))
+                                            .disabled(true)
+                                            .padding(.bottom)
+                                            .padding(.horizontal)
+                                    }
                                     Text("Nota")
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal)
@@ -86,7 +92,10 @@ struct UltimosDias: View {
             } else {
                 return .red
             }
-        }
+    }
+    func roundedString(value: Double, decimalPlaces: Int) -> String {
+        return String(format: "%.\(decimalPlaces)f", value)
+    }
 
 }
 

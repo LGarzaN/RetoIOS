@@ -18,6 +18,13 @@ struct DataModel : Codable{
 struct Response : Codable{
     var JW_token : String
     var idUsuario : Int
+    /*
+     var NombreUsuario : String
+     var ApellidoUsuario : String
+     var Fecha_Nacimiento : String
+     var CorreoUsuario : String
+     var TelefonoUsuario : Int
+     */
 }
 
 struct ContentView: View {

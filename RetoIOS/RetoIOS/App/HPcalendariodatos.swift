@@ -100,11 +100,6 @@ struct HPcalendariodatos: View {
                     await getData(link: dbLink, numId: usu, fecha: fecha)
                 }
             }
-            .onChange(of: isDetailPresented) { newValue in
-                if newValue, let index = registros.firstIndex(where: { $0.idRegistroSintomas == registro.first?.idRegistroSintomas }) {
-                    registro = [registros[index]]
-                }
-            }
         }
 
     func formattedDateString(ano: Int, mes:String, d:String) -> String? {

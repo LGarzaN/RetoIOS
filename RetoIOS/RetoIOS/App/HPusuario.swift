@@ -7,19 +7,27 @@
 
 import SwiftUI
 
+struct datosp : Codable{
+    var Estatura : Double
+    var NombreUsuario : String
+    var ApellidoUsuario : String
+    var CorreoUsuario : String
+}
+
 struct HPusuario: View {
-    @State var nombre = "Juan"
-    @State var apellidos = "Lebrija"
-    @State var correo = "a01721659@tec.mx"
+    @State var correo = "correo@mail.mx"
     @State var Num_tel_Usuario = "81 23 45 67 89"
+    let dbLink = "http://10.22.129.138:5001"
     @State var Doctor = ""
+    @State var d = datosp(Estatura: 0, NombreUsuario: "Luis", ApellidoUsuario: "Garza", CorreoUsuario: "luis@gmail.com")
     @State var logOut = false
     @State var checkLogOut = false
     @State var Num_tel_Doctor = ""
-    @State var peso = 1.1
-    @State var estatura = 2.2
     @AppStorage("usu") var usu = 0
     @AppStorage("JWT") var jwt = ""
+    @AppStorage("nombre") var nombre = ""
+    @AppStorage("apellidos") var apellidos = ""
+    @AppStorage("Estatura") var estatura = 0.0
     
     var opciones = ["Sintomas" , "Calendario", "Usuario"]
     var body: some View {
@@ -40,7 +48,7 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("nombre", text: $nombre)
+                                                    TextField("nombre", text: $d.NombreUsuario)
                                                 }
                                             }
                                         }
@@ -49,7 +57,7 @@ struct HPusuario: View {
                                     }label:{
                                         HStack{
                                             Text("Nombre")
-                                            TextField("\(nombre)", text: $nombre)
+                                            TextField("\(nombre)", text: $d.NombreUsuario)
                                                 .multilineTextAlignment(.trailing)
                                                 .disabled(true)
                                                 .foregroundColor(.gray)
@@ -62,7 +70,7 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("apellido", text: $apellidos)
+                                                    TextField("apellido", text: $d.ApellidoUsuario)
                                                 }
                                             }
                                         }
@@ -71,7 +79,7 @@ struct HPusuario: View {
                                     }label:{
                                         HStack{
                                             Text("Apellido")
-                                            TextField("\(apellidos)", text: $apellidos)
+                                            TextField("\(apellidos)", text: $d.ApellidoUsuario)
                                                 .multilineTextAlignment(.trailing)
                                                 .disabled(true)
                                                 .foregroundColor(.gray)
@@ -90,7 +98,7 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("LuisPancho@gmail.com", text: $correo)
+                                                    TextField("LuisPancho@gmail.com", text: $d.CorreoUsuario)
                                                 }
                                             }
                                         }
@@ -121,40 +129,6 @@ struct HPusuario: View {
                                 Text("Datos del contacto")
                             }
                             Section{
-                                //peso
-                                HStack{
-                                    NavigationLink{
-                                        Form{
-                                            Section{
-                                                HStack{
-                                                    TextField("Peso", text: Binding(get: {
-                                                                                "\(peso)"
-                                                                            }, set: { newValue in
-                                                                                if let value = Double(newValue) {
-                                                                                    peso = value
-                                                                                }
-                                                                            }))
-                                                        .keyboardType(.decimalPad)
-                                                }
-                                            }
-                                        }
-                                        .navigationTitle("Nombre")
-                                        .navigationBarTitleDisplayMode(.inline)
-                                    }label:{
-                                        HStack{
-                                            Text("Peso")
-                                            TextField("Peso", text: Binding(get: {"\(peso)"
-                                                                    }, set: { newValue in
-                                                                        if let value = Double(newValue) {
-                                                                            peso = value
-                                                                        }
-                                                                    }))
-                                                .multilineTextAlignment(.trailing)
-                                                .disabled(true)
-                                                .foregroundColor(.gray)
-                                        }
-                                    }
-                                }
                                 //estatura
                                 HStack{
                                     NavigationLink{
@@ -196,7 +170,7 @@ struct HPusuario: View {
                                 //dr nombre
                                 HStack{
                                     Text("Dr")
-                                    TextField("Dr bueno bueno", text: $Doctor)
+                                    TextField("Dr Gonzalez Guerra", text: $Doctor)
                                         .disabled(true)
                                         .multilineTextAlignment(.trailing)
                                 }
@@ -238,6 +212,29 @@ struct HPusuario: View {
                     }
                 }
             }
+        }
+    }
+    
+    func getData(link: String, numId: Int) async {
+        guard let url = URL(string: link + "/getAlgo/" + String(numId)) else {
+            print("Wrong URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            if let decodedData = try? JSONDecoder().decode([datosp].self, from: data) {
+                let datos = decodedData
+                if (!datos.isEmpty){
+                    d = datos[0]
+                }
+            }
+        } catch {
+            print("Error: Couldn't bring back data")
         }
     }
 }
