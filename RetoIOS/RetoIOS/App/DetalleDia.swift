@@ -8,30 +8,38 @@
 import SwiftUI
 
 struct DetalleDia: View {
-    @State var dato : RegistroDatos
+    @State var fecha: String
+    @State var intensidad: Float
+    @State var nota : String
     var body: some View {
-        VStack{
-            Text(dato.RegistroFecha)
-                .foregroundColor(Color("txt"))
-            Slider(value:$dato.RegistroIntensidad)
-                .tint(accentColor(for: $dato.RegistroIntensidad))
-                .disabled(true)
-                .padding(.bottom)
-                .padding(.horizontal, 30)
-            HStack{
-                Text("Intensidad: ")
-                Text("\((dato.RegistroIntensidad*10).formatted()) / 10")
+        ZStack{
+            VStack{
+                Text(fecha)
+                    .foregroundColor(Color("txt"))
+                    .multilineTextAlignment(.leading)
+                    .font(.title)
+                    .bold()
+                    .padding(.top, 30)
+                Slider(value:$intensidad)
+                    .tint(accentColor(for: $intensidad))
+                    .disabled(true)
+                    //.padding(.bottom)
+                    .padding(.horizontal, 30)
+                List{
+                    Section{
+                        Text("\((intensidad*10).formatted()) / 10")
+                    }
+                    header: {
+                        Text("Intensidad")
+                    }
+                    Section{
+                        Text(nota)
+                    }
+                    header: {
+                        Text("Nota")
+                    }
+                }
             }
-            .padding()
-            Text("Nota")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 30)
-                .foregroundColor(Color("txt"))
-                .padding(.bottom, 1)
-            Text(dato.RegistroNota)
-                .multilineTextAlignment(.leading)
-                .foregroundColor(Color("gry"))
-                .padding(.horizontal)
         }
     }
     
@@ -49,6 +57,6 @@ struct DetalleDia: View {
 
 struct DetalleDia_Previews: PreviewProvider {
     static var previews: some View {
-        DetalleDia(dato: RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0))
+        DetalleDia(fecha: "fechA", intensidad: 0.0, nota: "pruebapruebapruebapruebapruebapruebapruebapruebaprueba")
     }
 }

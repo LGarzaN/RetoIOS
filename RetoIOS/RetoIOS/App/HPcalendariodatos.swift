@@ -15,7 +15,9 @@ struct HPcalendariodatos: View {
     let selectedYear: Int
     @AppStorage("usu") var usu = 0
     @AppStorage ("JWT") var jwt = ""
-    @State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    @State var registro = [
+        RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    ]
     @State var registros = [RegistroDatos]()
     @State private var isDetailPresented = false
 
@@ -70,16 +72,19 @@ struct HPcalendariodatos: View {
                                     .padding(.horizontal, 20)
                                     .padding(5)
                                     .onTapGesture {
-                                        regis = r.wrappedValue
-                                        isDetailPresented = true
+                                        if let index = registros.firstIndex(where: { $0.idRegistroSintomas == r.idRegistroSintomas.wrappedValue }) {
+                                            registro = [registros[index]] // Assign the tapped RegistroDatos to `registro`
+                                            isDetailPresented = true
+                                        }
                                     }
                                 }
                             }
                             .sheet(isPresented: $isDetailPresented) {
-                                DetalleDia(dato: regis)
-                                    .presentationDetents([.medium, .large])
+                                if !registro.isEmpty {
+                                    DetalleDia(fecha: registro[0].RegistroFecha, intensidad: registro[0].RegistroIntensidad, nota: registro[0].RegistroNota)
+                                }
                             }
-                            .navigationBarTitle(regis.RegistroSintoma)
+                            .navigationBarTitle("hola")//.navigationBarTitle(regis.RegistroSintoma)
                         }
                     }
                     .navigationBarTitle("\(selectedDay) \(selectedMonth) \(String(format: "%04d", selectedYear))", displayMode: .inline)
@@ -93,6 +98,11 @@ struct HPcalendariodatos: View {
                 }
                 Task{
                     await getData(link: dbLink, numId: usu, fecha: fecha)
+                }
+            }
+            .onChange(of: isDetailPresented) { newValue in
+                if newValue, let index = registros.firstIndex(where: { $0.idRegistroSintomas == registro.first?.idRegistroSintomas }) {
+                    registro = [registros[index]]
                 }
             }
         }
