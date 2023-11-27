@@ -16,6 +16,10 @@ struct CrearCuenta2: View {
     @State var create = false
     @Binding var user : Usuario
     @AppStorage("usu") var usu = 0
+    let options = ["Hombre", "Mujer"]
+    @State var genero = ""
+    @State var alrtmsg = ""
+    @State var alrt = false
     
     @StateObject var listaAntecedentes = ListaAntecedentes()
     
@@ -38,7 +42,13 @@ struct CrearCuenta2: View {
                             }
                             //Peso
                             HStack{
-                                TextField("peso",text: $peso)
+                                Text("Genero")
+                                Picker(" ", selection: $genero) {
+                                    ForEach(options, id: \.self){ opt in
+                                        Text(opt)
+                                    }
+                                }
+                                .padding(.trailing, 20)
                             }
                             //Estatura
                             HStack{
@@ -74,8 +84,23 @@ struct CrearCuenta2: View {
                     .navigationTitle("Cuenta")
                 }
                 Button {
+                    if (estatura == ""){
+                        alrtmsg = "Ingrese una Estatura válida"
+                        alrt = true
+                    }
                     user.contrasena = hashPassword(user.contrasena)
                     user.fechanac = formatDate(FechaNac)
+                    if (genero == "Hombre"){
+                        user.genero = "M"
+                    } else {
+                        user.genero = "F"
+                    }
+                    if let est = Int(estatura){
+                        user.estatura = est
+                    } else {
+                        alrtmsg = "Ingrese una Estatura válida"
+                        alrt = true
+                    }
                     Task{
                         await postData(link: dbLink, postData: user)
                     }
@@ -85,6 +110,9 @@ struct CrearCuenta2: View {
                 }
                 .fullScreenCover(isPresented : $create) {
                     ContentView()
+                }
+                .alert(alrtmsg, isPresented: $alrt) {
+                    
                 }
                 Text("J C S L")
                     .bold()
@@ -166,7 +194,7 @@ struct CrearCuenta2: View {
 
 struct CrearCuenta2_Previews: PreviewProvider {
     static var previews: some View {
-        CrearCuenta2(user: .constant(Usuario(nombre: "", apellido: "", fecha: "", correo: "", contrasena: "", telefono: 0)))
+        CrearCuenta2(user: .constant(Usuario(nombre: "", apellido: "", fechanac: "", correo: "", telefono: 0, contrasena: "", estatura: 0, genero: "")))
     }
 }
 

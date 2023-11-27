@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct datosp : Codable{
-    var Estatura : Double
-    var NombreUsuario : String
-    var ApellidoUsuario : String
-    var CorreoUsuario : String
+    var apellidousuario : String
+    var correousuario : String
+    var estatura : Int
+    var nombreusuario : String
+    var telefonousuario : Int
+
 }
 
 struct HPusuario: View {
@@ -19,7 +21,7 @@ struct HPusuario: View {
     @State var Num_tel_Usuario = "81 23 45 67 89"
     let dbLink = "http://10.22.129.138:5001"
     @State var Doctor = ""
-    @State var d = datosp(Estatura: 0, NombreUsuario: "Luis", ApellidoUsuario: "Garza", CorreoUsuario: "luis@gmail.com")
+    @State var d = datosp(apellidousuario: "", correousuario: "Luis@gmail.com", estatura: 0, nombreusuario: "Luis", telefonousuario: 0)
     @State var logOut = false
     @State var checkLogOut = false
     @State var Num_tel_Doctor = ""
@@ -27,7 +29,7 @@ struct HPusuario: View {
     @AppStorage("JWT") var jwt = ""
     @AppStorage("nombre") var nombre = ""
     @AppStorage("apellidos") var apellidos = ""
-    @AppStorage("Estatura") var estatura = 0.0
+    @AppStorage("Estatura") var estatura = 0
     
     var opciones = ["Sintomas" , "Calendario", "Usuario"]
     var body: some View {
@@ -48,7 +50,7 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("nombre", text: $d.NombreUsuario)
+                                                    TextField("nombre", text: $d.nombreusuario)
                                                 }
                                             }
                                         }
@@ -57,7 +59,7 @@ struct HPusuario: View {
                                     }label:{
                                         HStack{
                                             Text("Nombre")
-                                            TextField("\(nombre)", text: $d.NombreUsuario)
+                                            TextField("\(nombre)", text: $d.nombreusuario)
                                                 .multilineTextAlignment(.trailing)
                                                 .disabled(true)
                                                 .foregroundColor(.gray)
@@ -70,7 +72,7 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("apellido", text: $d.ApellidoUsuario)
+                                                    TextField("apellido", text: $d.apellidousuario)
                                                 }
                                             }
                                         }
@@ -79,7 +81,7 @@ struct HPusuario: View {
                                     }label:{
                                         HStack{
                                             Text("Apellido")
-                                            TextField("\(apellidos)", text: $d.ApellidoUsuario)
+                                            TextField("\(apellidos)", text: $d.apellidousuario)
                                                 .multilineTextAlignment(.trailing)
                                                 .disabled(true)
                                                 .foregroundColor(.gray)
@@ -98,7 +100,7 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("LuisPancho@gmail.com", text: $d.CorreoUsuario)
+                                                    TextField("LuisPancho@gmail.com", text: $d.correousuario)
                                                 }
                                             }
                                         }
@@ -114,7 +116,14 @@ struct HPusuario: View {
                                         Form{
                                             Section{
                                                 HStack{
-                                                    TextField("81 89 67 56 78", text: $Num_tel_Usuario)
+                                                    TextField("cel", text: Binding(get: {
+                                                        "\(d.telefonousuario)"
+                                                                            }, set: { newValue in
+                                                                                if let value = Int(newValue) {
+                                                                                    d.telefonousuario = value
+                                                                                }
+                                                                            }))
+                                                        .keyboardType(.decimalPad)
                                                 }
                                             }
                                         }
@@ -136,10 +145,10 @@ struct HPusuario: View {
                                             Section{
                                                 HStack{
                                                     TextField("Estatura", text: Binding(get: {
-                                                                                "\(estatura)"
+                                                        "\(d.estatura)"
                                                                             }, set: { newValue in
-                                                                                if let value = Double(newValue) {
-                                                                                    estatura = value
+                                                                                if let value = Int(newValue) {
+                                                                                    d.estatura = value
                                                                                 }
                                                                             }))
                                                         .keyboardType(.decimalPad)
@@ -151,10 +160,10 @@ struct HPusuario: View {
                                     }label:{
                                         HStack{
                                             Text("Estatura")
-                                            TextField("Estatura", text: Binding(get: {"\(estatura)"
+                                            TextField("Estatura", text: Binding(get: {"\(d.estatura)"
                                                                     }, set: { newValue in
-                                                                        if let value = Double(newValue) {
-                                                                            estatura = value
+                                                                        if let value = Int(newValue) {
+                                                                            d.estatura = value
                                                                         }
                                                                     }))
                                                 .multilineTextAlignment(.trailing)
@@ -204,7 +213,17 @@ struct HPusuario: View {
                             Button("Cerrar Sesión", role: .destructive) {
                                 usu = 0
                                 jwt = ""
+                                nombre = ""
+                                apellidos = ""
+                                estatura = 0
                                 logOut = true
+                            }
+                        }
+                        .onAppear(){
+                            if (nombre == "" || apellidos == ""){
+                                Task{
+                                    await getData(link: dbLink, numId: usu)
+                                }
                             }
                         }
                         .scrollContentBackground(.hidden)
@@ -216,26 +235,29 @@ struct HPusuario: View {
     }
     
     func getData(link: String, numId: Int) async {
+        print("1")
         guard let url = URL(string: link + "/getAlgo/" + String(numId)) else {
             print("Wrong URL")
             return
         }
-
+        print(url)
         var request = URLRequest(url: url)
         request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
         request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
-        
+        print("2")
         do {
+            print("2.5")
             let (data, _) = try await URLSession.shared.data(for: request)
             if let decodedData = try? JSONDecoder().decode([datosp].self, from: data) {
                 let datos = decodedData
-                if (!datos.isEmpty){
-                    d = datos[0]
-                }
+                print(datos)
+                print("3")
+                d = datos[0]
             }
         } catch {
             print("Error: Couldn't bring back data")
         }
+        print("4")
     }
 }
 

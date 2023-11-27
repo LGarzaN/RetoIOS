@@ -14,7 +14,7 @@ struct CrearCuenta1: View {
     @State var errorMsg = ""
     @State var error = false
     @State var next = false
-    @State var user = Usuario(nombre: "", apellido: "", fecha: "", correo: "", contrasena: "", telefono: 0)
+    @State var user = Usuario(nombre: "", apellido: "", fechanac: "", correo: "", telefono: 0, contrasena: "", estatura: 0, genero: "")
     var body: some View {
         NavigationStack{
             ZStack{
