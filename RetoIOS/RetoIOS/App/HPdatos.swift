@@ -130,8 +130,6 @@ struct HPdatos: View {
                                 await getData(link: dbLink, numId: usu)
                                 await getChartsData(link: dbLink, usuId: usu)
                                 sortRegistros()
-                                var matrix = createMatrix()
-                                print(matrix)
                             }
                         }//onAppear
                     }//vStack
