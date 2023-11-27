@@ -12,67 +12,75 @@ struct UltimosDias: View {
     @State var registros : [RegistroDatos]
     var dato : DatoSeguir
     @State var inte = 0.5
-    @State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    //@State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
     @State private var isDetailPresented = false
     @State var registro = [
         RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
     ]
     var body: some View {
         NavigationStack {
-            if (registros.isEmpty){
-                Text("No hay registros")
-                    .font(.largeTitle)
-            } else {
-                VStack{
-                    ScrollView(.vertical, showsIndicators: true) {
-                        ForEach($registros){r in
-                            NavigationLink{
-                            } label: {
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color("butts"))
-                                    VStack{
-                                        Text(r.RegistroFecha.wrappedValue)
-                                            .foregroundColor(Color("txt"))
+            VStack{
+                ScrollView(.vertical, showsIndicators: true) {
+                    ForEach($registros){r in
+                        NavigationLink{
+                        } label: {
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color("butts"))
+                                VStack{
+                                    Text(r.RegistroFecha.wrappedValue)
+                                        .foregroundColor(Color("txt"))
+                                    if (dato.SeguirTipo == 0){
+                                        Text(roundedString(value: Double(r.RegistroIntensidad.wrappedValue), decimalPlaces: 2))
+                                            .padding()
+                                            .foregroundColor(.primary)
+                                    } else {
                                         Slider(value:r.RegistroIntensidad)
                                             .tint(accentColor(for: r.RegistroIntensidad))
                                             .disabled(true)
                                             .padding(.bottom)
                                             .padding(.horizontal)
-                                        Text("Nota")
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .padding(.horizontal)
-                                            .foregroundColor(Color("txt"))
-                                            .padding(.bottom, 1)
-                                        
-                                        Text(r.RegistroNota.wrappedValue)
-                                            .multilineTextAlignment(.leading)
-                                            .foregroundColor(Color("gry"))
-                                            .lineLimit(2)
-                                            .truncationMode(.tail)
-                                            .padding(.horizontal)
-                                        
                                     }
-                                    .padding()
+                                    Text("Nota")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.horizontal)
+                                        .foregroundColor(Color("txt"))
+                                        .padding(.bottom, 1)
+                                    
+                                    Text(r.RegistroNota.wrappedValue)
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundColor(Color("gry"))
+                                        .lineLimit(2)
+                                        .truncationMode(.tail)
+                                        .padding(.horizontal)
+                                    
                                 }
-                                .padding(.horizontal, 20)
-                                .padding(5)
-                                .onTapGesture {
-                                    regis = r.wrappedValue
+                                .padding()
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(5)
+                            .onTapGesture {
+                                if let index = registros.firstIndex(where: { $0.idRegistroSintomas == r.idRegistroSintomas.wrappedValue }) {
+                                    registro = [registros[index]] // Assign the tapped RegistroDatos to `registro`
                                     isDetailPresented = true
                                 }
                             }
                         }
                         .sheet(isPresented: $isDetailPresented) {
-                            DetalleDia(dato: regis)
-                                .presentationDetents([.medium, .large])
+                            if !registro.isEmpty {
+                                DetalleDia(fecha: registro[0].RegistroFecha, intensidad: registro[0].RegistroIntensidad, nota: registro[0].RegistroNota)
+                            }
                         }
-                        .navigationBarTitle(dato.SeguirNombre)
                     }
+                    .navigationBarTitle(dato.SeguirNombre)
                 }
-                .background(Color("basic"))
             }
-
+            .background(Color("basic"))
+        }
+        .onChange(of: isDetailPresented) { newValue in
+            if newValue, let index = registros.firstIndex(where: { $0.idRegistroSintomas == registro.first?.idRegistroSintomas }) {
+                registro = [registros[index]]
+            }
         }
     }
     func accentColor(for value: Binding<Float>) -> Color {
@@ -84,7 +92,10 @@ struct UltimosDias: View {
             } else {
                 return .red
             }
-        }
+    }
+    func roundedString(value: Double, decimalPlaces: Int) -> String {
+        return String(format: "%.\(decimalPlaces)f", value)
+    }
 
 }
 

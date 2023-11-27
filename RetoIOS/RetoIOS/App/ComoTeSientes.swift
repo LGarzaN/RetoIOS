@@ -23,33 +23,51 @@ struct ComoTeSientes: View {
     
     var body: some View {
         VStack{
-            Text("¿Cómo te sientes hoy?")
-                .foregroundColor(.gray)
-                .frame(width: 333, alignment: .center)
-                .padding()
-                .font(.system(size: 25))
             if (dato.SeguirTipo == 1){
+                Text("¿Cómo te sientes?")
+                    .foregroundColor(.gray)
+                    .frame(width: 333, alignment: .center)
+                    .padding()
+                    .font(.system(size: 25))
                 Slider(value: $intensidad)
                     .padding(.horizontal, 30)
                     .padding(.bottom, 15)
                     .tint(accentColor(for: intensidad))
-            } else {
-                TextField("Escribe un dato", text: $intensidadStr)
-                    .padding()
-                    .padding(.horizontal, 80)
-                    .textFieldStyle(.roundedBorder)
-            }
-            Form{
-                Section{
-                    TextEditor(text: $nota)
-                        .frame(height: 150)
-                        .padding()
-                } header: {
-                    Text("Notas")
+                Form{
+                    Section{
+                        TextEditor(text: $nota)
+                            .frame(height: 150)
+                            .padding()
+                    } header: {
+                        Text("Notas")
+                    }
+                    Section{
+                        HStack{
+                            DatePicker("Fecha", selection: $fecha, displayedComponents: .date)
+                        }
+                    }
                 }
-                Section{
-                    HStack{
-                        DatePicker("Fecha", selection: $fecha, displayedComponents: .date)
+            } else {
+                Text("¿Cómo vas?")
+                    .foregroundColor(.gray)
+                    .frame(width: 333, alignment: .center)
+                    .padding()
+                    .font(.system(size: 25))
+                Form{
+                    Section{
+                        TextField("Escribe aqui", text: $intensidadStr)
+                    }
+                    Section{
+                        TextEditor(text: $nota)
+                            .frame(height: 150)
+                            .padding()
+                    } header: {
+                        Text("Notas")
+                    }
+                    Section{
+                        HStack{
+                            DatePicker("Fecha", selection: $fecha, displayedComponents: .date)
+                        }
                     }
                 }
             }

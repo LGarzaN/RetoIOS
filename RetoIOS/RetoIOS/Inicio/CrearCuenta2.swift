@@ -122,6 +122,7 @@ struct CrearCuenta2: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Juan123", forHTTPHeaderField: "x-api-key")
         
         do {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)

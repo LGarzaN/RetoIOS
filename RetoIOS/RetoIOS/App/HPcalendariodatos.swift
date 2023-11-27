@@ -15,7 +15,9 @@ struct HPcalendariodatos: View {
     let selectedYear: Int
     @AppStorage("usu") var usu = 0
     @AppStorage ("JWT") var jwt = ""
-    @State private var regis = RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    @State var registro = [
+        RegistroDatos(idRegistroSintomas: 0, RegistroSintoma: "", RegistroIntensidad: 0, RegistroFecha: "", RegistroNota: "", Usuario_idUsuario: 0, SintomasSeguir_idSintomasSeguir: 0)
+    ]
     @State var registros = [RegistroDatos]()
     @State private var isDetailPresented = false
 
@@ -36,13 +38,16 @@ struct HPcalendariodatos: View {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 10)
                                             .foregroundColor(Color("butts"))
-                                        VStack{
+                                        VStack(alignment: .leading){
                                             Text(r.RegistroSintoma.wrappedValue)
                                                 .foregroundColor(Color("txt"))
+                                                .padding(.horizontal)
                                             if (r.RegistroIntensidad.wrappedValue > 1){
                                                 Text(roundedString(value: Double(r.RegistroIntensidad.wrappedValue), decimalPlaces: 2))
-                                                    .padding()
-                                                    .foregroundColor(.primary)
+                                                    .padding(.bottom)
+                                                    .padding(.horizontal)
+                                                    .foregroundColor(Color("gry"))
+                                                    
                                             } else {
                                                 Slider(value:r.RegistroIntensidad)
                                                     .tint(accentColor(for: r.RegistroIntensidad))
@@ -50,39 +55,42 @@ struct HPcalendariodatos: View {
                                                     .padding(.bottom)
                                                     .padding(.horizontal)
                                             }
-
-                                            Text("Nota")
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .padding(.horizontal)
-                                                .foregroundColor(Color("txt"))
-                                                .padding(.bottom, 1)
-                                            
-                                            Text(r.RegistroNota.wrappedValue)
-                                                .multilineTextAlignment(.leading)
-                                                .foregroundColor(Color("gry"))
-                                                .lineLimit(2)
-                                                .truncationMode(.tail)
-                                                .padding(.horizontal)
-                                            
+                                            if r.RegistroNota.wrappedValue.count > 1{
+                                                Text("Nota:")
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                    .padding(.horizontal)
+                                                    .foregroundColor(Color("txt"))
+                                                    .padding(.bottom, 1)
+                                                
+                                                Text(r.RegistroNota.wrappedValue)
+                                                    .multilineTextAlignment(.leading)
+                                                    .foregroundColor(Color("gry"))
+                                                    .lineLimit(2)
+                                                    .truncationMode(.tail)
+                                                    .padding(.horizontal)
+                                            }
                                         }
                                         .padding()
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(5)
                                     .onTapGesture {
-                                        regis = r.wrappedValue
-                                        isDetailPresented = true
+                                        if let index = registros.firstIndex(where: { $0.idRegistroSintomas == r.idRegistroSintomas.wrappedValue }) {
+                                            registro = [registros[index]] // Assign the tapped RegistroDatos to `registro`
+                                            isDetailPresented = true
+                                        }
                                     }
                                 }
                             }
                             .sheet(isPresented: $isDetailPresented) {
-                                DetalleDia(dato: regis)
-                                    .presentationDetents([.medium, .large])
+                                if !registro.isEmpty {
+                                    DetalleDia(fecha: registro[0].RegistroFecha, intensidad: registro[0].RegistroIntensidad, nota: registro[0].RegistroNota)
+                                }
                             }
-                            .navigationBarTitle(regis.RegistroSintoma)
+                            //.navigationBarTitle(registro.RegistroSintoma)
                         }
                     }
-                    .navigationBarTitle("\(selectedDay) \(selectedMonth) \(String(format: "%04d", selectedYear))", displayMode: .inline)
+                    //.navigationBarTitle("\(selectedDay) \(selectedMonth) \(String(format: "%04d", selectedYear))", displayMode: .inline)
                 }
             }
             .onAppear(){

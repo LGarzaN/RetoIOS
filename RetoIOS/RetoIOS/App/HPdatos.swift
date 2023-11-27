@@ -97,7 +97,7 @@ struct HPdatos: View {
                                                     Text(opt)
                                                 }
                                             }
-                                            Spacer()
+                                            .padding(.trailing, 120)
                                         }
                                     }header : {
                                         Text("Tipo de dato")
@@ -130,8 +130,6 @@ struct HPdatos: View {
                                 await getData(link: dbLink, numId: usu)
                                 await getChartsData(link: dbLink, usuId: usu)
                                 sortRegistros()
-                                var matrix = createMatrix()
-                                print(matrix)
                             }
                         }//onAppear
                     }//vStack
