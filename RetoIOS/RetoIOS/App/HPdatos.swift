@@ -97,7 +97,7 @@ struct HPdatos: View {
                                                     Text(opt)
                                                 }
                                             }
-                                            Spacer()
+                                            .padding(.trailing, 120)
                                         }
                                     }header : {
                                         Text("Tipo de dato")

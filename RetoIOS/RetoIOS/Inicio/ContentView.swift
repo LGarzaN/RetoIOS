@@ -60,12 +60,9 @@ struct ContentView: View {
                         }
                         Section{
                             HStack{
-                                TextField(" ",text: $password)
+                                SecureField(" ",text: $password)
                                     .autocapitalization(.none)
                                     .autocorrectionDisabled()
-                                    //.textContentType(.password)
-                                //Text(String(repeating: "•", count: password.count))
-                                            //.foregroundColor(.black)
                             }
                         }
                         header : {

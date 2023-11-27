@@ -101,6 +101,7 @@ struct HPcalendario: View {
                                                     .padding(.bottom, 20)
                                             }
                                         }
+                                        
                                         .sheet(isPresented: $mostrarDatos){
                                             HPcalendariodatos(selectedDay: diaElegido, selectedMonth: meses[mesElegido], selectedYear: year)
                                         }
