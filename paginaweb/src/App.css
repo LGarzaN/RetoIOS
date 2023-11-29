@@ -1,0 +1,75 @@
+body {
+  background-color: #2e3334; /* Cambia el color de fondo según tus preferencias */
+  margin: 0; /* Elimina el margen predeterminado del body */
+  font-family: 'Arial', sans-serif; /* Ajusta la fuente según tus preferencias */
+}
+
+.option-picker-container {
+  text-align: center;
+  margin-top: 50px; /* Ajusta según sea necesario */
+}
+
+.option-picker-title,
+.option-picker-label,
+.option-picker-selected,
+.symptom-records-container h2,
+.symptom-records-container p,
+.symptom-records-container li {
+  color: #ffffff; /* Establecer el color del texto en blanco */
+}
+
+.option-picker-label {
+  margin-top: 10px; /* Ajusta según sea necesario */
+  display: block;
+}
+
+.option-picker-select {
+  margin-top: 5px; /* Ajusta según sea necesario */
+  padding: 8px;
+}
+
+.option-picker-selected {
+  margin-top: 10px; /* Ajusta según sea necesario */
+  font-weight: bold;
+}
+
+/* Agrega estos estilos en tu archivo styles.css */
+
+.logo-container {
+  position: absolute;
+  top: 10px; /* Ajusta según sea necesario */
+  right: 10px; /* Ajusta según sea necesario */
+}
+
+.logo-container img {
+  width: 150px; /* Ajusta el tamaño del logo según sea necesario */
+  height: auto; /* Mantiene la proporción original del logo */
+}
+
+
+.symptom-records-container {
+  text-align: center;
+  margin-top: 20px; /* Ajusta según sea necesario */
+  margin-bottom: 20px;
+}
+
+.symptom-records-table {
+  width: 50%; /* Ajusta según sea necesario */
+  margin: 0 auto; /* Centra la tabla */
+  border-collapse: collapse;
+  background-color: #2e3334; /* Fondo blanco */
+  color: #ffffff; /* Color del texto del encabezado */
+}
+
+.symptom-records-table th, .symptom-records-table td {
+  border: 1px solid #dddddd; /* Bordes de las celdas */
+  padding: 8px;
+}
+
+.symptom-records-table th {
+  background-color: #2e3334; /* Color de fondo del encabezado */
+  color: #ffffff; /* Color del texto del encabezado */
+}
+
+
+
