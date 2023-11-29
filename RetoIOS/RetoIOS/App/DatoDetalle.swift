@@ -10,7 +10,7 @@ import Charts
 
 struct DatoDetalle: View {
     var dato : DatoSeguir
-    let dblink = "http://10.22.129.138:5001"
+    let dblink = "http://10.22.139.63:5001"
     @State var registros = [RegistroDatos]()
     @State var registrosNull = [RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: " ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 1, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "   ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4),RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "    ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4), RegistroDatos(idRegistroSintomas: 2, RegistroSintoma: "_", RegistroIntensidad: 0.9 , RegistroFecha: "     ", RegistroNota: "_", Usuario_idUsuario: 3, SintomasSeguir_idSintomasSeguir: 4)]
     @State var alrt : Bool = false
