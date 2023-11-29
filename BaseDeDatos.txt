@@ -1,0 +1,144 @@
+Create DataBase RetoMovil;
+Use RetoMovil;
+
+-- -----------------------------------------------------
+-- Table Usuario
+-- -----------------------------------------------------
+	CREATE TABLE Usuario(
+	  idUsuario INT AUTO_INCREMENT,
+	  NombreUsuario VARCHAR(45),
+	  ApellidoUsuario VARCHAR(45),
+	  Fecha_Nacimiento DATETIME,
+	  CorreoUsuario VARCHAR(45),
+	  Contrasena VARCHAR(100),
+	  TelefonoUsuario BIGINT,
+	  PRIMARY KEY (idUsuario)
+	);
+
+-- -----------------------------------------------------
+-- Table Doctor
+-- -----------------------------------------------------
+CREATE TABLE Doctor(
+  idDoctor INT AUTO_INCREMENT,
+  Matricula INT,
+  Usuario_idUsuario INT,
+  PRIMARY KEY (idDoctor),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario)
+);
+
+-- -----------------------------------------------------
+-- Table Paciente
+-- -----------------------------------------------------
+CREATE TABLE Paciente(
+  idPaciente INT AUTO_INCREMENT,
+  Genero VARCHAR(1),
+  Estatura DECIMAL,
+  MatriculaDoc INT,
+  Usuario_idUsuario INT,
+  PRIMARY KEY (idPaciente),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario)
+);
+
+-- -----------------------------------------------------
+-- Table Antecedentes
+-- -----------------------------------------------------
+CREATE TABLE Antecedentes (
+  idAntecedentes INT AUTO_INCREMENT,
+  Titulo VARCHAR(45),
+  Contenido VARCHAR(45),
+  Usuario_idUsuario INT,
+  PRIMARY KEY (idAntecedentes),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario)
+);
+
+-- -----------------------------------------------------
+-- Table Notas
+-- -----------------------------------------------------
+CREATE TABLE Notas (
+  idNotas INT AUTO_INCREMENT,
+  TituloNotas VARCHAR(45),
+  ContenidoNotas VARCHAR(45),
+  FechaNotas DATETIME,
+  Usuario_idUsuario INT,
+  PRIMARY KEY (idNotas),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario)
+);
+
+-- -----------------------------------------------------
+-- Table SintomasSeguir
+-- -----------------------------------------------------
+CREATE TABLE SintomasSeguir(
+  idSintomasSeguir INT AUTO_INCREMENT,
+  SeguirNombre VARCHAR(45),
+  SeguirTipo INT,
+  UltimoRegistro DATETIME,
+  SeguirFechaInicial DATETIME,
+  SeguirFechaFinal DATETIME,
+  Usuario_idUsuario INT,
+  PRIMARY KEY (idSintomasSeguir),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario)
+);
+
+-- -----------------------------------------------------
+-- Table RegistroSintomas
+-- -----------------------------------------------------
+CREATE TABLE RegistroSintomas (
+  idRegistroSintomas INT AUTO_INCREMENT,
+  RegistroSintoma VARCHAR(45),
+  RegistroIntensidad VARCHAR(45),
+  RegistroFecha DATETIME,
+  RegistroNota VARCHAR(45),
+  Usuario_idUsuario INT,
+  SintomasSeguir_idSintomasSeguir INT,
+  PRIMARY KEY (idRegistroSintomas),
+  FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario (idUsuario),
+  FOREIGN KEY (SintomasSeguir_idSintomasSeguir) REFERENCES SintomasSeguir(idSintomasSeguir)
+);
+
+-- Insertar datos de prueba en la tabla Usuario
+INSERT INTO Usuario (idUsuario, NombreUsuario, ApellidoUsuario, Fecha_Nacimiento, CorreoUsuario, TelefonoUsuario)
+VALUES 
+  (1, 'Juan', 'Pérez', '1990-01-15', 'juanperez@email.com', 1234567890),
+  (2, 'María', 'López', '1995-03-20', 'marialopez@email.com', 9876543210),
+  (3, 'Luis', 'Garza', '1998-02-05', 'luisgarza@email.com', 7832516901),
+  (4, 'Mariel', 'Cortes', '1997-09-12', 'marielcortes@email.com', 235415763);
+
+
+-- Insertar datos de prueba en la tabla Doctor
+INSERT INTO Doctor (idDoctor, Matricula, Usuario_idUsuario)
+VALUES 
+ (1, 9876, 3), -- Asociar al usuario Juan Pérez (idUsuario 1) como doctor
+ (2, 6543, 4); -- Asociar al usuario María López (idUsuario 2) como doctor
+
+-- Insertar datos de prueba en la tabla Paciente
+INSERT INTO Paciente (idPaciente, Genero, Estatura, MatriculaDoc, Usuario_idUsuario)
+VALUES 
+  (1, 'M', 175.5, 123, 1), -- Asociar al usuario Juan Pérez (idUsuario 1)
+  (2, 'F', 160.5, 543, 2); -- Asociar al usuario María López (idUsuario 2);
+
+-- Insertar datos de prueba en la tabla Antecedentes
+INSERT INTO Antecedentes (idAntecedentes, Titulo, Contenido, Usuario_idUsuario)
+VALUES 
+  (1, 'Antecedente 1', 'Contenido de Antecedente 1', 1), -- Asociar al paciente Juan Pérez (idPaciente 1)
+  (2, 'Antecedente 2', 'Contenido de Antecedente 2', 2); -- Asociar al paciente María López (idPaciente 2);
+
+-- Insertar datos de prueba en la tabla Notas
+INSERT INTO Notas (idNotas, TituloNotas, ContenidoNotas, FechaNotas, Usuario_idUsuario)
+VALUES 
+  (1, 'Nota 1', 'Contenido de la nota 1', '2023-11-08 10:00:00', 1), -- Asociar a Juan Pérez (idPaciente 1)
+  (2, 'Nota 2', 'Contenido de la nota 2', '2023-11-09 11:30:00', 2); -- Asociar a María López (idPaciente 2);
+
+-- Insertar datos de prueba en la tabla SintomasSeguir
+INSERT INTO SintomasSeguir (idSintomasSeguir, SeguirNombre, SeguirTipo, UltimoRegistro, SeguirFechaInicial, SeguirFechaFinal, Usuario_idUsuario)
+VALUES 
+  (1, 'Seguimiento 1', 1, '2023-11-08 08:45:00', '2023-11-15 09:00:00', '2023-12-01 10:30:00', 1),
+  (2, 'Seguimiento 2', 2, '2023-11-10 10:15:00', '2023-11-15 11:00:00', '2023-12-02 12:15:00', 2);
+
+-- Insertar datos de prueba en la tabla RegistroSintomas
+INSERT INTO RegistroSintomas (idRegistroSintomas, RegistroSintoma, RegistroIntensidad, RegistroFecha, RegistroNota, Usuario_idUsuario, SintomasSeguir_idSintomasSeguir)
+VALUES 
+  (1, 'Dolor de cabeza', 'Moderado', '2023-11-08 10:30:00', 'Nota sobre el dolor de cabeza', 1, 1),
+  (2, 'Dolor de espalda', 'Leve', '2023-11-09 11:00:00', 'Nota sobre el dolor de espalda', 2, 2);
+
+
+Select * from SintomasSeguir;
