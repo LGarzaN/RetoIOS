@@ -9,7 +9,7 @@ import CryptoKit
 
 
 struct CrearCuenta2: View {
-    let dbLink = "http://10.22.129.138:5001"
+    let dbLink = "http://10.22.139.63:5001"
     @State var FechaNac = Date()
     @State var peso = ""
     @State var estatura = ""

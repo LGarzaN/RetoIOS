@@ -19,9 +19,9 @@ struct datosp : Codable{
 struct HPusuario: View {
     @State var correo = "correo@mail.mx"
     @State var Num_tel_Usuario = "81 23 45 67 89"
-    let dbLink = "http://10.22.129.138:5001"
+    let dbLink = "http://10.22.139.63:5001"
     @State var Doctor = ""
-    @State var d = datosp(apellidousuario: "", correousuario: "Luis@gmail.com", estatura: 0, nombreusuario: "Luis", telefonousuario: 0)
+    @State var d = datosp(apellidousuario: "", correousuario: " ", estatura: 0, nombreusuario: " ", telefonousuario: 0)
     @State var logOut = false
     @State var checkLogOut = false
     @State var Num_tel_Doctor = ""

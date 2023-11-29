@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct HPdatos: View {
-    let dbLink = "http://10.22.129.138:5001"
+    let dbLink = "http://10.22.139.63:5001"
     @State var alrt = false
     @State private var animate: Bool = false
     @State var tip = 0
@@ -20,7 +20,6 @@ struct HPdatos: View {
     @State private var selectedOption = ""
     @AppStorage ("API_KEY") var key = "Juan"
     @State var registros = [DatoCharts]()
-    //@State var registrosNull = [DatoCharts(RegistroFecha: " ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "  ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "   ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "    ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69),DatoCharts(RegistroFecha: "     ", RegistroIntensidad: 0.9, SintomasSeguir_idSintomasSeguir: 69)]
     @AppStorage("usu") var usu = 0
     @AppStorage ("JWT") var jwt = ""
     var body: some View {
@@ -97,6 +96,7 @@ struct HPdatos: View {
                                                     Text(opt)
                                                 }
                                             }
+                                            .pickerStyle(SegmentedPickerStyle())
                                             .padding(.trailing, 120)
                                         }
                                     }header : {
@@ -104,13 +104,16 @@ struct HPdatos: View {
                                     }
                                 }//form
                                 Button{
-                                    selectedOption = datoExtra
+                                    print("tipo")
+                                    print(tipo)
+                                    
                                     if (tipo == "Cualitativo"){
                                         tip = 1
                                     } else {
                                         tip = 0
                                     }
-                                    let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: selectedOption, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
+                                    print(tip)
+                                    let datoS = DatoSeguir(idSintomasSeguir: 0, SeguirNombre: datoExtra, SeguirTipo: tip, UltimoRegistro: "", SeguirFechaInicial: "", SeguirFechaFinal: "", Usuario_idUsuario: usu)
                                     datoS.formatDate(Date())
                                     
                                     Task{

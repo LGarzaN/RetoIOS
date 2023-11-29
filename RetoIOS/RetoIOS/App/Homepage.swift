@@ -21,7 +21,6 @@ struct Homepage: View {
                     Image(systemName: "calendar")
                     Text("Calendar")
                 }
-                .tint(.purp)
 
             HPusuario()
                 .tabItem {
@@ -30,7 +29,6 @@ struct Homepage: View {
                     Text("Profile")
                 }
         }
-        .tint(.grn)
     }
 }
 

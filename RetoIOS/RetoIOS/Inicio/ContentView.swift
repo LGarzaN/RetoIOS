@@ -28,7 +28,7 @@ struct Response : Codable{
 }
 
 struct ContentView: View {
-    let dbLink = "http://10.22.129.138:5001"
+    let dbLink = "http://10.22.139.63:5001"
     @State var email = ""
     @State var password = ""
     @State var enter = false
